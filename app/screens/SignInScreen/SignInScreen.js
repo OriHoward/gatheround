@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
 } from "react-native";
-import Logo from "../../../images/newLogo.png";
+import Logo from "../../../Images/newLogo.png";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 
