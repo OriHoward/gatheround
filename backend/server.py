@@ -11,7 +11,7 @@ load_dotenv()
 app = Flask(__name__)
 print(os.getenv("DB_URL"))
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URL")
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) # ORM = Object-relational mapping
 api = Api(app)
 
 
