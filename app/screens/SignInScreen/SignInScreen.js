@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
 } from "react-native";
-import Logo from "../../../assets/Images/newLogo.png"
+import Logo from "../../../assets/Images/logo-transparent-background.png"
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 
@@ -43,6 +43,7 @@ const SignInScreen = () => {
           placeholder="Username"
           value={username}
           setValue={setUsername}
+          keyboardType='email-address'
         />
         <CustomInput
           placeholder="Password"
@@ -52,7 +53,7 @@ const SignInScreen = () => {
         />
         <CustomButton text="Sign In" onPress={onSignInPressed} />
         <CustomButton
-          text="Forgot Password"
+          text="Forgot password?"
           onPress={onForgotPasswordPressed}
           type="TERTIARY"
         />
@@ -69,7 +70,7 @@ const SignInScreen = () => {
           fgColor="#DD4D44"
         />
         <CustomButton
-          text="Don't have an account? Create one"
+          text="Don't have an account? Sign up"
           onPress={onSignUpPressed}
           type="TERTIARY"
         />
