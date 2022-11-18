@@ -7,9 +7,10 @@ import {
   useWindowDimensions,
   ScrollView,
 } from "react-native";
-import Logo from "../../../assets/Images/logo-transparent-background.png"
+import Logo from "../../../assets/Images/logo-transparent-background.png";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
+import SocialSignInButtons from "../components/SocialSignInButtons";
 
 const SignInScreen = () => {
   const [username, setUsername] = useState("");
@@ -21,12 +22,7 @@ const SignInScreen = () => {
   const onForgotPasswordPressed = () => {
     console.log("Forgot password");
   };
-  const onSignInGoogle = () => {
-    console.log("GOOGLE");
-  };
-  const onSignInFacebook = () => {
-    console.log("FACEBOOK");
-  };
+
   const onSignUpPressed = () => {
     console.log("Sign Up");
   };
@@ -43,7 +39,7 @@ const SignInScreen = () => {
           placeholder="Username"
           value={username}
           setValue={setUsername}
-          keyboardType='email-address'
+          keyboardType="email-address"
         />
         <CustomInput
           placeholder="Password"
@@ -57,18 +53,7 @@ const SignInScreen = () => {
           onPress={onForgotPasswordPressed}
           type="TERTIARY"
         />
-        <CustomButton
-          text="Sign In with Facebook"
-          onPress={onSignInFacebook}
-          bgColor="#E7EAF4"
-          fgColor="#4765A9"
-        />
-        <CustomButton
-          text="Sign In with Google"
-          onPress={onSignInGoogle}
-          bgColor="#FAE9EA"
-          fgColor="#DD4D44"
-        />
+        <SocialSignInButtons />
         <CustomButton
           text="Don't have an account? Sign up"
           onPress={onSignUpPressed}
