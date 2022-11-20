@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   Image,
   StyleSheet,
   useWindowDimensions,
@@ -11,20 +10,28 @@ import Logo from "../../../assets/Images/logo-transparent-background.png";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import SocialSignInButtons from "../components/SocialSignInButtons";
+import { useNavigation } from "@react-navigation/native";
 
 const SignInScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const { height } = useWindowDimensions();
+  const navigation = useNavigation();
+
   const onSignInPressed = () => {
-    console.log("Sign in");
+    // validate user
+    if (username.length > 0 && password.length > 0) {
+      navigation.navigate("Home");
+    }
   };
+
   const onForgotPasswordPressed = () => {
-    console.log("Forgot password");
+    navigation.navigate("ForgotPassword");
   };
 
   const onSignUpPressed = () => {
-    console.log("Sign Up");
+    navigation.navigate("SignUp");
   };
 
   return (

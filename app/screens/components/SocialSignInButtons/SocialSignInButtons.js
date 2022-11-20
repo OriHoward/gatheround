@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import CustomButton from "../CustomButton";
 
@@ -22,7 +21,7 @@ const SocialSignInButtons = () => {
         onPress={onSignInGoogle}
         bgColor="#FAE9EA"
         fgColor="#DD4D44"
-      />{" "}
+      />
     </>
   );
 };
