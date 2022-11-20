@@ -20,7 +20,11 @@ const NewPasswordScreen = () => {
     <ScrollView>
       <View style={styles.root}>
         <Text style={styles.title}>Reset your password</Text>
-        <CustomInput placeholder="Enter your confimation code" value={code} setValue={setCode} />
+        <CustomInput
+          placeholder="Enter your confimation code"
+          value={code}
+          setValue={setCode}
+        />
         <CustomInput
           placeholder="Enter your new password"
           value={newPassword}
