@@ -14,11 +14,29 @@ const SignUpScreen = () => {
   const navigation = useNavigation();
 
   const onRegisterPressed = () => {
-    navigation.navigate('ConfirmEmail');
-  }
+    if (password !== passwordRepeat) {
+      console.log("Bad password");
+    }
+
+    const data = {
+      username,
+      password,
+      email,
+    };
+    
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((resp) => resp.json())
+      .then(console.log);
+  };
 
   const onSignInPressed = () => {
-    navigation.navigate('SignIn');
+    navigation.navigate("SignIn");
   };
 
   const onTermsOfUsePressed = () => {
