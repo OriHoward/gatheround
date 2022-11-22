@@ -13,26 +13,26 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
-  const onRegisterPressed = () => {
+  const  onRegisterPressed = async () => {
     if (password !== passwordRepeat) {
       console.log("Bad password");
     }
-
     const data = {
       username,
       password,
       email,
     };
-    
-    fetch("http://localhost:5000/users", {
+    const resp = await fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then((resp) => resp.json())
-      .then(console.log);
+    
+    const jsonData = await resp.json()
+    console.log(jsonData, "FROM BACKEND")
+
   };
 
   const onSignInPressed = () => {
