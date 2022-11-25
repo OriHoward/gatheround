@@ -6,7 +6,7 @@ const HomeScreen = () => {
   return (
     <View>
       <Text style={{ fontSize: 24, alignSelf: "center" }}>Homepage</Text>
-      <BottomNavi  />
+      {/* <BottomNavi /> */}
     </View>
   );
 };
