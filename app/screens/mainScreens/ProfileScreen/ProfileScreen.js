@@ -4,7 +4,7 @@ import React from "react";
 const ProfileScreen = ({ navigation }) => {
   return (
     <View>
-      <Text onPress={() => navigation.navigate("Home")}>ProfileScreen</Text>
+      <Text style={{ fontSize: 24, alignSelf: "center" }}>ProfileScreen</Text>
     </View>
   );
 };
