@@ -13,7 +13,7 @@ const homeName = "Home";
 const profileName = "Profile";
 
 const Tab = createBottomTabNavigator();
-
+// https://reactnavigation.org/docs/tab-based-navigation/
 const MainContainer = () => {
   return (
     <Tab.Navigator
