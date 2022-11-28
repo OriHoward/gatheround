@@ -19,10 +19,32 @@ const SignInScreen = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
-  const onSignInPressed = () => {
+  const onSignInPressed = async () => {
     // validate user
     if (username.length > 0 && password.length > 0) {
-      navigation.navigate("Home");
+      const data = {
+        username,
+        password,
+      };
+      try {
+        const resp = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const jsonData = await resp.json();
+        if (jsonData.status === "accepted") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("SignIn");
+          alert("Incorrect password!");
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
