@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import BottomNavi from "../components/BottomNavi";
+import BottomNavi from "../../components/BottomNavi";
 
 const HomeScreen = () => {
   return (
