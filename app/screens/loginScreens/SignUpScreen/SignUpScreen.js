@@ -12,6 +12,12 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import SocialSignInButtons from "../../components/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/native";
+import {
+  isValidEmail,
+  isIdentical,
+  isValidUsername,
+  isValidPassword,
+} from "../../../utils/input-validation";
 
 const SignUpScreen = () => {
   const [username, setUsername] = useState("");
@@ -22,33 +28,62 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
-  const onRegisterPressed = async () => {
-    if (password !== passwordRepeat) {
-      console.log("Bad password");
+  const alertAccordingly = (
+    validUsername,
+    validEmail,
+    validPassword,
+    validRepeat
+  ) => {
+    if (!validUsername) {
+      alert(
+        "Username can only contain numbers and digits with one ' _ ' in between"
+      );
     }
-    const data = {
-      username,
-      password,
-      email,
-    };
-    try {
-      const resp = await fetch("http://localhost:5000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    if (!validEmail) {
+      alert("Not a valid email");
+    }
+    if (!validPassword) {
+      alert(
+        "Password length must be between 5-20 and must contain atleast one letter and one digit"
+      );
+    }
+    if (!validRepeat) {
+      alert("Password and repeat password does not match");
+    }
+  };
 
-      const jsonData = await resp.json();
-      console.log(jsonData, "FROM BACKEND");
-      if (jsonData.status === "accepted") {
-        navigation.navigate("SignIn");
-      } else {
-        alert("incorrect sign up");
+  const onRegisterPressed = async () => {
+    const validUsername = isValidUsername(username);
+    const validEmail = isValidEmail(email);
+    const validPassword = isValidPassword(password);
+    const validRepeat = isIdentical(password, passwordRepeat);
+    if (validUsername && validEmail && validPassword && validRepeat) {
+      const data = {
+        username,
+        password,
+        email,
+      };
+      try {
+        const resp = await fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const jsonData = await resp.json();
+        console.log(jsonData, "FROM BACKEND");
+        if (jsonData.status === "accepted") {
+          navigation.navigate("SignIn");
+        } else {
+          alert("Something went wrong, Please try again later");
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    } else {
+      alertAccordingly(validUsername, validEmail, validPassword, validRepeat);
     }
   };
 
