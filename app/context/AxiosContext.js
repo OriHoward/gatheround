@@ -3,6 +3,8 @@ import axios from 'axios';
 import {AuthContext} from './AuthContext';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
+import Cookies from 'js-cookie';
 
 
 const AxiosContext = createContext();
@@ -53,13 +55,21 @@ const AxiosProvider = ({children}) => {
           accessToken: tokenRefreshResponse.data.accessToken,
         });
 
-        await SecureStore.setItemAsync(
-          'token',
-          JSON.stringify({
-            accessToken: tokenRefreshResponse.data.accessToken,
-            refreshToken: authContext.authState.refreshToken,
-          }),
-        );
+        if (Platform.OS !== 'web') {
+          await SecureStore.setItemAsync(
+            'token',
+            JSON.stringify({
+              accessToken: tokenRefreshResponse.data.accessToken,
+              refreshToken: authContext.authState.refreshToken,
+            }),
+          );
+        }else{
+          Cookies.set('token', JSON.stringify({
+            accessToken,
+            refreshToken,
+          }))
+        }
+        
 
         return Promise.resolve();
       })

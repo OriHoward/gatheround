@@ -1,5 +1,7 @@
 import React, { createContext, useState } from 'react'
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
+
 
 
 const AuthContext = createContext(null)
@@ -13,7 +15,10 @@ const AuthProvider = ({ children }) => {
 	})
 
 	const logout = async () => {
-		await SecureStore.deleteItemAsync('token')
+		if (Platform.OS !== 'web') {
+			await SecureStore.deleteItemAsync('token')	
+		}
+		
 		setAuthState({
 			accessToken: null,
 			refreshToken: null,

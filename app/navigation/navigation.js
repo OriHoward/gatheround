@@ -1,9 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { StyleSheet, SafeAreaView, Text } from 'react-native'
+import { Text, Platform} from 'react-native'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import * as SecureStore from 'expo-secure-store';
+import Cookies from 'js-cookie';
+
 
 
 
@@ -18,9 +20,16 @@ const Navigation = () => {
 
 	const loadJWT = useCallback(async () => {
 		try {
+			let jwt
+			if (Platform.OS !== 'web') {
 			const value = await SecureStore.getItemAsync('token') || {}
+			jwt = JSON.parse(value.password)
+			}else{
+				const tokenString = Cookies.get('token')
+				
+				jwt = JSON.parse(tokenString)
+			}
 			
-			const jwt = JSON.parse(value.password)
 			authContext.setAuthState({
 				accessToken: jwt.accessToken || null,
 				refreshToken: jwt.refreshToken || null,
@@ -29,7 +38,7 @@ const Navigation = () => {
 			setStatus('success')
 		} catch (error) {
 			setStatus('error')
-			console.log(`SecureStore Error: ${error.message}`)
+			console.log(`JWT parsing Error: ${error.message}`)
 			authContext.setAuthState({
 				accessToken: null,
 				refreshToken: null,

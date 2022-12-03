@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { View, Image, StyleSheet, useWindowDimensions, ScrollView,   Alert } from 'react-native'
+import { View, Image, StyleSheet, useWindowDimensions, ScrollView, Alert, Platform } from 'react-native'
 import Logo from '../../../../assets/Images/logo-transparent-background.png'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
@@ -7,8 +7,8 @@ import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../../../context/AuthContext'
 import { AxiosContext } from '../../../context/AxiosContext'
-import * as SecureStore from 'expo-secure-store';
-
+import * as SecureStore from 'expo-secure-store'
+import Cookies from 'js-cookie';
 
 const SignInScreen = () => {
 	const [username, setUsername] = useState('')
@@ -32,15 +32,22 @@ const SignInScreen = () => {
 				refreshToken,
 				authenticated: true,
 			})
-			await SecureStore.setItemAsync(
-				'token',
-				JSON.stringify({
+			if (Platform.OS !== 'web') {
+				await SecureStore.setItemAsync(
+					'token',
+					JSON.stringify({
+						accessToken,
+						refreshToken,
+					})
+				)
+			}else{
+				Cookies.set('token', JSON.stringify({
 					accessToken,
 					refreshToken,
-				})
-			)
+				}))
+
+			}
 		} catch (error) {
-      console.error(error)
 			Alert.alert('Login Failed', error)
 		}
 	}
