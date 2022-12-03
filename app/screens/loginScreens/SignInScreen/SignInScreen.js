@@ -1,109 +1,84 @@
-import React, { useState } from "react";
-import {
-  View,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-  ScrollView,
-} from "react-native";
-import Logo from "../../../../assets/Images/logo-transparent-background.png";
-import CustomInput from "../../components/CustomInput";
-import CustomButton from "../../components/CustomButton";
-import SocialSignInButtons from "../../components/SocialSignInButtons";
-import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useState } from 'react'
+import { View, Image, StyleSheet, useWindowDimensions, ScrollView,   Alert } from 'react-native'
+import Logo from '../../../../assets/Images/logo-transparent-background.png'
+import CustomInput from '../../components/CustomInput'
+import CustomButton from '../../components/CustomButton'
+import SocialSignInButtons from '../../components/SocialSignInButtons'
+import { useNavigation } from '@react-navigation/native'
+import { AuthContext } from '../../../context/AuthContext'
+import { AxiosContext } from '../../../context/AxiosContext'
+import * as SecureStore from 'expo-secure-store';
+
 
 const SignInScreen = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+	const authContext = useContext(AuthContext)
+	const { publicAxios } = useContext(AxiosContext)
 
-  const { height } = useWindowDimensions();
-  const navigation = useNavigation();
+	const { height } = useWindowDimensions()
+	const navigation = useNavigation()
 
-  const onSignInPressed = async () => {
-    // validate user
-    if (username.length > 0 && password.length > 0) {
-      const data = {
-        username,
-        password,
-      };
-      try {
-        const resp = await fetch("http://localhost:5000/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+	const onLogin = async () => {
+		try {
+			const response = await publicAxios.post('/login', {
+				username,
+				password,
+			})
 
-        const jsonData = await resp.json();
-        if (jsonData.status === "accepted") {
-          navigation.navigate("Home");
-        } else {
-          navigation.navigate("SignIn");
-          alert("Incorrect password!");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
+			const { access_token: accessToken, refresh_token: refreshToken } = response.data
+			authContext.setAuthState({
+				accessToken,
+				refreshToken,
+				authenticated: true,
+			})
+			await SecureStore.setItemAsync(
+				'token',
+				JSON.stringify({
+					accessToken,
+					refreshToken,
+				})
+			)
+		} catch (error) {
+      console.error(error)
+			Alert.alert('Login Failed', error)
+		}
+	}
 
-  const onForgotPasswordPressed = () => {
-    navigation.navigate("ForgotPassword");
-  };
+	const onForgotPasswordPressed = () => {
+		navigation.navigate('ForgotPassword')
+	}
 
-  const onSignUpPressed = () => {
-    navigation.navigate("SignUp");
-  };
+	const onSignUpPressed = () => {
+		navigation.navigate('SignUp')
+	}
 
-  return (
-    <ScrollView>
-      <View style={styles.root}>
-        <Image
-          source={Logo}
-          style={[styles.logo, { height: height * 0.2 }]}
-          resizeMode="contain"
-        />
-        <CustomInput
-          placeholder="Username"
-          value={username}
-          setValue={setUsername}
-          keyboardType="email-address"
-        />
-        <CustomInput
-          placeholder="Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-        />
-        <CustomButton text="Sign In" onPress={onSignInPressed} />
-        <CustomButton
-          text="Forgot password?"
-          onPress={onForgotPasswordPressed}
-          type="TERTIARY"
-        />
-        <SocialSignInButtons />
-        <CustomButton
-          text="Don't have an account? Sign up"
-          onPress={onSignUpPressed}
-          type="TERTIARY"
-        />
-      </View>
-    </ScrollView>
-  );
-};
+	return (
+		<ScrollView>
+			<View style={styles.root}>
+				<Image source={Logo} style={[styles.logo, { height: height * 0.2 }]} resizeMode="contain" />
+				<CustomInput placeholder="Username" value={username} setValue={setUsername} keyboardType="email-address" />
+				<CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={true} />
+				<CustomButton text="Sign In" onPress={onLogin} />
+				<CustomButton text="Forgot password?" onPress={onForgotPasswordPressed} type="TERTIARY" />
+				<SocialSignInButtons />
+				<CustomButton text="Don't have an account? Sign up" onPress={onSignUpPressed} type="TERTIARY" />
+			</View>
+		</ScrollView>
+	)
+}
 
 const styles = StyleSheet.create({
-  root: {
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "white",
-  },
-  logo: {
-    width: "80%",
-    maxWidth: 600,
-    maxHeight: 450,
-  },
-});
+	root: {
+		alignItems: 'center',
+		padding: 20,
+		backgroundColor: 'white',
+	},
+	logo: {
+		width: '80%',
+		maxWidth: 600,
+		maxHeight: 450,
+	},
+})
 
-export default SignInScreen;
+export default SignInScreen

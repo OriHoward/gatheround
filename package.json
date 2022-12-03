@@ -1,7 +1,7 @@
 {
   "name": "gatheround",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "./index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -13,6 +13,8 @@
     "@react-navigation/bottom-tabs": "^6.4.1",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.1",
+    "axios": "^1.2.0",
+    "axios-auth-refresh": "^3.3.4",
     "expo": "~46.0.16",
     "expo-status-bar": "~1.4.0",
     "expo-updates": "~0.14.7",
@@ -24,7 +26,8 @@
     "react-native-screens": "3.15.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "expo-secure-store": "~11.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
