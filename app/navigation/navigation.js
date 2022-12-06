@@ -58,7 +58,7 @@ const Navigation = () => {
         {authContext?.authState?.authenticated === false ? (
           <Stack.Screen name="Login" component={LoginContainer} />
         ) : (
-          <Stack.Screen name="Home" component={MainContainer} />
+          <Stack.Screen name="Main" component={MainContainer} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
