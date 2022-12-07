@@ -12,7 +12,7 @@ export function isIdentical(passwordInput, repeatPasswordInput) {
   return passwordInput === repeatPasswordInput;
 }
 
-export function isValidUsername(usernameInput) {
-  var validRegex = "^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
-  return usernameInput.match(validRegex) && usernameInput.length > 0;
+export function isValidName(nameInput) {
+  var validRegex = "^[a-z]+$";
+  return nameInput.match(validRegex) && nameInput.length > 0;
 }
