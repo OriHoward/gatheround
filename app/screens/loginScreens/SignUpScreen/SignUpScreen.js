@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -12,32 +12,39 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import SocialSignInButtons from "../../components/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/native";
+import { AxiosContext } from "../../../context/AxiosContext";
+
 import {
   isValidEmail,
   isIdentical,
-  isValidUsername,
   isValidPassword,
+  isValidName,
 } from "../../../utils/input-validation";
 
 const SignUpScreen = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
+  const { publicAxios } = useContext(AxiosContext);
+
   const { height } = useWindowDimensions();
 
   const navigation = useNavigation();
 
   const alertAccordingly = (
-    validUsername,
+    validFirstName,
+    validLastName,
     validEmail,
     validPassword,
     validRepeat
   ) => {
-    if (!validUsername) {
-      alert(
-        "Username can only contain numbers and digits with one ' _ ' in between"
-      );
+    if (!validFirstName) {
+      alert("All first name letters must be lowercase");
+    }
+    if (!validLastName) {
+      alert("All last name letters must be lowercase");
     }
     if (!validEmail) {
       alert("Not a valid email");
@@ -53,37 +60,40 @@ const SignUpScreen = () => {
   };
 
   const onRegisterPressed = async () => {
-    const validUsername = isValidUsername(username);
     const validEmail = isValidEmail(email);
+    const validFirstName = isValidName(firstName);
+    const validLastName = isValidName(lastName);
     const validPassword = isValidPassword(password);
     const validRepeat = isIdentical(password, passwordRepeat);
-    if (validUsername && validEmail && validPassword && validRepeat) {
+    if (
+      validFirstName &&
+      validLastName &&
+      validEmail &&
+      validPassword &&
+      validRepeat
+    ) {
       const data = {
-        username,
-        password,
         email,
+        firstName,
+        lastName,
+        password,
       };
       try {
-        const resp = await fetch("http://localhost:5000/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        const jsonData = await resp.json();
-        console.log(jsonData, "FROM BACKEND");
-        if (jsonData.status === "accepted") {
+        const response = await publicAxios.post("/users", data);
+        if (response.status == 200) {
           navigation.navigate("SignIn");
-        } else {
-          alert("Something went wrong, Please try again later");
         }
       } catch (error) {
         console.error(error);
       }
     } else {
-      alertAccordingly(validUsername, validEmail, validPassword, validRepeat);
+      alertAccordingly(
+        validFirstName,
+        validLastName,
+        validEmail,
+        validPassword,
+        validRepeat
+      );
     }
   };
 
@@ -111,12 +121,21 @@ const SignUpScreen = () => {
         />
         <Text style={styles.title}>Create an account</Text>
         <CustomInput
-          placeholder="Username"
-          value={username}
-          setValue={setUsername}
+          placeholder="Email"
+          value={email}
+          setValue={setEmail}
           keyboardType="email-address"
         />
-        <CustomInput placeholder="Email" value={email} setValue={setEmail} />
+        <CustomInput
+          placeholder="First Name"
+          value={firstName}
+          setValue={setFirstName}
+        />
+        <CustomInput
+          placeholder="Last Name"
+          value={lastName}
+          setValue={setlastName}
+        />
         <CustomInput
           placeholder="Password"
           value={password}
