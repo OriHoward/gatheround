@@ -12,9 +12,9 @@ const EventButton = ({ onPress, isHost }) => {
       </View>
       <View
         style={{
+          alignItems: "center",
           flexDirection: "row",
           justifyContent: "space-between",
-          paddingTop: 3,
         }}
       >
         <Text style={styles.header3}>Insert Event Address</Text>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   header1: { fontSize: 24, fontWeight: "bold" },
-  header2_date: { fontSize: 16, fontWeight: "bold" },
+  header2_date: { fontSize: 16, fontWeight: "bold", padding: 2 },
   header2_time: { fontSize: 16 },
   header3: { fontSize: 16, color: "gray" },
 });
