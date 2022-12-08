@@ -1,10 +1,11 @@
 import { View, Text } from "react-native";
 import React from "react";
+import SectionTitle from "../../components/SectionTitle";
 
 const ProfileScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text style={{ fontSize: 24, alignSelf: "center" }}>ProfileScreen</Text>
+    <View style={{ alignItems: "center" }}>
+      <SectionTitle title={"My Profile"} />
     </View>
   );
 };
