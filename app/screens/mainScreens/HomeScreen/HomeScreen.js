@@ -14,8 +14,8 @@ const HomeScreen = () => {
       <EventButton />
       <EventButton />
       <SectionTitle title={"My Events"} />
-      <EventButton />
-      <EventButton />
+      <EventButton isHost={true} />
+      <EventButton isHost={true} />
       <CustomButton text="Sign Out" onPress={logout} />
     </View>
   );
