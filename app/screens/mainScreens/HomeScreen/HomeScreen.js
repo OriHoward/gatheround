@@ -1,14 +1,21 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useContext } from "react";
 import CustomButton from "../../components/CustomButton";
+import EventButton from "../../components/EventButton";
+import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
 
 const HomeScreen = () => {
   const authContext = useContext(AuthContext);
   const logout = authContext.logout;
   return (
-    <View>
-      <Text style={{ fontSize: 24, alignSelf: "center" }}>Homepage</Text>
+    <View style={{ alignItems: "center" }}>
+      <SectionTitle title={"My Invites"} />
+      <EventButton />
+      <EventButton />
+      <SectionTitle title={"My Events"} />
+      <EventButton />
+      <EventButton />
       <CustomButton text="Sign Out" onPress={logout} />
     </View>
   );
