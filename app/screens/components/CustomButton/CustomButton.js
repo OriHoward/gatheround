@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
   },
 
   container_PRIMARY: {
-    backgroundColor: "#3B71F3",
+    backgroundColor: "#FF7F50",
   },
 
   container_SECONDARY: {
-    borderColor: "#3B71F3",
+    borderColor: "#FF7F50",
     borderWidth: 2,
   },
 
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
 
   text_SECONDARY: {
-    color: "#3B71F3",
+    color: "#FF7F50",
   },
 
   text_TERTIARY: {

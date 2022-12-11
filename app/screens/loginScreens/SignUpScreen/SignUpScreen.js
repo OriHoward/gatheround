@@ -114,11 +114,6 @@ const SignUpScreen = () => {
   return (
     <ScrollView>
       <View style={styles.root}>
-        <Image
-          source={Logo}
-          style={[styles.logo, { height: height * 0.2 }]}
-          resizeMode="contain"
-        />
         <Text style={styles.title}>Create an account</Text>
         <CustomInput
           placeholder="Email"
