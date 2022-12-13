@@ -7,6 +7,7 @@ import {
   ScrollView,
   useWindowDimensions,
 } from "react-native";
+import { RadioButton } from "react-native-paper";
 import Logo from "../../../../assets/Images/logo-transparent-background.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -26,6 +27,7 @@ const SignUpScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [password, setPassword] = useState("");
+  const [checked, setChecked] = React.useState("first");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const { publicAxios } = useContext(AxiosContext);
 
@@ -143,6 +145,24 @@ const SignUpScreen = () => {
           setValue={setPasswordRepeat}
           secureTextEntry={true}
         />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
+            Business
+          </Text>
+          <RadioButton
+            value="first"
+            status={checked === "first" ? "checked" : "unchecked"}
+            onPress={() => setChecked("first")}
+          />
+          <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
+            Host
+          </Text>
+          <RadioButton
+            value="second"
+            status={checked === "second" ? "checked" : "unchecked"}
+            onPress={() => setChecked("second")}
+          />
+        </View>
         <CustomButton text="Register" onPress={onRegisterPressed} />
         <Text style={styles.text}>
           By registering, you confirm that you accept our{" "}
