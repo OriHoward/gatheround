@@ -12,7 +12,12 @@ export function isIdentical(passwordInput, repeatPasswordInput) {
   return passwordInput === repeatPasswordInput;
 }
 
-export function isValidName(nameInput) {
-  var validRegex = "^[a-z]+$";
-  return nameInput.match(validRegex) && nameInput.length > 0;
+export function isValidStr(strInput) {
+  var validRegex = "^[a-zA-Z ]+$";
+  return strInput.match(validRegex) && strInput.length > 0;
+}
+
+export function isValidNumber(number) {
+  var validRegex = /^\+?\d{10,13}$/;
+  return number.match(validRegex) && number.length > 0;
 }
