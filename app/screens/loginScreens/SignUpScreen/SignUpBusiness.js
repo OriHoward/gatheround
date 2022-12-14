@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
@@ -9,12 +8,13 @@ import { RadioButton } from "react-native-paper";
 
 import { isValidStr, isValidNumber } from "../../../utils/input-validation";
 
-const SignUpScreenBusiness = () => {
+const SignUpScreenBusiness = ({ route }) => {
   const [profession, setProffesion] = useState("");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
   const [visible, setVisible] = React.useState("first");
+  const { userId } = route.params;
   const { publicAxios } = useContext(AxiosContext);
 
   const navigation = useNavigation();
@@ -46,6 +46,7 @@ const SignUpScreenBusiness = () => {
     const validPhoneNumber = isValidNumber(phoneNumber);
     if (validProfession && validCountry && validCity && validPhoneNumber) {
       const data = {
+        userId,
         profession,
         country,
         city,
