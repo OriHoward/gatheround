@@ -2,13 +2,10 @@ import React, { useContext, useState } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   ScrollView,
-  useWindowDimensions,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
-import Logo from "../../../../assets/Images/logo-transparent-background.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import SocialSignInButtons from "../../components/SocialSignInButtons";
@@ -19,7 +16,7 @@ import {
   isValidEmail,
   isIdentical,
   isValidPassword,
-  isValidName,
+  isValidStr,
 } from "../../../utils/input-validation";
 
 const SignUpScreen = () => {
@@ -31,7 +28,6 @@ const SignUpScreen = () => {
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const { publicAxios } = useContext(AxiosContext);
 
-  const { height } = useWindowDimensions();
 
   const navigation = useNavigation();
 
@@ -43,10 +39,10 @@ const SignUpScreen = () => {
     validRepeat
   ) => {
     if (!validFirstName) {
-      alert("All first name letters must be lowercase");
+      alert("Only letter are allowed");
     }
     if (!validLastName) {
-      alert("All last name letters must be lowercase");
+      alert("Only letter are allowed");
     }
     if (!validEmail) {
       alert("Not a valid email");
@@ -63,8 +59,8 @@ const SignUpScreen = () => {
 
   const onRegisterPressed = async () => {
     const validEmail = isValidEmail(email);
-    const validFirstName = isValidName(firstName);
-    const validLastName = isValidName(lastName);
+    const validFirstName = isValidStr(firstName);
+    const validLastName = isValidStr(lastName);
     const validPassword = isValidPassword(password);
     const validRepeat = isIdentical(password, passwordRepeat);
     if (
@@ -83,7 +79,12 @@ const SignUpScreen = () => {
       try {
         const response = await publicAxios.post("/users", data);
         if (response.status == 200) {
-          navigation.navigate("SignIn");
+          if (checked == "first") {
+            navigation.navigate("SignUpBusiness")
+          }
+          else{
+            navigation.navigate("SignIn"); 
+          }
         }
       } catch (error) {
         console.error(error);
