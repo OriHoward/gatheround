@@ -1,8 +1,11 @@
 import { StyleSheet, View, Text } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SectionTitle from "../../components/SectionTitle";
+import { AuthContext } from "../../../context/AuthContext";
+import { AxiosContext } from "../../../context/AxiosContext";
+import { useNavigation } from "@react-navigation/core";
 
 const EventScreen = () => {
   const [name, setName] = useState("");
@@ -10,6 +13,10 @@ const EventScreen = () => {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState("");
+
+  const authContext = useContext(AuthContext);
+  const { publicAxios } = useContext(AxiosContext);
+  const navigation = useNavigation();
 
   const getFormattedDate = () => {
     //  backend format: %d/%m/%Y
@@ -19,8 +26,30 @@ const EventScreen = () => {
     }/${eventDate.getFullYear()}`;
   };
 
-  const onCreateNewEventPressed = () => {
-    alert("New event created");
+  const onCreateNewEventPressed = async () => {
+    const eventData = {
+      name,
+      eventDate: getFormattedDate(),
+      address,
+      description,
+    };
+    try {
+      const eventResponse = await publicAxios.post("/events", eventData);
+      if (eventResponse.status === 200) {
+        const eventId = eventResponse.data.id;
+        const hostData = {
+          eventId,
+          hostId: 1,
+        };
+        const hostResponse = await publicAxios.post("/hosts", hostData);
+        if (hostResponse.status === 200) {
+          console.log("Event: Success!");
+          navigation.navigate("Home");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -35,7 +64,7 @@ const EventScreen = () => {
       />
       <CustomInput
         placeholder="Select Date and Time"
-        value={setEventDate}
+        value={eventDate}
         setValue={setEventDate}
         type="event"
         inputType="event"
