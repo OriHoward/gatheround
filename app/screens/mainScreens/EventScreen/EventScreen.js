@@ -11,9 +11,18 @@ const EventScreen = () => {
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState("");
 
+  const getFormattedDate = () => {
+    //  backend format: %d/%m/%Y
+    // +1 because Month starts from 0
+    return `${eventDate.getDay()}/${
+      eventDate.getMonth() + 1
+    }/${eventDate.getFullYear()}`;
+  };
+
   const onCreateNewEventPressed = () => {
     alert("New event created");
   };
+
   return (
     <View style={styles.root}>
       <SectionTitle title={"Create New Event"} />
@@ -26,7 +35,7 @@ const EventScreen = () => {
       />
       <CustomInput
         placeholder="Select Date and Time"
-        value={eventDate}
+        value={setEventDate}
         setValue={setEventDate}
         type="event"
         inputType="event"
