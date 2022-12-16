@@ -2,23 +2,25 @@ import { StyleSheet, View, Text } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import React, { useState } from "react";
+import SectionTitle from "../../components/SectionTitle";
 
 const EventScreen = () => {
-  const [eventName, setEventName] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [eventAddress, setEventAddress] = useState("");
+  const [name, setName] = useState("");
+  const [eventDate, setEventDate] = useState(new Date());
+  const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState("");
 
-  const createNewEventOnPress = () => {
+  const onCreateNewEventPressed = () => {
     alert("New event created");
   };
   return (
     <View style={styles.root}>
+      <SectionTitle title={"Create New Event"} />
       <CustomInput
         placeholder="Event Name"
-        value={eventName}
-        setValue={setEventName}
+        value={name}
+        setValue={setName}
         type="event"
         inputType="event"
       />
@@ -31,8 +33,8 @@ const EventScreen = () => {
       />
       <CustomInput
         placeholder="Address"
-        value={eventAddress}
-        setValue={setEventAddress}
+        value={address}
+        setValue={setAddress}
         type="event"
         inputType="event"
       />
@@ -43,7 +45,7 @@ const EventScreen = () => {
         type="event"
         inputType="event"
       />
-      <CustomButton text="Create New Event" onPress={createNewEventOnPress} />
+      <CustomButton text="Create Event" onPress={onCreateNewEventPressed} />
     </View>
   );
 };
