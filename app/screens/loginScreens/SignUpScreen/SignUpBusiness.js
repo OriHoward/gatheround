@@ -13,9 +13,10 @@ const SignUpScreenBusiness = ({ route }) => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
-  const [visible, setVisible] = React.useState("first");
+  const [checked, setChecked] = React.useState("first");
   const { userId } = route.params;
   const { publicAxios } = useContext(AxiosContext);
+  var visible = 0;
 
   const navigation = useNavigation();
 
@@ -51,8 +52,12 @@ const SignUpScreenBusiness = ({ route }) => {
         country,
         city,
         phoneNumber,
+        visible,
       };
       try {
+        if (checked === "first") {
+          visible = 1;
+        }
         const respone = await publicAxios.post("/business", data);
         if (respone.status == 200) {
           navigation.navigate("SignIn");
@@ -96,16 +101,16 @@ const SignUpScreenBusiness = ({ route }) => {
           </Text>
           <RadioButton
             value="first"
-            status={visible === "first" ? "checked" : "unchecked"}
-            onPress={() => setVisible("first")}
+            status={checked === "first" ? "checked" : "unchecked"}
+            onPress={() => setChecked("first")}
           />
           <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
             Hide profile
           </Text>
           <RadioButton
             value="second"
-            status={visible === "second" ? "checked" : "unchecked"}
-            onPress={() => setVisible("second")}
+            status={checked === "second" ? "checked" : "unchecked"}
+            onPress={() => setChecked("second")}
           />
         </View>
         <CustomButton text="Create Profile" onPress={onCreateProfilePressed} />
