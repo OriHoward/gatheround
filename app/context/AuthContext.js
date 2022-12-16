@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
     authenticated: null,
   });
 
+  // TODO: this ID is hardcoded (need to make it dynamic)
   const [userInfo, setUserInfo] = useState({
     id: 1,
   });

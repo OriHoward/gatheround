@@ -35,6 +35,8 @@ const EventScreen = () => {
     };
     try {
       const eventResponse = await publicAxios.post("/events", eventData);
+      // TODO: how to get userId
+      // const userResponse = await publicAxios.get("/users", authContext.authState);
       if (eventResponse.status === 200) {
         const hostData = {
           eventId: eventResponse.data.eventId,
