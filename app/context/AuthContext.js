@@ -13,6 +13,10 @@ const AuthProvider = ({ children }) => {
     authenticated: null,
   });
 
+  const [userInfo, setUserInfo] = useState({
+    id: 1,
+  });
+
   const logout = async () => {
     if (Platform.OS !== "web") {
       await SecureStore.deleteItemAsync("token");
@@ -24,6 +28,10 @@ const AuthProvider = ({ children }) => {
       accessToken: null,
       refreshToken: null,
       authenticated: false,
+    });
+
+    setUserInfo({
+      id: null,
     });
   };
 
@@ -38,6 +46,8 @@ const AuthProvider = ({ children }) => {
         getAccessToken,
         setAuthState,
         logout,
+        userInfo,
+        setUserInfo,
       }}
     >
       {children}

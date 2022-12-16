@@ -33,12 +33,18 @@ const SignInScreen = () => {
         password,
       });
 
-      const { access_token: accessToken, refresh_token: refreshToken } =
-        response.data;
+      const {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        id: id,
+      } = response.data;
       authContext.setAuthState({
         accessToken,
         refreshToken,
         authenticated: true,
+      });
+      authContext.setUserInfo({
+        id,
       });
       if (Platform.OS !== "web") {
         await SecureStore.setItemAsync(

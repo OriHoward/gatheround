@@ -1,10 +1,10 @@
 import { StyleSheet, View, Text } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import SectionTitle from "../../components/SectionTitle";
-import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
+import { AuthContext } from "../../../context/AuthContext";
 import { useNavigation } from "@react-navigation/core";
 
 const EventScreen = () => {
@@ -16,7 +16,7 @@ const EventScreen = () => {
 
   const authContext = useContext(AuthContext);
   const { publicAxios } = useContext(AxiosContext);
-  const navigation = useNavigation();
+  const navigate = useNavigation();
 
   const getFormattedDate = () => {
     //  backend format: %d/%m/%Y
@@ -36,10 +36,9 @@ const EventScreen = () => {
     try {
       const eventResponse = await publicAxios.post("/events", eventData);
       if (eventResponse.status === 200) {
-        const eventId = eventResponse.data.id;
         const hostData = {
-          eventId,
-          hostId: 1,
+          eventId: eventResponse.data.eventId,
+          userId: authContext.userInfo.id,
         };
         const hostResponse = await publicAxios.post("/hosts", hostData);
         if (hostResponse.status === 200) {

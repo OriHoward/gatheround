@@ -8,6 +8,7 @@ import { AuthContext } from "../../../context/AuthContext";
 const HomeScreen = () => {
   const authContext = useContext(AuthContext);
   const logout = authContext.logout;
+  console.log(authContext.userInfo)
   return (
     <View style={{ alignItems: "center" }}>
       <SectionTitle title={"My Invites"} />
