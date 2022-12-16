@@ -78,8 +78,8 @@ const SignUpScreen = () => {
       };
       try {
         const response = await publicAxios.post("/users", data);
-        if (response.status == 200) {
-          if (checked == "first") {
+        if (response.status === 200) {
+          if (checked === "first") {
             const userId = response.data.id
             navigation.navigate("SignUpBusiness",{userId})
           }
