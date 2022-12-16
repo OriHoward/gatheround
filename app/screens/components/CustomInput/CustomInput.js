@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 
 const CustomInput = ({
   value,
@@ -7,14 +7,16 @@ const CustomInput = ({
   placeholder,
   secureTextEntry = false,
   keyboardType = "default",
+  type = "primary",
+  inputType = "regular",
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles[`container_${type}`]}>
       <TextInput
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
-        style={styles.input}
+        style={styles[`input_${inputType}`]}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
       />
@@ -23,7 +25,7 @@ const CustomInput = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container_primary: {
     backgroundColor: "white",
     width: "100%",
     maxWidth: 500,
@@ -33,8 +35,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginVertical: 10,
   },
-  input: {
+  container_event: {
+    width: "100%",
+    maxWidth: 500,
+    borderColor: "#e8e8e8",
+    borderWidth: 1,
+    borderRadius: 15,
+    paddingHorizontal: 8,
+    marginVertical: 10,
+  },
+
+  input_regular: {
     padding: 8,
+  },
+  input_event: {
+    backgroundColor: "#dddddd",
+    borderRadius: 15,
+    padding: 15,
+    height: 65,
   },
 });
 export default CustomInput;
