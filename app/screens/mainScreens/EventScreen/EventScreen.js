@@ -35,7 +35,7 @@ const EventScreen = () => {
       />
       <CustomInput
         placeholder="Select Date and Time"
-        value={setEventDate}
+        value={eventDate}
         setValue={setEventDate}
         type="event"
         inputType="event"
