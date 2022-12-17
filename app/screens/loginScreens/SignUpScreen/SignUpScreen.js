@@ -19,7 +19,7 @@ const SignUpScreen = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [password, setPassword] = useState("");
-  const [checked, setChecked] = React.useState("first");
+  const [isBusiness, setIsBusiness] = useState(false);
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const { publicAxios } = useContext(AxiosContext);
 
@@ -71,15 +71,17 @@ const SignUpScreen = () => {
         password,
       };
       try {
-        const response = await publicAxios.post("/users", data);
-        if (response.status === 200) {
-          if (checked === "second") {
-            const userId = response.data.id;
-            navigation.navigate("SignUpBusiness", { userId });
-          } else {
-            navigation.navigate("SignIn");
+        if (isBusiness) {
+          navigation.navigate('SignUpBusiness', {...data, isBusiness})
+        } else {
+          try {
+            const response = await publicAxios.post('/users', data)
+            navigation.navigate('SignIn')
+          } catch (error) {
+            console.error(error)
           }
         }
+        
       } catch (error) {
         console.error(error);
       }
@@ -146,16 +148,16 @@ const SignUpScreen = () => {
           </Text>
           <RadioButton
             value="first"
-            status={checked === "first" ? "checked" : "unchecked"}
-            onPress={() => setChecked("first")}
+            status={!isBusiness ? "checked" : "unchecked"}
+            onPress={() => setIsBusiness(false)}
           />
           <Text style={{ fontSize: 16, color: "gray", marginTop: 8 }}>
             Business
           </Text>
           <RadioButton
             value="second"
-            status={checked === "second" ? "checked" : "unchecked"}
-            onPress={() => setChecked("second")}
+            status={isBusiness ? "checked" : "unchecked"}
+            onPress={() => setIsBusiness(true)}
           />
         </View>
         <CustomButton text="Register" onPress={onRegisterPressed} />
