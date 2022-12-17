@@ -12,10 +12,15 @@ const SearchScreen = () => {
 	const onChangeSearch = (query) => setSearchQuery(query)
 
 	const onSearchClick = async () => {
-		const resp = await authAxios.get(`/business-search?profession=${searchQuery}`)
-		const { data } = resp
-		const { results } = data
-		setDataDataToDisplay(results)
+		try {
+      const resp = await authAxios.get(`/business-search?profession=${searchQuery}`)
+      		const { data } = resp
+      		const { results } = data
+      		setDataDataToDisplay(results)
+    } catch (error) {
+      console.error(error)
+      setDataDataToDisplay([])
+    }
 	}
 	return (
 		<View>
