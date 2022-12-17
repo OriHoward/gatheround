@@ -96,7 +96,7 @@ const SignUpScreenBusiness = ({ route }) => {
           setValue={setphoneNumber}
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
+          <Text style={{ fontSize: 16, color: "gray", marginTop: 8 }}>
             Show profile
           </Text>
           <RadioButton
@@ -104,7 +104,7 @@ const SignUpScreenBusiness = ({ route }) => {
             status={checked === "first" ? "checked" : "unchecked"}
             onPress={() => setChecked("first")}
           />
-          <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
+          <Text style={{ fontSize: 16, color: "gray", marginTop: 8 }}>
             Hide profile
           </Text>
           <RadioButton
