@@ -15,7 +15,7 @@ const SignUpScreenBusiness = ({ route }) => {
   const [phoneNumber, setphoneNumber] = useState("");
   const [checked, setChecked] = React.useState("first");
   const { publicAxios } = useContext(AxiosContext);
-  var visible = 0;
+  let visible = 0;
 
   const navigation = useNavigation();
 
