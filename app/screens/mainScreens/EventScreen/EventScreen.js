@@ -16,8 +16,8 @@ const EventScreen = () => {
   const [limitAttending, setLimitAttending] = useState("");
 
   const authContext = useContext(AuthContext);
-  const { publicAxios } = useContext(AxiosContext);
-  const navigate = useNavigation();
+  const { authAxios } = useContext(AxiosContext);
+  const navigation = useNavigation();
 
   const getFormattedDate = () => {
     //  backend format: %d/%m/%Y
@@ -39,19 +39,9 @@ const EventScreen = () => {
       description,
     };
     try {
-      const eventResponse = await publicAxios.post("/events", eventData);
-      // TODO: how to get userId
-      // const userResponse = await publicAxios.get("/users", authContext.authState);
+      const eventResponse = await authAxios.post("/events", eventData);
       if (eventResponse.status === 200) {
-        const hostData = {
-          eventId: eventResponse.data.eventId,
-          userId: 1,
-        };
-        const hostResponse = await publicAxios.post("/hosts", hostData);
-        if (hostResponse.status === 200) {
-          console.log("Event: Success!");
-          navigation.navigate("Home");
-        }
+        navigation.navigate("Home");
       }
     } catch (error) {
       console.error(error);
