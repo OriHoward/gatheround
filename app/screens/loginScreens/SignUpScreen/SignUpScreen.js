@@ -141,7 +141,7 @@ const SignUpScreen = () => {
           secureTextEntry={true}
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
+          <Text style={{ fontSize: 16, color: "gray", marginTop: 8 }}>
             Host
           </Text>
           <RadioButton
@@ -149,7 +149,7 @@ const SignUpScreen = () => {
             status={checked === "first" ? "checked" : "unchecked"}
             onPress={() => setChecked("first")}
           />
-          <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
+          <Text style={{ fontSize: 16, color: "gray", marginTop: 8 }}>
             Business
           </Text>
           <RadioButton
