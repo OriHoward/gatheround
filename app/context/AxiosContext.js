@@ -41,7 +41,7 @@ const AxiosProvider = ({ children }) => {
     const options = {
       method: "POST",
       data,
-      url: "http://localhost:5000refresh",
+      url: "http://localhost:5000/refresh",
     };
 
     return axios(options)

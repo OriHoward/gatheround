@@ -6,16 +6,15 @@ import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
 import { getValue } from "../../../utils/user-utils";
 
-
 const HomeScreen = () => {
   const authContext = useContext(AuthContext);
   const logout = authContext.logout;
   const [isLoading, setLoading] = useState(true);
 
   if (isLoading) {
-    getValue("isBusiness").then((isBusiness) => {
+    getValue("isBusiness").then((value) => {
       authContext.setUserInfo({
-        isBusiness,
+        isBusiness: value === "true",
       });
       setLoading(false);
     });
@@ -25,7 +24,8 @@ const HomeScreen = () => {
       </View>
     );
   } else {
-    const isHost = authContext.userInfo.isBusiness === true ? true : false;
+    console.log("HOMESCREEN", authContext.userInfo.isBusiness);
+    const isHost = authContext.userInfo.isBusiness === true ? false : true;
     return (
       <View style={{ alignItems: "center" }}>
         <SectionTitle title={"My Invites"} />

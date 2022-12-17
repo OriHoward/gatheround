@@ -39,6 +39,7 @@ const SignInScreen = () => {
         refresh_token: refreshToken,
         is_business: isBusiness,
       } = response.data;
+
       authContext.setAuthState({
         accessToken,
         refreshToken,

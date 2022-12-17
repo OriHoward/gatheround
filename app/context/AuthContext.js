@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
     } else {
       Cookies.remove("token");
     }
+    deleteValue("isBusiness");
 
     setAuthState({
       accessToken: null,
