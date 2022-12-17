@@ -14,7 +14,6 @@ const SignUpScreenBusiness = ({ route }) => {
   const [city, setCity] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
   const [checked, setChecked] = React.useState("first");
-  const { userId } = route.params;
   const { publicAxios } = useContext(AxiosContext);
   var visible = 0;
 
@@ -47,18 +46,18 @@ const SignUpScreenBusiness = ({ route }) => {
     const validPhoneNumber = isValidNumber(phoneNumber);
     if (validProfession && validCountry && validCity && validPhoneNumber) {
       const data = {
-        userId,
         profession,
         country,
         city,
         phoneNumber,
         visible,
+        ...route.params //these are the parameters I passed form the previous page
       };
       try {
         if (checked === "first") {
           visible = 1;
         }
-        const respone = await publicAxios.post("/business", data);
+        const respone = await publicAxios.post("/users", data);
         if (respone.status == 200) {
           navigation.navigate("SignIn");
         }
