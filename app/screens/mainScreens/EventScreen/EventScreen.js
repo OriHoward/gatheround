@@ -58,13 +58,6 @@ const EventScreen = () => {
         type="event"
         inputType="event"
       />
-      <CustomInput
-        placeholder="Select Date and Time"
-        value={eventDate}
-        setValue={setEventDate}
-        type="event"
-        inputType="event"
-      />
       <View style={styles.container}>
         <DatePickerInput
           value={eventDate}
