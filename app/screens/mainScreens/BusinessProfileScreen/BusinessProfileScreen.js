@@ -8,7 +8,10 @@ import { AxiosContext } from "../../../context/AxiosContext";
 const ProfileScreen = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [businessValues, setBusinessValues] = useState({
+  const [businessProfile, setBusinessProfile] = useState({
+    email: null,
+    firstName: null,
+    lastName: null,
     profession: null,
     country: null,
     city: null,
@@ -23,8 +26,19 @@ const ProfileScreen = ({ navigation }) => {
 
   if (isLoading) {
     getBusinessInfo().then((data) => {
-      const { id, profession, country, city, phoneNumber } = data;
-      setBusinessValues({ profession, country, city, phoneNumber });
+      const { userRecord, businessRecord } = data;
+      const { id: userId, email, first_name: firstName, last_name : lastName, join_date : joinDate } = userRecord;
+      const { id, profession, country, city, phone_number: phoneNumber } = businessRecord;
+
+      setBusinessProfile({
+        email,
+        firstName,
+        lastName,
+        profession,
+        country,
+        city,
+        phoneNumber,
+      });
       setLoading(false);
     });
 
@@ -37,17 +51,19 @@ const ProfileScreen = ({ navigation }) => {
     return (
       <View style={styles.root}>
         <SectionTitle title={"My Profile"} />
-        <Text style={styles.name}>My Name</Text>
-        <Text style={styles.profession}>{businessValues.profession}</Text>
+        <Text style={styles.name}>{businessProfile.firstName} {businessProfile.lastName}</Text>
+        <Text style={styles.profession}>{businessProfile.profession}</Text>
         <Ionicons name={"location"}>
           <Text style={{ fontSize: 15 }}>
-            {businessValues.country}, {businessValues.city}
+            {businessProfile.country}, {businessProfile.city}
           </Text>
         </Ionicons>
         <View style={styles.line}></View>
         <Text style={styles.contact_info}> Contact Info</Text>
-        <Text style={styles.contact_details}>{businessValues.phoneNumber}</Text>
-        <Text style={styles.contact_details}>Email</Text>
+        <Text style={styles.contact_details}>
+          {businessProfile.phoneNumber}
+        </Text>
+        <Text style={styles.contact_details}>{businessProfile.email}</Text>
         <Text style={styles.contact_details}>Website Link</Text>
         <View style={styles.line}></View>
 
