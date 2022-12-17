@@ -12,12 +12,14 @@ import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen";
 import SearchScreen from "./SearchScreen";
 import EventScreen from "./EventScreen";
+import BusinessProfileScreen from "./BusinessProfileScreen";
 
 // Screen names
 const homeName = "Home";
 const profileName = "Profile";
 const searchName = "Search";
 const eventName = "Create New Event";
+const businessProfileName = "My Profile";
 
 const Tab = createBottomTabNavigator();
 // https://reactnavigation.org/docs/tab-based-navigation/
@@ -40,17 +42,16 @@ const MainContainer = () => {
       </View>
     );
   } else if (!isLoading && authContext.userInfo.isBusiness) {
-    console.log(authContext.userInfo.isBusiness, isLoading);
     return (
       <Tab.Navigator
-        initialRootName={homeName}
+        initialRootName={businessProfileName}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let rn = route.name;
             if (rn === homeName) {
               iconName = focused ? "home" : "home-outline";
-            } else if (rn === profileName) {
+            } else if (rn === businessProfileName) {
               iconName = focused ? "person" : "person-outline";
             }
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -62,8 +63,11 @@ const MainContainer = () => {
           style: { padding: 10, height: 70 },
         })}
       >
+        <Tab.Screen
+          name={businessProfileName}
+          component={BusinessProfileScreen}
+        />
         <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={profileName} component={ProfileScreen} />
       </Tab.Navigator>
     );
   } else if (!isLoading && !authContext.userInfo.isBusiness) {
