@@ -3,7 +3,7 @@ import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const EventButton = ({ onPress, isHost, data = {} }) => {
-  // todo: how to add default values
+  // todo: how to add default values + key error
   const { id, name, event_date, address, description, limit_attending } = data;
   return (
     <TouchableOpacity key={id} style={styles.container} onPress={onPress}>

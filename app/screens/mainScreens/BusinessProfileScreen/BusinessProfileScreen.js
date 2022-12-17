@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState, useContext } from "react";
 import SectionTitle from "../../components/SectionTitle";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -39,18 +39,26 @@ const ProfileScreen = ({ navigation }) => {
         <SectionTitle title={"My Profile"} />
         <Text style={styles.name}>My Name</Text>
         <Text style={styles.profession}>{businessValues.profession}</Text>
-        <Ionicons name={"location"}>
-          <Text style={{ fontSize: 15 }}>
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Ionicons name="location" size={20} color="black" />
+          <Text style={styles.location}>
             {businessValues.country}, {businessValues.city}
           </Text>
-        </Ionicons>
+        </View>
         <View style={styles.line}></View>
-        <Text style={styles.contact_info}> Contact Info</Text>
-        <Text style={styles.contact_details}>{businessValues.phoneNumber}</Text>
+        <SectionTitle title={"Contact Info"} />
+        <Text style={styles.contact_details_bold}>
+          {businessValues.phoneNumber}
+        </Text>
         <Text style={styles.contact_details}>Email</Text>
         <Text style={styles.contact_details}>Website Link</Text>
         <View style={styles.line}></View>
-
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={styles.switch_style}>Show profile</Text>
           <RadioButton
@@ -65,9 +73,21 @@ const ProfileScreen = ({ navigation }) => {
             onPress={() => setIsVisible(false)}
           />
         </View>
-        <Ionicons name="create-sharp" size={16}>
-          <Text style={{ marginRight: 12, padding: 10 }}> Edit Profile</Text>
-        </Ionicons>
+        <TouchableOpacity
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            backgroundColor: "#dddddd",
+            borderWidth: 7,
+            borderColor: "#dddddd",
+            borderRadius: 15,
+            marginVertical: 3,
+          }}
+        >
+          <Ionicons name="create-sharp" size={16} />
+          <Text style={{ marginRight: 2, padding: 4 }}>Edit Profile</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -80,46 +100,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   line: {
-    borderBottomWidth: 3,
+    borderBottomWidth: 1,
     borderBottomColor: "black",
     borderBottomStyle: "solid",
-    padding: 15,
+    padding: 7,
     width: "100%",
     maxWidth: 350,
   },
-  name: {
-    marginTop: 30,
-    fontSize: 28,
-    padding: 8,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  profession: {
-    fontSize: 20,
-    padding: 8,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  location: {
-    fontSize: 12,
-    color: "#333",
-  },
-  contact_info: {
-    fontSize: 28,
-    padding: 8,
-    marginTop: 20,
-    color: "#C5C5C5",
-  },
-  contact_details: {
-    fontSize: 20,
-    padding: 8,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  switch_style: {
-    fontSize: 16,
-    color: "gray",
-    marginTop: 8,
-  },
+  name: { fontSize: 24, fontWeight: "bold" },
+  profession: { fontSize: 16, fontWeight: "bold", padding: 2 },
+  location: { fontSize: 16 },
+  contact_details_bold: { fontSize: 16, fontWeight: "bold", padding: 2 },
+  contact_details: { fontSize: 16, padding: 2 },
+  switch_style: { fontSize: 14, color: "gray", marginTop: 8 },
 });
 export default ProfileScreen;
