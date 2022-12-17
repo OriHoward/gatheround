@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 import Cookies from "js-cookie";
+import { deleteValue } from "../utils/user-utils";
 
 const AuthContext = createContext(null);
 const { Provider } = AuthContext;
@@ -13,16 +14,15 @@ const AuthProvider = ({ children }) => {
     authenticated: null,
   });
 
-  // TODO: this ID is hardcoded (need to make it dynamic)
   const [userInfo, setUserInfo] = useState({
-    id: 1,
+    isBusiness: null,
   });
 
   const logout = async () => {
     if (Platform.OS !== "web") {
       await SecureStore.deleteItemAsync("token");
     } else {
-      await Cookies.remove("token");
+      Cookies.remove("token");
     }
 
     setAuthState({
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
     });
 
     setUserInfo({
-      id: null,
+      isBusiness: null,
     });
   };
 

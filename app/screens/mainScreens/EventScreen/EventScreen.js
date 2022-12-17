@@ -45,7 +45,7 @@ const EventScreen = () => {
       if (eventResponse.status === 200) {
         const hostData = {
           eventId: eventResponse.data.eventId,
-          userId: authContext.userInfo.id,
+          userId: 1,
         };
         const hostResponse = await publicAxios.post("/hosts", hostData);
         if (hostResponse.status === 200) {

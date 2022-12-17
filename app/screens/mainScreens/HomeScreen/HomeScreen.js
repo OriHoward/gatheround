@@ -1,25 +1,43 @@
-import { View } from "react-native";
-import React, { useContext } from "react";
+import { View, Text, Platform } from "react-native";
+import React, { useContext, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import EventButton from "../../components/EventButton";
 import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
+import { getValue } from "../../../utils/user-utils";
+
 
 const HomeScreen = () => {
   const authContext = useContext(AuthContext);
   const logout = authContext.logout;
-  console.log(authContext.userInfo)
-  return (
-    <View style={{ alignItems: "center" }}>
-      <SectionTitle title={"My Invites"} />
-      <EventButton />
-      <EventButton />
-      <SectionTitle title={"My Events"} />
-      <EventButton isHost={true} />
-      <EventButton isHost={true} />
-      <CustomButton text="Sign Out" onPress={logout} />
-    </View>
-  );
+  const [isLoading, setLoading] = useState(true);
+
+  if (isLoading) {
+    getValue("isBusiness").then((isBusiness) => {
+      authContext.setUserInfo({
+        isBusiness,
+      });
+      setLoading(false);
+    });
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  } else {
+    const isHost = authContext.userInfo.isBusiness === true ? true : false;
+    return (
+      <View style={{ alignItems: "center" }}>
+        <SectionTitle title={"My Invites"} />
+        <EventButton />
+        <EventButton />
+        {isHost && <SectionTitle title={"My Events"} />}
+        <EventButton isHost={isHost} />
+        <EventButton isHost={isHost} />
+        <CustomButton text="Sign Out" onPress={logout} />
+      </View>
+    );
+  }
 };
 
 export default HomeScreen;
