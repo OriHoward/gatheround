@@ -40,7 +40,9 @@ const ProfileScreen = ({ navigation }) => {
         <Text style={styles.name}>My Name</Text>
         <Text style={styles.profession}>{businessValues.profession}</Text>
         <Ionicons name={"location"}>
-          <Text>{businessValues.country}</Text>
+          <Text style={{ fontSize: 15 }}>
+            {businessValues.country}, {businessValues.city}
+          </Text>
         </Ionicons>
         <View style={styles.line}></View>
         <Text style={styles.contact_info}> Contact Info</Text>
@@ -87,13 +89,13 @@ const styles = StyleSheet.create({
   },
   name: {
     marginTop: 30,
-    fontSize: 25,
+    fontSize: 28,
     padding: 8,
     fontWeight: "bold",
     color: "#333",
   },
   profession: {
-    fontSize: 15,
+    fontSize: 20,
     padding: 8,
     fontWeight: "bold",
     color: "#333",
