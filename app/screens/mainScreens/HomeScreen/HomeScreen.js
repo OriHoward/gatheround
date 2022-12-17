@@ -24,7 +24,6 @@ const HomeScreen = () => {
       </View>
     );
   } else {
-    console.log("HOMESCREEN", authContext.userInfo.isBusiness);
     const isHost = authContext.userInfo.isBusiness === true ? false : true;
     return (
       <View style={{ alignItems: "center" }}>
