@@ -51,8 +51,8 @@ const ProfileScreen = ({ navigation }) => {
     return (
       <View style={styles.root}>
         <SectionTitle title={"My Profile"} />
-        <Text style={styles.name}>{businessValues.firstName} {businessValues.lastName}</Text>
-        <Text style={styles.profession}>{businessValues.profession}</Text>
+        <Text style={styles.name}>{businessProfile.firstName} {businessProfile.lastName}</Text>
+        <Text style={styles.profession}>{businessProfile.profession}</Text>
         <View
           style={{
             alignItems: "center",
@@ -62,7 +62,7 @@ const ProfileScreen = ({ navigation }) => {
         >
           <Ionicons name="location" size={20} color="black" />
           <Text style={styles.location}>
-            {businessValues.country}, {businessValues.city}
+            {businessProfile.country}, {businessProfile.city}
           </Text>
         </View>
         <View style={styles.line}></View>
