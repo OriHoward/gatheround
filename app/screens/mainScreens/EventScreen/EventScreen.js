@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import React, { useState, useContext } from "react";
@@ -6,6 +6,7 @@ import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigation } from "@react-navigation/core";
+import { DatePickerInput } from "react-native-paper-dates";
 
 const EventScreen = () => {
   const [name, setName] = useState("");
@@ -24,6 +25,10 @@ const EventScreen = () => {
     return `${eventDate.getDay()}/${
       eventDate.getMonth() + 1
     }/${eventDate.getFullYear()}`;
+  };
+
+  const onDateChange = (date) => {
+    setEventDate(date);
   };
 
   const onCreateNewEventPressed = async () => {
@@ -70,6 +75,18 @@ const EventScreen = () => {
         type="event"
         inputType="event"
       />
+      <View style={styles.container}>
+        <DatePickerInput
+          value={eventDate}
+          onChange={onDateChange}
+          label={"Event Date"}
+          date
+          withDateFormatInLabel={false}
+          activeUnderlineColor="#FF7F50"
+          backgroundColor="#dddddd"
+          validRange={{ startDate: new Date() }}
+        />
+      </View>
       <CustomInput
         placeholder="Address"
         value={address}
@@ -94,5 +111,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
+  container: {
+    backgroundColor: "#dddddd",
+    width: "100%",
+    maxWidth: 500,
+    padding: 15,
+    marginVertical: 7,
+    borderRadius: 15,
+  },
+  header1: { fontSize: 24, fontWeight: "bold" },
+  header2_date: { fontSize: 16, fontWeight: "bold", padding: 2 },
+  header2_time: { fontSize: 16 },
+  header3: { fontSize: 16, color: "gray" },
 });
 export default EventScreen;
