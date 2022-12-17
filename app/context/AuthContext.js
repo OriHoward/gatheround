@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 import Cookies from "js-cookie";
+import { deleteValue } from "../utils/user-utils";
 
 const AuthContext = createContext(null);
 const { Provider } = AuthContext;
@@ -13,17 +14,25 @@ const AuthProvider = ({ children }) => {
     authenticated: null,
   });
 
+  const [userInfo, setUserInfo] = useState({
+    isBusiness: null,
+  });
+
   const logout = async () => {
     if (Platform.OS !== "web") {
       await SecureStore.deleteItemAsync("token");
     } else {
-      await Cookies.remove("token");
+      Cookies.remove("token");
     }
 
     setAuthState({
       accessToken: null,
       refreshToken: null,
       authenticated: false,
+    });
+
+    setUserInfo({
+      isBusiness: null,
     });
   };
 
@@ -38,6 +47,8 @@ const AuthProvider = ({ children }) => {
         getAccessToken,
         setAuthState,
         logout,
+        userInfo,
+        setUserInfo,
       }}
     >
       {children}

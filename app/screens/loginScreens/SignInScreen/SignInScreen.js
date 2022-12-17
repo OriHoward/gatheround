@@ -16,6 +16,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
 import * as SecureStore from "expo-secure-store";
 import Cookies from "js-cookie";
+import { setValue } from "../../../utils/user-utils";
 
 const SignInScreen = () => {
   const [email, setEmail] = useState("");
@@ -33,12 +34,18 @@ const SignInScreen = () => {
         password,
       });
 
-      const { access_token: accessToken, refresh_token: refreshToken } =
-        response.data;
+      const {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        is_business: isBusiness,
+      } = response.data;
       authContext.setAuthState({
         accessToken,
         refreshToken,
         authenticated: true,
+      });
+      authContext.setUserInfo({
+        isBusiness,
       });
       if (Platform.OS !== "web") {
         await SecureStore.setItemAsync(
@@ -57,6 +64,7 @@ const SignInScreen = () => {
           })
         );
       }
+      setValue("isBusiness", isBusiness);
     } catch (error) {
       alert("Login Failed, please check your password", error);
     }
