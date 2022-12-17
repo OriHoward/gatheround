@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const EventButton = ({ onPress, isHost }) => {
+const EventButton = ({ onPress, isHost, data }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.header1}>Insert Event Name</Text>
