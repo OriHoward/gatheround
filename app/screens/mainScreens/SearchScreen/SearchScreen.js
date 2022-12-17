@@ -13,14 +13,14 @@ const SearchScreen = () => {
 
 	const onSearchClick = async () => {
 		try {
-      const resp = await authAxios.get(`/business-search?profession=${searchQuery}`)
-      		const { data } = resp
-      		const { results } = data
-      		setDataDataToDisplay(results)
-    } catch (error) {
-      console.error(error)
-      setDataDataToDisplay([])
-    }
+			const resp = await authAxios.get(`/business-search?profession=${searchQuery}`)
+			const { data } = resp
+			const { results = [] } = data
+			setDataDataToDisplay(results)
+		} catch (error) {
+			console.error(error)
+			setDataDataToDisplay([])
+		}
 	}
 	return (
 		<View>
