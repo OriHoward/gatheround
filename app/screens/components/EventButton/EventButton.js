@@ -2,12 +2,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const EventButton = ({ onPress, isHost, data }) => {
+const EventButton = ({ onPress, isHost, data = {} }) => {
+  // todo: how to add default values
+  const { id, name, event_date, address, description, limit_attending } = data;
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text style={styles.header1}>Insert Event Name</Text>
+    <TouchableOpacity key={id} style={styles.container} onPress={onPress}>
+      <Text style={styles.header1}>{name}</Text>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={styles.header2_date}>Insert Event Date</Text>
+        <Text style={styles.header2_date}>{event_date}</Text>
         <Text style={styles.header2_time}>Insert Event Time</Text>
       </View>
       <View
@@ -17,7 +19,7 @@ const EventButton = ({ onPress, isHost, data }) => {
           justifyContent: "space-between",
         }}
       >
-        <Text style={styles.header3}>Insert Event Address</Text>
+        <Text style={styles.header3}>{address}</Text>
         {isHost === true ? (
           <View style={{ flexDirection: "row" }}>
             <Text
