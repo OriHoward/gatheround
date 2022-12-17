@@ -1,10 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { RadioButton } from "react-native-paper";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -27,7 +22,6 @@ const SignUpScreen = () => {
   const [checked, setChecked] = React.useState("first");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const { publicAxios } = useContext(AxiosContext);
-
 
   const navigation = useNavigation();
 
@@ -79,12 +73,11 @@ const SignUpScreen = () => {
       try {
         const response = await publicAxios.post("/users", data);
         if (response.status === 200) {
-          if (checked === "first") {
-            const userId = response.data.id
-            navigation.navigate("SignUpBusiness",{userId})
-          }
-          else{
-            navigation.navigate("SignIn"); 
+          if (checked === "second") {
+            const userId = response.data.id;
+            navigation.navigate("SignUpBusiness", { userId });
+          } else {
+            navigation.navigate("SignIn");
           }
         }
       } catch (error) {
@@ -149,7 +142,7 @@ const SignUpScreen = () => {
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
-            Business
+            Host
           </Text>
           <RadioButton
             value="first"
@@ -157,7 +150,7 @@ const SignUpScreen = () => {
             onPress={() => setChecked("first")}
           />
           <Text style={{ fontSize: 16, color: "gray", marginTop: 5 }}>
-            Host
+            Business
           </Text>
           <RadioButton
             value="second"
