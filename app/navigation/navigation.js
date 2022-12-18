@@ -1,11 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text, Platform } from "react-native";
+import {View ,Text, Platform } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import * as SecureStore from "expo-secure-store";
 import Cookies from "js-cookie";
-
+import { getValue } from '../utils/user-utils';
 import LoginContainer from "../screens/loginScreens/LoginContainer";
 import MainContainer from "../screens/mainScreens/MainContainer";
 
@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   const authContext = useContext(AuthContext);
-  const [status, setStatus] = useState("loading");
+  const [isLoading, setLoading] = useState(true);
 
   const loadJWT = useCallback(async () => {
     try {
@@ -25,21 +25,29 @@ const Navigation = () => {
         const tokenString = Cookies.get("token") || {};
         jwt = JSON.parse(tokenString);
       }
-
+      const value = await getValue("isBusiness")
+      authContext.setUserInfo({
+        isBusiness: value === "true",
+      });
+      
       authContext.setAuthState({
         accessToken: jwt.accessToken || null,
         refreshToken: jwt.refreshToken || null,
         authenticated: jwt.accessToken !== null,
       });
-      setStatus("success");
+      setLoading(false);
     } catch (error) {
-      setStatus("error");
       console.log(`JWT parsing Error: ${error.message}`);
       authContext.setAuthState({
         accessToken: null,
         refreshToken: null,
         authenticated: false,
       });
+      authContext.setUserInfo({
+        isBusiness:null
+      })
+      console.log("Couldn't identify if business")
+      setLoading(false);
     }
   }, []);
 
@@ -47,8 +55,12 @@ const Navigation = () => {
     loadJWT();
   }, [loadJWT]);
 
-  if (status === "loading") {
-    return <Text>Create an account</Text>;
+  if (isLoading) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   return (
