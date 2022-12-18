@@ -1,4 +1,4 @@
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, SectionList } from "react-native";
 import React, { useContext, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import EventButton from "../../components/EventButton";
@@ -11,19 +11,26 @@ const HomeScreen = () => {
   const { authAxios } = useContext(AxiosContext);
   const logout = authContext.logout;
   const [isLoading, setLoading] = useState(true);
-  const [myEvents, setMyEvents] = useState([]);
+  const [myEvents, setMyEvents] = useState([{}]);
 
   const getMyEvents = async () => {
-    // console.log(authContext.getAccessToken())
     try {
-      const response = await authAxios.get("/events");
+      const response = await authAxios.get("/events?host-limit=2");
       const { data } = response;
       const { my_events = [] } = data;
-      console.log(response.data);
-      setMyEvents(my_events);
+      setMyEvents([
+        {
+          title: "My Invites",
+          data: [],
+        },
+        {
+          title: "My Events",
+          data: my_events,
+        },
+      ]);
     } catch (error) {
       console.error(error);
-      setMyEvents([]);
+      // setMyEvents([]);
     }
   };
   if (isLoading) {
@@ -37,14 +44,36 @@ const HomeScreen = () => {
     );
   } else {
     return (
-      <View style={{ alignItems: "center" }}>
-        <SectionTitle title={"My Invites"} />
-        <EventButton />
-        <EventButton />
-        <SectionTitle title={"My Events"} />
-        {myEvents.map((entry) => {
-          return <EventButton data={entry} isHost={true} />;
-        })}
+      <View
+        style={{
+          alignContent: "center",
+        }}
+      >
+        <SectionList
+          sections={myEvents}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item }) => {
+            const {
+              id,
+              name,
+              event_date,
+              address,
+              description,
+              limit_attending,
+            } = item;
+            return (
+              <EventButton
+                isHost={true}
+                name={name}
+                event_date={event_date}
+                address={address}
+              />
+            );
+          }}
+          renderSectionHeader={({ section: { title } }) => (
+            <SectionTitle title={title} />
+          )}
+        />
         <CustomButton text="Sign Out" onPress={logout} />
       </View>
     );

@@ -5,6 +5,7 @@ const SectionTitle = ({ title }) => {
   return (
     <View
       style={{
+        alignSelf: "center",
         alignItems: "center",
         flexDirection: "row",
         maxWidth: 500,
