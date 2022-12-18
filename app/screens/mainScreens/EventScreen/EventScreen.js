@@ -9,7 +9,6 @@ import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 const EventScreen = () => {
   const [name, setName] = useState("");
   const [eventDate, setEventDate] = useState(new Date());
-  const [eventTime, setEventTime] = useState({});
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState("");
@@ -18,13 +17,14 @@ const EventScreen = () => {
   const { authAxios } = useContext(AxiosContext);
   const navigation = useNavigation();
 
-  const getFormattedTime = (time) => {
-    const { hours, minutes } = time;
-    if (!hours || !minutes) {
-      return "";
-    }
-    return `${hours}:${minutes}`;
+  const getFormattedTime = () => {
+    const hours = eventDate.getHours();
+    const minutes = eventDate.getMinutes();
+    return `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`;
   };
+
   const getFormattedDate = () => {
     //  backend format: %d/%m/%Y
     // +1 because Month starts from 0
@@ -34,11 +34,12 @@ const EventScreen = () => {
   };
 
   const onCreateNewEventPressed = async () => {
-    const fdate = getFormattedDate();
-    console.log(fdate);
+    // backend format: %d/%m/%Y :%H:%M
+    const fdatetime = `${getFormattedDate()} ${getFormattedTime()}`;
+    console.log(fdatetime);
     const eventData = {
       name,
-      eventDate: fdate,
+      eventDate: fdatetime,
       address,
       description,
     };
@@ -79,10 +80,8 @@ const EventScreen = () => {
         visible={isTimePickerVisible}
         onDismiss={() => setTimePickerVisible(false)}
         onConfirm={({ hours, minutes }) => {
-          setEventTime({
-            hours,
-            minutes,
-          });
+          eventDate.setHours(hours);
+          eventDate.setMinutes(minutes);
           setTimePickerVisible(false);
         }}
         label="Select time"
@@ -90,7 +89,7 @@ const EventScreen = () => {
       />
       <TextInput
         placeholder="Event Time"
-        value={getFormattedTime(eventTime)}
+        value={getFormattedTime()}
         style={styles.input}
         activeUnderlineColor={peachColor}
         right={
