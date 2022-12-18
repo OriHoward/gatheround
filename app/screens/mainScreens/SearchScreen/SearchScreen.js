@@ -1,7 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
 import React, { useContext, useState } from "react";
 import { Searchbar, Button } from "react-native-paper";
-import CustomButton from "../../components/CustomButton";
 import { AxiosContext } from "../../../context/AxiosContext";
 
 const SearchScreen = () => {
