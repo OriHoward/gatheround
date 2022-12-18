@@ -48,7 +48,6 @@ const Navigation = () => {
   }, [loadJWT]);
 
   if (status === "loading") {
-    console.log("HERE !!!");
     return <Text>Create an account</Text>;
   }
 

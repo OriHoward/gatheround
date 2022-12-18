@@ -14,6 +14,7 @@ import SearchScreen from "./SearchScreen";
 import EventScreen from "./EventScreen";
 import BusinessProfileScreen from "./BusinessProfileScreen";
 import BusinessHomeScreen from "./BusinessHomeScreen";
+import { useNavigation } from "@react-navigation/native";
 
 // Screen names
 const homeName = "Home";
@@ -29,7 +30,7 @@ const Tab = createBottomTabNavigator();
 const MainContainer = () => {
   const authContext = useContext(AuthContext);
   const [isLoading, setLoading] = useState(true);
-  console.log(authContext.userInfo.isBusiness);
+  const navigation = useNavigation();
 
   if (isLoading) {
     getValue("isBusiness").then((value) => {
@@ -37,6 +38,10 @@ const MainContainer = () => {
         isBusiness: value === "true",
       });
       setLoading(false);
+    }).catch((e)=>{
+      console.log("Couldn't identify if business, redirect to login")
+      setLoading(false);
+      navigation.navigate("Login")
     });
     return (
       <View>
