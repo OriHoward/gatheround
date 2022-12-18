@@ -1,40 +1,44 @@
 import { StyleSheet, View } from "react-native";
-import CustomInput from "../../components/CustomInput";
-import CustomButton from "../../components/CustomButton";
 import React, { useState, useContext } from "react";
+import { Button, Text, TextInput } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
-import { AuthContext } from "../../../context/AuthContext";
 import { useNavigation } from "@react-navigation/core";
-import { DatePickerInput } from "react-native-paper-dates";
+import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 
 const EventScreen = () => {
   const [name, setName] = useState("");
   const [eventDate, setEventDate] = useState(new Date());
+  const [eventTime, setEventTime] = useState({});
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState("");
+  const [isTimePickerVisible, setTimePickerVisible] = useState(false);
 
-  const authContext = useContext(AuthContext);
   const { authAxios } = useContext(AxiosContext);
   const navigation = useNavigation();
 
+  const getFormattedTime = (time) => {
+    const { hours, minutes } = time;
+    if (!hours || !minutes) {
+      return "";
+    }
+    return `${hours}:${minutes}`;
+  };
   const getFormattedDate = () => {
     //  backend format: %d/%m/%Y
     // +1 because Month starts from 0
-    return `${eventDate.getDay()}/${
+    return `${eventDate.getUTCDate()}/${
       eventDate.getMonth() + 1
     }/${eventDate.getFullYear()}`;
   };
 
-  const onDateChange = (date) => {
-    setEventDate(date);
-  };
-
   const onCreateNewEventPressed = async () => {
+    const fdate = getFormattedDate();
+    console.log(fdate);
     const eventData = {
       name,
-      eventDate: getFormattedDate(),
+      eventDate: fdate,
       address,
       description,
     };
@@ -47,44 +51,79 @@ const EventScreen = () => {
       console.error(error);
     }
   };
-
+  const peachColor = "#FF7F50";
   return (
     <View style={styles.root}>
       <SectionTitle title={"Create New Event"} />
-      <CustomInput
-        placeholder="Event Name"
+      <TextInput
+        label="Event Name"
         value={name}
-        setValue={setName}
-        type="event"
-        inputType="event"
+        activeUnderlineColor={peachColor}
+        onChangeText={(text) => setName(text)}
+        style={styles.input}
       />
-      <View style={styles.container}>
-        <DatePickerInput
-          value={eventDate}
-          onChange={onDateChange}
-          label={"Event Date"}
-          date
-          withDateFormatInLabel={false}
-          activeUnderlineColor="#FF7F50"
-          backgroundColor="#dddddd"
-          validRange={{ startDate: new Date() }}
-        />
-      </View>
-      <CustomInput
-        placeholder="Address"
+      <DatePickerInput
+        value={eventDate}
+        onChange={(date) => {
+          console.log(getFormattedDate());
+          setEventDate(date);
+        }}
+        label={"Event Date"}
+        withDateFormatInLabel={false}
+        activeUnderlineColor={peachColor}
+        backgroundColor="#dddddd"
+        validRange={{ startDate: new Date() }}
+        style={styles.input}
+      />
+      <TimePickerModal
+        visible={isTimePickerVisible}
+        onDismiss={() => setTimePickerVisible(false)}
+        onConfirm={({ hours, minutes }) => {
+          setEventTime({
+            hours,
+            minutes,
+          });
+          setTimePickerVisible(false);
+        }}
+        label="Select time"
+        uppercase={false}
+      />
+      <TextInput
+        placeholder="Event Time"
+        value={getFormattedTime(eventTime)}
+        style={styles.input}
+        activeUnderlineColor={peachColor}
+        right={
+          <TextInput.Icon
+            icon="clock"
+            onPress={() => setTimePickerVisible(true)}
+          />
+        }
+      />
+      <TextInput
+        label="Address"
         value={address}
-        setValue={setAddress}
-        type="event"
-        inputType="event"
+        activeUnderlineColor={peachColor}
+        onChangeText={(text) => setAddress(text)}
+        style={styles.input}
       />
-      <CustomInput
-        placeholder="Invitation Description (Optional)"
+      <TextInput
+        label="Invitation Description (Optional)"
         value={description}
-        setValue={setDescription}
-        type="event"
-        inputType="event"
+        activeUnderlineColor={peachColor}
+        onChangeText={(text) => setDescription(text)}
+        style={styles.input}
       />
-      <CustomButton text="Create Event" onPress={onCreateNewEventPressed} />
+      <Button
+        uppercase={false}
+        color={peachColor}
+        mode="contained"
+        onPress={onCreateNewEventPressed}
+        style={styles.button}
+        labelStyle={{ fontWeight: "bold" }}
+      >
+        Create Event
+      </Button>
     </View>
   );
 };
@@ -93,18 +132,15 @@ const styles = StyleSheet.create({
   root: {
     alignItems: "center",
     padding: 20,
+    flexDirection: "column",
   },
-  container: {
-    backgroundColor: "#dddddd",
-    width: "100%",
-    maxWidth: 500,
-    padding: 15,
-    marginVertical: 7,
+  button: {
+    padding: 3,
+    marginVertical: 5,
     borderRadius: 15,
   },
-  header1: { fontSize: 24, fontWeight: "bold" },
-  header2_date: { fontSize: 16, fontWeight: "bold", padding: 2 },
-  header2_time: { fontSize: 16 },
-  header3: { fontSize: 16, color: "gray" },
+  input: {
+    minWidth: 300,
+  },
 });
 export default EventScreen;
