@@ -32,6 +32,14 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+  const putUserInfo = async () => {
+    try {
+      const response = await authAxios.put("/users", userInfo);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (isLoading) {
     getUserInfo().then(() => setLoading(false));
     return (
@@ -94,7 +102,7 @@ const ProfileScreen = ({ navigation }) => {
             icon="content-save-edit"
             uppercase={false}
             color="black"
-            onPress={() => setIsDisabled(true)}
+            onPress={() => putUserInfo().then(setIsDisabled(true))}
           >
             Save
           </Button>
