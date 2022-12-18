@@ -4,7 +4,10 @@ import { Button, Text, TextInput } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useNavigation } from "@react-navigation/core";
-import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
+import {
+  DatePickerInput,
+  TimePickerModal,
+} from "react-native-paper-dates";
 
 const EventScreen = () => {
   const [name, setName] = useState("");
@@ -34,7 +37,7 @@ const EventScreen = () => {
   };
 
   const onCreateNewEventPressed = async () => {
-    // backend format: %d/%m/%Y :%H:%M
+    // backend format: %d/%m/%Y %H:%M
     const fdatetime = `${getFormattedDate()} ${getFormattedTime()}`;
     console.log(fdatetime);
     const eventData = {
@@ -65,10 +68,7 @@ const EventScreen = () => {
       />
       <DatePickerInput
         value={eventDate}
-        onChange={(date) => {
-          console.log(getFormattedDate());
-          setEventDate(date);
-        }}
+        onChange={(date) => setEventDate(date)}
         label={"Event Date"}
         withDateFormatInLabel={false}
         activeUnderlineColor={peachColor}
@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
   root: {
     alignItems: "center",
     padding: 20,
-    flexDirection: "column",
   },
   button: {
     padding: 3,
@@ -140,6 +139,7 @@ const styles = StyleSheet.create({
   },
   input: {
     minWidth: 300,
+    maxHeight: 70,
   },
 });
 export default EventScreen;
