@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useState, useContext } from "react";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { Button, TextInput } from "react-native-paper";
@@ -50,7 +50,7 @@ const ProfileScreen = ({ navigation }) => {
   } else {
     const peachColor = "#FF7F50";
     return (
-      <View style={{ alignItems: "center" }}>
+      <View style={styles.root}>
         <SectionTitle title={"My Profile"} />
         <TextInput
           label="First Name"
@@ -63,6 +63,7 @@ const ProfileScreen = ({ navigation }) => {
               firstName: text,
             })
           }
+          style={styles.input}
         />
         <TextInput
           label="Last Name"
@@ -75,6 +76,7 @@ const ProfileScreen = ({ navigation }) => {
               lastName: text,
             })
           }
+          style={styles.input}
         />
         <TextInput
           label="Email"
@@ -87,6 +89,7 @@ const ProfileScreen = ({ navigation }) => {
               email: text,
             })
           }
+          style={styles.input}
         />
         {isDisabled ? (
           <Button
@@ -112,4 +115,14 @@ const ProfileScreen = ({ navigation }) => {
   }
 };
 
+const styles = StyleSheet.create({
+  root: {
+    alignItems: "center",
+    paddingTop: 30,
+  },
+  input: {
+    minWidth: 300,
+    maxHeight: 70,
+  },
+});
 export default ProfileScreen;
