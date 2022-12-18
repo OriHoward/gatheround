@@ -36,6 +36,8 @@ const HomeScreen = () => {
   if (isLoading) {
     getMyEvents().then(() => {
       setLoading(false);
+    }).catch((e)=>{
+      console.error(e)
     });
     return (
       <View>

@@ -26,6 +26,7 @@ const Navigation = () => {
         jwt = JSON.parse(tokenString);
       }
       const value = await getValue("isBusiness")
+      console.log("got value", value)
       authContext.setUserInfo({
         isBusiness: value === "true",
       });
@@ -37,7 +38,7 @@ const Navigation = () => {
       });
       setLoading(false);
     } catch (error) {
-      console.log(`JWT parsing Error: ${error.message}`);
+      console.log(`JWT parsing Error: ${error}`);
       authContext.setAuthState({
         accessToken: null,
         refreshToken: null,
