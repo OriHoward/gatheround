@@ -34,11 +34,11 @@ const HomeScreen = () => {
     }
   };
   if (isLoading) {
-    getMyEvents().then(() => {
-      setLoading(false);
-    }).catch((e)=>{
-      console.error(e)
-    });
+    getMyEvents()
+      .then(() => setLoading(false))
+      .catch((e) => {
+        console.error(e);
+      });
     return (
       <View>
         <Text>Loading...</Text>
@@ -49,6 +49,7 @@ const HomeScreen = () => {
       <View
         style={{
           alignContent: "center",
+          padding: 30,
         }}
       >
         <SectionList
