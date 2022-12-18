@@ -14,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -29,6 +27,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "entryPoint":"index.js"
+    "entryPoint": "index.js",
+    "jsEngine": "hermes"
   }
 }
