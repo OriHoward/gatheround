@@ -3,10 +3,14 @@ import Cookies from "js-cookie";
 import { Platform } from "react-native";
 
 export async function setValue(key, value) {
-  if (Platform.OS !== "web") {
-    await SecureStore.setItemAsync(key, value);
-  } else {
-    Cookies.set(key, value);
+  try {
+    if (Platform.OS !== "web") {
+      await SecureStore.setItemAsync(key, value);
+    } else {
+      Cookies.set(key, value);
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 
