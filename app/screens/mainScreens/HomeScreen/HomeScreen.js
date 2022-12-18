@@ -15,7 +15,7 @@ const HomeScreen = () => {
 
   const getMyEvents = async () => {
     try {
-      const response = await authAxios.get("/events");
+      const response = await authAxios.get("/events?host-limit=2");
       const { data } = response;
       const { my_events = [] } = data;
       setMyEvents([
