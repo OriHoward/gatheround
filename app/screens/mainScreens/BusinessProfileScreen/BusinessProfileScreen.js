@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { RadioButton } from "react-native-paper";
 import { AxiosContext } from "../../../context/AxiosContext";
 
-const ProfileScreen = () => {
+const BusinessProfileScreen = ({ navigation }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const { authAxios } = useContext(AxiosContext);
@@ -164,4 +164,4 @@ const styles = StyleSheet.create({
     marginVertical: 3,
   },
 });
-export default ProfileScreen;
+export default BusinessProfileScreen;
