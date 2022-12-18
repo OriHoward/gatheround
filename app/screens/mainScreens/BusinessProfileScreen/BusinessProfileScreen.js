@@ -8,6 +8,7 @@ import { AxiosContext } from "../../../context/AxiosContext";
 const ProfileScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const { authAxios } = useContext(AxiosContext);
   const [businessProfile, setBusinessProfile] = useState({
     email: null,
     firstName: null,
@@ -18,33 +19,29 @@ const ProfileScreen = () => {
     phoneNumber: null,
     visible: null,
   });
-  const { authAxios } = useContext(AxiosContext);
 
   const getBusinessInfo = async () => {
     const response = await authAxios.get("/business");
     return response.data;
   };
 
-
   const showProfile = async () => {
     try {
-      const visible = 1
-      await authAxios.put("/business",{visible})
-    }
-    catch(error) {
+      const visible = 1;
+      await authAxios.put("/business", { visible });
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const hideProfile = async () => {
     try {
-      const visible = 0
-      await authAxios.put("/business",{visible})
-    }
-    catch(error) {
+      const visible = 0;
+      await authAxios.put("/business", { visible });
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   if (isLoading) {
     getBusinessInfo().then((data) => {
@@ -65,7 +62,7 @@ const ProfileScreen = () => {
           phone_number: phoneNumber,
           visible,
         } = businessRecord;
-        
+
         setBusinessProfile({
           email,
           firstName,
@@ -75,7 +72,7 @@ const ProfileScreen = () => {
           city,
           phoneNumber,
         });
-        setIsVisible(Boolean(visible))
+        setIsVisible(Boolean(visible));
         setLoading(false);
       }
     });
@@ -127,18 +124,7 @@ const ProfileScreen = () => {
             onPress={() => hideProfile().then(setIsVisible(false))}
           />
         </View>
-        <TouchableOpacity
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            backgroundColor: "#dddddd",
-            borderWidth: 7,
-            borderColor: "#dddddd",
-            borderRadius: 15,
-            marginVertical: 3,
-          }}
-        >
+        <TouchableOpacity style={styles.edit_style}>
           <Ionicons name="create-sharp" size={16} />
           <Text style={{ marginRight: 2, padding: 4 }}>Edit Profile</Text>
         </TouchableOpacity>
@@ -167,5 +153,15 @@ const styles = StyleSheet.create({
   contact_details_bold: { fontSize: 16, fontWeight: "bold", padding: 2 },
   contact_details: { fontSize: 16, padding: 2 },
   switch_style: { fontSize: 14, color: "gray", marginTop: 8 },
+  edit_style: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#dddddd",
+    borderWidth: 7,
+    borderColor: "#dddddd",
+    borderRadius: 15,
+    marginVertical: 3,
+  },
 });
 export default ProfileScreen;
