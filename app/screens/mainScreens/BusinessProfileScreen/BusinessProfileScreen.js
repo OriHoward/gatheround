@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { RadioButton } from "react-native-paper";
 import { AxiosContext } from "../../../context/AxiosContext";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [businessProfile, setBusinessProfile] = useState({
@@ -16,6 +16,7 @@ const ProfileScreen = ({ navigation }) => {
     country: null,
     city: null,
     phoneNumber: null,
+    visible: null,
   });
   const { authAxios } = useContext(AxiosContext);
 
@@ -23,6 +24,27 @@ const ProfileScreen = ({ navigation }) => {
     const response = await authAxios.get("/business");
     return response.data;
   };
+
+
+  const showProfile = async () => {
+    try {
+      const visible = 1
+      await authAxios.put("/business",{visible})
+    }
+    catch(error) {
+      console.error(error);
+    }
+  }
+
+  const hideProfile = async () => {
+    try {
+      const visible = 0
+      await authAxios.put("/business",{visible})
+    }
+    catch(error) {
+      console.error(error);
+    }
+  }
 
   if (isLoading) {
     getBusinessInfo().then((data) => {
@@ -41,8 +63,9 @@ const ProfileScreen = ({ navigation }) => {
           country,
           city,
           phone_number: phoneNumber,
+          visible,
         } = businessRecord;
-
+        
         setBusinessProfile({
           email,
           firstName,
@@ -52,6 +75,7 @@ const ProfileScreen = ({ navigation }) => {
           city,
           phoneNumber,
         });
+        setIsVisible(Boolean(visible))
         setLoading(false);
       }
     });
@@ -94,13 +118,13 @@ const ProfileScreen = ({ navigation }) => {
           <RadioButton
             value="first"
             status={isVisible ? "checked" : "unchecked"}
-            onPress={() => setIsVisible(true)}
+            onPress={() => showProfile().then(setIsVisible(true))}
           />
           <Text style={styles.switch_style}>Hide profile</Text>
           <RadioButton
             value="second"
             status={!isVisible ? "checked" : "unchecked"}
-            onPress={() => setIsVisible(false)}
+            onPress={() => hideProfile().then(setIsVisible(false))}
           />
         </View>
         <TouchableOpacity
