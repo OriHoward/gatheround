@@ -61,11 +61,13 @@ const HomeScreen = () => {
               description,
               limit_attending,
             } = item;
+            const [date, time] = event_date.split(" ");
             return (
               <EventButton
                 isHost={true}
                 name={name}
-                event_date={event_date}
+                event_date={date}
+                event_time={time}
                 address={address}
               />
             );
