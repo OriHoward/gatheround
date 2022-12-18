@@ -37,21 +37,25 @@ const AxiosProvider = ({ children }) => {
     const data = {
       refreshToken: authContext.authState.refreshToken,
     };
-
     const options = {
       method: "POST",
       data,
       url: "http://localhost:5000/refresh",
+      headers:{
+        Authorization:`Bearer ${authContext.authState.refreshToken}`
+      }
     };
 
     return axios(options)
       .then(async (tokenRefreshResponse) => {
+        const { data } = tokenRefreshResponse
+        const {access_token: accessToken} = data
         failedRequest.response.config.headers.Authorization =
-          "Bearer " + tokenRefreshResponse.data.accessToken;
-
+          "Bearer " + accessToken;
+        
         authContext.setAuthState({
           ...authContext.authState,
-          accessToken: tokenRefreshResponse.data.accessToken,
+          accessToken: accessToken,
         });
 
         if (Platform.OS !== "web") {
@@ -82,7 +86,7 @@ const AxiosProvider = ({ children }) => {
       });
   };
 
-  createAuthRefreshInterceptor(authAxios, refreshAuthLogic, {});
+  createAuthRefreshInterceptor(authAxios, refreshAuthLogic);
 
   return (
     <Provider
