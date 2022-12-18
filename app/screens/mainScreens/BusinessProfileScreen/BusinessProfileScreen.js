@@ -26,20 +26,34 @@ const ProfileScreen = ({ navigation }) => {
 
   if (isLoading) {
     getBusinessInfo().then((data) => {
-      const { userRecord, businessRecord } = data;
-      const { id: userId, email, first_name: firstName, last_name : lastName, join_date : joinDate } = userRecord;
-      const { id, profession, country, city, phone_number: phoneNumber } = businessRecord;
+      if (data && data.userRecord && data.businessRecord) {
+        const { userRecord, businessRecord } = data;
+        const {
+          id: userId,
+          email,
+          first_name: firstName,
+          last_name: lastName,
+          join_date: joinDate,
+        } = userRecord;
+        const {
+          id,
+          profession,
+          country,
+          city,
+          phone_number: phoneNumber,
+        } = businessRecord;
 
-      setBusinessProfile({
-        email,
-        firstName,
-        lastName,
-        profession,
-        country,
-        city,
-        phoneNumber,
-      });
-      setLoading(false);
+        setBusinessProfile({
+          email,
+          firstName,
+          lastName,
+          profession,
+          country,
+          city,
+          phoneNumber,
+        });
+        setLoading(false);
+      }
     });
 
     return (
@@ -51,7 +65,9 @@ const ProfileScreen = ({ navigation }) => {
     return (
       <View style={styles.root}>
         <SectionTitle title={"My Profile"} />
-        <Text style={styles.name}>{businessProfile.firstName} {businessProfile.lastName}</Text>
+        <Text style={styles.name}>
+          {businessProfile.firstName} {businessProfile.lastName}
+        </Text>
         <Text style={styles.profession}>{businessProfile.profession}</Text>
         <View
           style={{
@@ -68,9 +84,7 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.line}></View>
         <SectionTitle title={"Contact Info"} />
         <Text style={styles.contact_details_bold}>
-          
           {businessProfile.phoneNumber}
-        
         </Text>
         <Text style={styles.contact_details}>{businessProfile.email}</Text>
         <Text style={styles.contact_details}>Website Link</Text>
