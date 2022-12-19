@@ -9,6 +9,7 @@ import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 const EventScreen = () => {
   const [name, setName] = useState("");
   const [eventDate, setEventDate] = useState(new Date());
+  const [eventTime, setEventTime] = useState(new Date());
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState(""); // We will use this state in the future
@@ -18,8 +19,8 @@ const EventScreen = () => {
   const navigation = useNavigation();
 
   const getFormattedTime = () => {
-    const hours = eventDate.getHours();
-    const minutes = eventDate.getMinutes();
+    const hours = eventTime.getHours();
+    const minutes = eventTime.getMinutes();
     return `${hours < 10 ? `0${hours}` : hours}:${
       minutes < 10 ? `0${minutes}` : minutes
     }`;
@@ -80,8 +81,8 @@ const EventScreen = () => {
         visible={isTimePickerVisible}
         onDismiss={() => setTimePickerVisible(false)}
         onConfirm={({ hours, minutes }) => {
-          eventDate.setHours(hours);
-          eventDate.setMinutes(minutes);
+          eventTime.setHours(hours);
+          eventTime.setMinutes(minutes);
           setTimePickerVisible(false);
         }}
         label="Select time"
