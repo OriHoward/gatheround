@@ -25,13 +25,16 @@ const AxiosProvider = ({ children }) => {
       if (!config.headers.Authorization) {
         config.headers.Authorization = `Bearer ${authContext.getAccessToken()}`;
       }
-
       return config;
     },
     (error) => {
       return Promise.reject(error);
     }
   );
+
+  /*
+    This function refreshes the access token if expired and the refresh token is valid.
+  */
 
   const refreshAuthLogic = (failedRequest) => {
     const data = {
@@ -41,18 +44,18 @@ const AxiosProvider = ({ children }) => {
       method: "POST",
       data,
       url: "http://localhost:5000/refresh",
-      headers:{
-        Authorization:`Bearer ${authContext.authState.refreshToken}`
-      }
+      headers: {
+        Authorization: `Bearer ${authContext.authState.refreshToken}`,
+      },
     };
 
     return axios(options)
       .then(async (tokenRefreshResponse) => {
-        const { data } = tokenRefreshResponse
-        const {access_token: accessToken} = data
+        const { data } = tokenRefreshResponse;
+        const { access_token: accessToken } = data;
         failedRequest.response.config.headers.Authorization =
           "Bearer " + accessToken;
-        
+
         authContext.setAuthState({
           ...authContext.authState,
           accessToken: accessToken,
@@ -62,8 +65,8 @@ const AxiosProvider = ({ children }) => {
           await SecureStore.setItemAsync(
             "token",
             JSON.stringify({
-              accessToken: tokenRefreshResponse.data.accessToken,
-              refreshToken: authContext.authState.refreshToken,
+              accessToken,
+              refreshToken,
             })
           );
         } else {
@@ -83,6 +86,10 @@ const AxiosProvider = ({ children }) => {
           accessToken: null,
           refreshToken: null,
         });
+        authContext
+          .logout()
+          .then()
+          .catch((e) => console.error(e));
       });
   };
 
