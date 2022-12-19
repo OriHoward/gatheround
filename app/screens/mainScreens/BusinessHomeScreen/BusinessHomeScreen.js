@@ -1,5 +1,5 @@
-import { View, Text, Platform } from "react-native";
-import React, { useContext, useState } from "react";
+import { View } from "react-native";
+import React, { useContext } from "react";
 import CustomButton from "../../components/CustomButton";
 import EventButton from "../../components/EventButton";
 import SectionTitle from "../../components/SectionTitle";
@@ -8,15 +8,13 @@ import { AxiosContext } from "../../../context/AxiosContext";
 
 const BusinessHomeScreen = () => {
   const authContext = useContext(AuthContext);
+  // We will use this in the future for new requests
   const { authAxios } = useContext(AxiosContext);
   const logout = authContext.logout;
 
   return (
     <View style={{ alignItems: "center" }}>
       <SectionTitle title={"My Invites"} />
-      <EventButton />
-      <EventButton />
-      <EventButton />
       <EventButton />
       <CustomButton text="Sign Out" onPress={logout} />
     </View>

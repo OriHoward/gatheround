@@ -18,6 +18,10 @@ const AuthProvider = ({ children }) => {
     isBusiness: null,
   });
 
+  /*
+    This function resets all the states and deletes all the cookies.
+  */
+
   const logout = async () => {
     if (Platform.OS !== "web") {
       await SecureStore.deleteItemAsync("token");

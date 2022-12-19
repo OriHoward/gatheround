@@ -27,6 +27,9 @@ const SignInScreen = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
+  /*
+    OnLogin is an async function that sends an http post request to the backend to authenticate the user
+  */
   const onLogin = async () => {
     try {
       const response = await publicAxios.post("/login", {

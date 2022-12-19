@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { RadioButton } from "react-native-paper";
 import { AxiosContext } from "../../../context/AxiosContext";
 
-const BusinessProfileScreen = ({ navigation }) => {
+const BusinessProfileScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const { authAxios } = useContext(AxiosContext);
@@ -19,6 +19,10 @@ const BusinessProfileScreen = ({ navigation }) => {
     phoneNumber: null,
     visible: null,
   });
+
+  /*
+    This function sends a get request to recieve the business profile data.
+  */
 
   const getBusinessInfo = async () => {
     const response = await authAxios.get("/business");
@@ -46,6 +50,7 @@ const BusinessProfileScreen = ({ navigation }) => {
   if (isLoading) {
     getBusinessInfo().then((data) => {
       if (data && data.userRecord && data.businessRecord) {
+        // Checks that the data exists
         const { userRecord, businessRecord } = data;
         const {
           id: userId,
@@ -72,7 +77,7 @@ const BusinessProfileScreen = ({ navigation }) => {
           city,
           phoneNumber,
         });
-        setIsVisible(Boolean(visible));
+        setIsVisible(Boolean(visible)); // visible is a string with 0 or 1 and IsVisible state uses a boolean value.
         setLoading(false);
       }
     });

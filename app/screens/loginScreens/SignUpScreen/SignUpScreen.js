@@ -25,6 +25,10 @@ const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
+  /*
+    This functions alerts the user for invalid input
+  */
+
   const alertAccordingly = (
     validFirstName,
     validLastName,
@@ -51,6 +55,11 @@ const SignUpScreen = () => {
     }
   };
 
+  /*
+    This function sends a post request if the user selected Host, 
+    otherwise it navigates to the Business Sign Up screen with the user's params.
+  */
+
   const onRegisterPressed = async () => {
     const validEmail = isValidEmail(email);
     const validFirstName = isValidStr(firstName);
@@ -72,16 +81,15 @@ const SignUpScreen = () => {
       };
       try {
         if (isBusiness) {
-          navigation.navigate('SignUpBusiness', {...data, isBusiness})
+          navigation.navigate("SignUpBusiness", { ...data, isBusiness });
         } else {
           try {
-            const response = await publicAxios.post('/users', data)
-            navigation.navigate('SignIn')
+            const response = await publicAxios.post("/users", data);
+            navigation.navigate("SignIn");
           } catch (error) {
-            console.error(error)
+            console.error(error);
           }
         }
-        
       } catch (error) {
         console.error(error);
       }

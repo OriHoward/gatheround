@@ -4,11 +4,15 @@ import { AxiosContext } from "../../../context/AxiosContext";
 import { Button, TextInput } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = () => {
   const { authAxios } = useContext(AxiosContext);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isLoading, setLoading] = useState(true);
   const [userInfo, setUserInfo] = useState({});
+
+  /*
+    This function sends a get requst to display the user's data.
+  */
 
   const getUserInfo = async () => {
     try {
@@ -32,9 +36,13 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+  /*
+    This function sends a put request to update the user's data.
+  */
+
   const putUserInfo = async () => {
     try {
-      const response = await authAxios.put("/users", userInfo);
+      await authAxios.put("/users", userInfo);
     } catch (error) {
       console.error(error);
     }

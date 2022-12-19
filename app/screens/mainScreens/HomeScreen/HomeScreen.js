@@ -1,4 +1,4 @@
-import { View, Text, Platform, SectionList } from "react-native";
+import { View, Text, SectionList } from "react-native";
 import React, { useContext, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import EventButton from "../../components/EventButton";
@@ -12,6 +12,10 @@ const HomeScreen = () => {
   const logout = authContext.logout;
   const [isLoading, setLoading] = useState(true);
   const [myEvents, setMyEvents] = useState([{}]);
+
+  /*
+    This function sends a get request for the 2 upcoming events.
+  */
 
   const getMyEvents = async () => {
     try {

@@ -10,6 +10,10 @@ const SearchScreen = () => {
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
+  /*
+    This function sends a get request to recieve all the business profiles that match the search query.
+  */
+
   const onSearchClick = async () => {
     try {
       const resp = await authAxios.get(
@@ -32,7 +36,11 @@ const SearchScreen = () => {
           onChangeText={onChangeSearch}
           value={searchQuery}
         />
-        <Button color="black" uppercase={false} onPress={() => setDataToDispay([])}>
+        <Button
+          color="black"
+          uppercase={false}
+          onPress={() => setDataToDispay([])}
+        >
           Clear
         </Button>
       </View>

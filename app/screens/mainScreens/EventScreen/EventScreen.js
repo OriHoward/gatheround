@@ -1,20 +1,17 @@
 import { StyleSheet, View } from "react-native";
 import React, { useState, useContext } from "react";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useNavigation } from "@react-navigation/core";
-import {
-  DatePickerInput,
-  TimePickerModal,
-} from "react-native-paper-dates";
+import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 
 const EventScreen = () => {
   const [name, setName] = useState("");
   const [eventDate, setEventDate] = useState(new Date());
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
-  const [limitAttending, setLimitAttending] = useState("");
+  const [limitAttending, setLimitAttending] = useState(""); // We will use this state in the future
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
 
   const { authAxios } = useContext(AxiosContext);
@@ -36,10 +33,13 @@ const EventScreen = () => {
     }/${eventDate.getFullYear()}`;
   };
 
+  /*
+    This function sends a post request to create a new event in the data base.
+  */
+
   const onCreateNewEventPressed = async () => {
     // backend format: %d/%m/%Y %H:%M
     const fdatetime = `${getFormattedDate()} ${getFormattedTime()}`;
-    console.log(fdatetime);
     const eventData = {
       name,
       eventDate: fdatetime,

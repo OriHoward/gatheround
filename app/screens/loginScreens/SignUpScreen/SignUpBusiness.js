@@ -18,6 +18,10 @@ const SignUpScreenBusiness = ({ route }) => {
 
   const navigation = useNavigation();
 
+  /*
+    This functions alerts the user for invalid input
+*/
+
   const alertAccordingly = (
     validProfession,
     validCountry,
@@ -38,6 +42,10 @@ const SignUpScreenBusiness = ({ route }) => {
     }
   };
 
+  /*
+    This function sends a post request with the user's params
+  */
+
   const onCreateProfilePressed = async () => {
     const validProfession = isValidStr(profession);
     const validCountry = isValidStr(country);
@@ -50,7 +58,7 @@ const SignUpScreenBusiness = ({ route }) => {
         city,
         phoneNumber,
         isVisible,
-        ...route.params, //these are the parameters I passed form the previous page
+        ...route.params, //these are the parameters that were passed from the previous page
       };
       try {
         const respone = await publicAxios.post("/users", data);
