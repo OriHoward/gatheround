@@ -26,7 +26,6 @@ const Navigation = () => {
         jwt = JSON.parse(tokenString);
       }
       const value = await getValue("isBusiness")
-      console.log("got value", value)
       authContext.setUserInfo({
         isBusiness: value === "true",
       });
@@ -47,7 +46,6 @@ const Navigation = () => {
       authContext.setUserInfo({
         isBusiness:null
       })
-      console.log("Couldn't identify if business")
       setLoading(false);
     }
   }, []);
