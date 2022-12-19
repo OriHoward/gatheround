@@ -82,6 +82,8 @@ const HomeScreen = () => {
           renderSectionHeader={({ section: { title } }) => (
             <SectionTitle title={title} />
           )}
+          onRefresh={() => setLoading(true)}
+          refreshing={isLoading}
         />
         <CustomButton text="Sign Out" onPress={logout} />
       </View>
