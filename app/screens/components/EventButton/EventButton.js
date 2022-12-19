@@ -34,7 +34,7 @@ const EventButton = ({
                 fontWeight: "bold",
               }}
             >
-              Num. Attending
+              {/* Num. Attending */}
             </Text>
             <Ionicons name="people-circle-outline" size={30} color="black" />
           </View>
