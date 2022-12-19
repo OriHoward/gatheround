@@ -129,10 +129,10 @@ const BusinessProfileScreen = () => {
             onPress={() => hideProfile().then(setIsVisible(false))}
           />
         </View>
-        <TouchableOpacity style={styles.edit_style}>
+        {/* <TouchableOpacity style={styles.edit_style}>
           <Ionicons name="create-sharp" size={16} />
           <Text style={{ marginRight: 2, padding: 4 }}>Edit Profile</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }
