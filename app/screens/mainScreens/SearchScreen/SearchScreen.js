@@ -29,7 +29,7 @@ const SearchScreen = () => {
 
 	useEffect(() => {
 		fetchDistinctValues()
-	}, [fetchDistinctValues])
+	}, [])
 	/*
     This function sends a get request to recieve all the business profiles that match the search query.
   */
