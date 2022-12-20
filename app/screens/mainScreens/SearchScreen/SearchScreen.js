@@ -16,9 +16,6 @@ const SearchScreen = () => {
 	const onChangeSearch = (query) => setSearchQuery(query)
 
 	const fetchDistinctValues = async () => {
-		if (availableCities.length || availableProfessions.length) {
-			return
-		}
 		const resp = await authAxios.get(`/business-search-meta`)
 		const { data } = resp
 		const { distinctCities = [], distinctProfessions = [] } = data
