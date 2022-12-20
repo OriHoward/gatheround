@@ -21,8 +21,7 @@ const SearchScreen = () => {
 		}
 		const resp = await authAxios.get(`/business-search-meta`)
 		const { data } = resp
-		const { results } = data
-		const { distinctCities = [], distinctProfessions = [] } = results
+		const { distinctCities = [], distinctProfessions = [] } = data
 
 		setAvailableCities(distinctCities)
 		setAvailableProfessions(distinctProfessions)
