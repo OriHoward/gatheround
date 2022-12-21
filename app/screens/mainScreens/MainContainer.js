@@ -13,6 +13,7 @@ import EventScreen from "./EventScreen";
 // Business screen
 import BusinessHomeScreen from "./BusinessHomeScreen";
 import BusinessProfileScreen from "./BusinessProfileScreen";
+import BusinessPackageScreen from "./BusinessPackageScreen";
 
 // Host screen names
 const homeName = "Home";
@@ -22,6 +23,7 @@ const eventName = "Create New Event";
 // Business screen names
 const businessHomeName = "Business Home";
 const businessProfileName = "My Profile";
+const businessPackageName = "Create New Package";
 
 const Tab = createBottomTabNavigator();
 // https://reactnavigation.org/docs/tab-based-navigation/
@@ -40,6 +42,8 @@ const MainContainer = () => {
               iconName = focused ? "home" : "home-outline";
             } else if (rn === businessProfileName) {
               iconName = focused ? "person" : "person-outline";
+            } else if (rn == businessPackageName) {
+              iconName = focused ? "cube" : "cube-outline";
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -55,6 +59,7 @@ const MainContainer = () => {
           component={BusinessProfileScreen}
         />
         <Tab.Screen name={businessHomeName} component={BusinessHomeScreen} />
+        <Tab.Screen name = {businessPackageName} component = {BusinessPackageScreen}/>
       </Tab.Navigator>
     );
   } else if (!authContext.userInfo.isBusiness) {
