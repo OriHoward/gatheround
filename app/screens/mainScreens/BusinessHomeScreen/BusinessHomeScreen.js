@@ -1,24 +1,70 @@
-import { View } from "react-native";
-import React, { useContext } from "react";
+import { View, Text, SectionList } from "react-native";
+import React, { useState, useContext } from "react";
 import CustomButton from "../../components/CustomButton";
-import EventButton from "../../components/EventButton";
 import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
+import PackageButton from "../../components/PackageButton";
 
 const BusinessHomeScreen = () => {
   const authContext = useContext(AuthContext);
-  // We will use this in the future for new requests
+  const [myPackages, setMyPackages] = useState([{}]);
+  const [isLoading, setLoading] = useState(true);
   const { authAxios } = useContext(AxiosContext);
   const logout = authContext.logout;
 
-  return (
-    <View style={{ alignItems: "center" }}>
-      <SectionTitle title={"My Invites"} />
-      <EventButton />
-      <CustomButton text="Sign Out" onPress={logout} />
-    </View>
-  );
+  const getPackageData = async () => {
+    try {
+      const response = await authAxios.get("/business-package?package-limit=4");
+      const { my_packages = [] } = response.data;
+      setMyPackages([{ data: my_packages }]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (isLoading) {
+    getPackageData()
+      .then(() => setLoading(false))
+      .catch((e) => {
+        console.error(e);
+      });
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={{ alignItems: "center" }}>
+        <SectionTitle title={"My Packages"} />
+        <SectionList
+          sections={myPackages}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item }) => {
+            const {
+              id,
+              package_name: packageName,
+              description,
+              price,
+              currency,
+            } = item;
+            return (
+              <PackageButton
+                packageName={packageName}
+                description={description}
+                price={price}
+                currency={currency}
+              />
+            );
+          }}
+          onRefresh={() => setLoading(true)}
+          refreshing={isLoading}
+        />
+        <CustomButton text="Sign Out" onPress={logout} />
+      </View>
+    );
+  }
 };
 
 export default BusinessHomeScreen;
