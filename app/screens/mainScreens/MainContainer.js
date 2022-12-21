@@ -54,11 +54,11 @@ const MainContainer = () => {
           style: { padding: 10, height: 70 },
         })}
       >
+        <Tab.Screen name={businessHomeName} component={BusinessHomeScreen} />
         <Tab.Screen
           name={businessProfileName}
           component={BusinessProfileScreen}
         />
-        <Tab.Screen name={businessHomeName} component={BusinessHomeScreen} />
         <Tab.Screen name = {businessPackageName} component = {BusinessPackageScreen}/>
       </Tab.Navigator>
     );
