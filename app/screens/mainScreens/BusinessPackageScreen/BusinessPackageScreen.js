@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     maxHeight: 70,
   },
   dropDown: {
-    width: "20%",
+    width: "50%",
   },
 });
 export default BusinessPackageScreen;
