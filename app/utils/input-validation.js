@@ -21,3 +21,9 @@ export function isValidNumber(number) {
   var validRegex = /^\+?\d{10,13}$/;
   return number.match(validRegex) && number.length > 0;
 }
+
+export function checkCurrency(currency) {
+  var validRegex = /^[A-Z]{3}$/;
+  return currency.match(validRegex) && currency.length > 0;
+}
+

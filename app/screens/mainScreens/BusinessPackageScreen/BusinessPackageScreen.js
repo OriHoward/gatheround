@@ -5,6 +5,8 @@ import SectionTitle from "../../components/SectionTitle";
 import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from "react-native-select-dropdown";
 import { AxiosContext } from "../../../context/AxiosContext";
+import { checkCurrency } from "../../../utils/input-validation";
+
 const BusinessPackageScreen = () => {
   const [packageName, setPackageName] = useState("");
   const [description, setDescription] = useState("");
@@ -24,12 +26,16 @@ const BusinessPackageScreen = () => {
       price,
     };
     try {
-      const packageResponse = await authAxios.post(
-        "/business-package",
-        packageData
-      );
-      if (packageResponse.status == 200) {
-        navigation.navigate("Business Home");
+      if (checkCurrency(currency)) {
+        const packageResponse = await authAxios.post(
+          "/business-package",
+          packageData
+        );
+        if (packageResponse.status == 200) {
+          navigation.navigate("Business Home");
+        }
+      } else {
+        alert("Please choose a currency");
       }
     } catch (error) {
       console.error(error);
