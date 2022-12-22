@@ -1,16 +1,17 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Button } from "react-native-paper";
 
 const PackageButton = ({
-  onPress,
+  onPressEdit,
+  onPressDelete,
   packageName,
   description,
   currency,
   price,
 }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container}>
       <Text style={styles.header1_name}>{packageName}</Text>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.header2_price}>
@@ -26,6 +27,26 @@ const PackageButton = ({
         }}
       >
         <Text style={styles.header3_desc}>{description}</Text>
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+        <Button
+          style={styles.editButton}
+          uppercase={false}
+          onPress={onPressEdit}
+          color="black"
+          labelStyle={{ fontWeight: "bold" }}
+        >
+          Edit
+        </Button>
+        <Button
+          style={styles.deleteButton}
+          uppercase={false}
+          onPress={onPressDelete}
+          color="black"
+          labelStyle={{ fontWeight: "bold" }}
+        >
+          Delete
+        </Button>
       </View>
     </TouchableOpacity>
   );
@@ -45,6 +66,20 @@ const styles = StyleSheet.create({
   header2_price: { fontSize: 16, fontWeight: "bold", padding: 2 },
   header2_currency: { fontSize: 16 },
   header3_desc: { fontSize: 16, color: "gray" },
+  editButton: {
+    backgroundColor: "gray",
+    padding: 4,
+    margin: 4,
+    borderRadius: 15,
+    alignSelf: "flex-end",
+  },
+  deleteButton: {
+    backgroundColor: "#e74c3c",
+    padding: 4,
+    margin: 4,
+    borderRadius: 15,
+    alignSelf: "flex-end",
+  },
 });
 
 export default PackageButton;

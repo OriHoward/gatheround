@@ -13,6 +13,20 @@ const BusinessHomeScreen = () => {
   const { authAxios } = useContext(AxiosContext);
   const logout = authContext.logout;
 
+  const onPressedDelete = async (id) => {
+    try {
+      const data = {
+        packageId: id,
+      };
+      await authAxios.delete("/business-package", { data });
+      setLoading(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onPressedEdit = async (id) => {};
+
   const getPackageData = async () => {
     try {
       const response = await authAxios.get("/business-package?package-limit=4");
@@ -51,6 +65,8 @@ const BusinessHomeScreen = () => {
             } = item;
             return (
               <PackageButton
+                onPressEdit={() => onPressedEdit(id)}
+                onPressDelete={() => onPressedDelete(id)}
                 packageName={packageName}
                 description={description}
                 price={price}
