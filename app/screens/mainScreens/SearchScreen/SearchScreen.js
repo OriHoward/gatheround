@@ -1,11 +1,12 @@
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, View, Dimensions } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
-import { Searchbar, Button } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 import { AxiosContext } from '../../../context/AxiosContext'
 import SelectDropdown from 'react-native-select-dropdown'
+import CustomButton from '../../components/CustomButton'
+const screenWidth = Dimensions.get('window').width
 
 const SearchScreen = () => {
-	const [searchQuery, setSearchQuery] = useState('')
 	const [dataToDisplay, setDataToDispay] = useState([])
 	const { authAxios } = useContext(AxiosContext)
 	const [availableCities, setAvailableCities] = useState([])
@@ -33,7 +34,12 @@ const SearchScreen = () => {
 
 	const onSearchClick = async () => {
 		try {
-			const resp = await authAxios.get(`/business-search?profession=${searchQuery}`)
+			const resp = await authAxios.get(`/business-search?profession=${desiredProfession}`)
+			const searchObj = { city, desiredProfession }
+			let searchQueryString = Object.keys(searchObj)
+				.filter((itemKey) => searchObj[itemKey])
+				.map((key) => `${key}=${searchObj[key]}`)
+			console.log(searchQueryString, "These are the parameters")
 			const { data } = resp
 			const { results = [] } = data
 			setDataToDispay(results)
@@ -45,44 +51,39 @@ const SearchScreen = () => {
 	return (
 		<View style={styles.root}>
 			<View style={styles.root}>
-      <SelectDropdown
-				data={availableCities}
-				onSelect={(selectedItem, index) => {
-					setCity(selectedItem)
-				}}
-				buttonTextAfterSelection={(selectedItem, index) => {
-					// text represented after item is selected
-					// if data array is an array of objects then return selectedItem.property to render after item is selected
-					return selectedItem
-				}}
-				rowTextForSelection={(item, index) => {
-					// text represented for each item in dropdown
-					// if data array is an array of objects then return item.property to represent item in dropdown
-					return item
-				}}
-			/>
-			<SelectDropdown
-				data={availableProfessions}
-				onSelect={(selectedItem, index) => {
-					setDesiredProfession(selectedItem)
-				}}
-				buttonTextAfterSelection={(selectedItem, index) => {
-					// text represented after item is selected
-					// if data array is an array of objects then return selectedItem.property to render after item is selected
-					return selectedItem
-				}}
-				rowTextForSelection={(item, index) => {
-					// text represented for each item in dropdown
-					// if data array is an array of objects then return item.property to represent item in dropdown
-					return item
-				}}
-			/>
-				<Searchbar
-					onIconPress={onSearchClick}
-					placeholder="Search profession"
-					onChangeText={onChangeSearch}
-					value={searchQuery}
-				/>
+				<View style={styles.parentFilter}>
+					<View style={styles.dropDownContainer}>
+						<SelectDropdown
+							data={availableCities}
+							defaultButtonText={'Select a city'}
+							onSelect={(selectedItem, index) => {
+								setCity(selectedItem)
+							}}
+							buttonTextAfterSelection={(selectedItem, index) => {
+								return selectedItem
+							}}
+							rowTextForSelection={(item, index) => {
+								return item
+							}}
+						/>
+					</View>
+					<View style={styles.dropDownContainer}>
+						<SelectDropdown
+							data={availableProfessions}
+							defaultButtonText={'Select Profession'}
+							onSelect={(selectedItem, index) => {
+								setDesiredProfession(selectedItem)
+							}}
+							buttonTextAfterSelection={(selectedItem, index) => {
+								return selectedItem
+							}}
+							rowTextForSelection={(item, index) => {
+								return item
+							}}
+						/>
+					</View>
+				</View>
+				<CustomButton text="Search" onPress={onSearchClick} />
 				<Button color="black" uppercase={false} onPress={() => setDataToDispay([])}>
 					Clear
 				</Button>
@@ -129,6 +130,12 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight: 'bold',
 		padding: 6,
+	},
+	parentFilter: {
+		flexDirection: 'row',
+	},
+	dropDownContainer: {
+		width: screenWidth / 2,
 	},
 })
 
