@@ -34,7 +34,6 @@ const SearchScreen = () => {
 
 	const onSearchClick = async () => {
 		try {
-			
 			const searchObj = { city, desiredProfession }
 			let queryParamsArray = Object.keys(searchObj)
 				.filter((itemKey) => searchObj[itemKey])
@@ -49,6 +48,11 @@ const SearchScreen = () => {
 			setDataToDispay([])
 		}
 	}
+	const cleanData = () => {
+		setDataToDispay([])
+		setCity('')
+		setDesiredProfession('')
+	}
 	return (
 		<View style={styles.root}>
 			<View style={styles.root}>
@@ -61,7 +65,7 @@ const SearchScreen = () => {
 								setCity(selectedItem)
 							}}
 							buttonTextAfterSelection={(selectedItem, index) => {
-								return selectedItem
+								return city ? city : 'Select a city'
 							}}
 							rowTextForSelection={(item, index) => {
 								return item
@@ -76,7 +80,7 @@ const SearchScreen = () => {
 								setDesiredProfession(selectedItem)
 							}}
 							buttonTextAfterSelection={(selectedItem, index) => {
-								return selectedItem
+								return desiredProfession ? desiredProfession : 'Select a profession'
 							}}
 							rowTextForSelection={(item, index) => {
 								return item
@@ -85,19 +89,23 @@ const SearchScreen = () => {
 					</View>
 				</View>
 				<CustomButton text="Search" onPress={onSearchClick} />
-				<Button color="black" uppercase={false} onPress={() => setDataToDispay([])}>
+				<Button color="black" uppercase={false} onPress={cleanData}>
 					Clear
 				</Button>
 			</View>
 			<View>
 				{dataToDisplay.map((entry) => {
-					const { id, profession, country, city, phone_number } = entry
+					const { id, profession, country, city, phone_number, price, currency, package_name, description } = entry
 					return (
 						<View key={id} style={styles.searchResultWrapper}>
 							<View style={styles.searchResult}>
 								<Text style={styles.resultText}>Profession: {profession}</Text>
 								<Text style={styles.resultText}>Country : {country}</Text>
 								<Text style={styles.resultText}>City: {city}</Text>
+								<Text style={styles.resultText}>Package Name: {package_name}</Text>
+								<Text style={styles.resultText}>Description: {description}</Text>
+								<Text style={styles.resultText}>Price :{price}</Text>
+								<Text style={styles.resultText}>Currency :{currency}</Text>
 								<Text style={styles.resultText}>Phone number :{phone_number}</Text>
 							</View>
 						</View>
