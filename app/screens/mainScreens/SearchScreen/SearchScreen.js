@@ -34,12 +34,13 @@ const SearchScreen = () => {
 
 	const onSearchClick = async () => {
 		try {
-			const resp = await authAxios.get(`/business-search?profession=${desiredProfession}`)
+			
 			const searchObj = { city, desiredProfession }
-			let searchQueryString = Object.keys(searchObj)
+			let queryParamsArray = Object.keys(searchObj)
 				.filter((itemKey) => searchObj[itemKey])
 				.map((key) => `${key}=${searchObj[key]}`)
-			console.log(searchQueryString, "These are the parameters")
+			let searchQueryString = queryParamsArray.length ? `?${queryParamsArray.join('&')}` : ''
+			const resp = await authAxios.get(`/business-search${searchQueryString}`)
 			const { data } = resp
 			const { results = [] } = data
 			setDataToDispay(results)
