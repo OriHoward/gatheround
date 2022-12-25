@@ -6,7 +6,7 @@ import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const { authAxios } = useContext(AxiosContext);
   const logout = authContext.logout;
@@ -34,7 +34,7 @@ const HomeScreen = () => {
       ]);
     } catch (error) {
       console.error(error);
-      // setMyEvents([]);
+      setMyEvents([]);
     }
   };
   if (isLoading) {
@@ -76,6 +76,16 @@ const HomeScreen = () => {
                 event_date={date}
                 event_time={time}
                 address={address}
+                onPress={() =>
+                  navigation.navigate("Details", {
+                    id,
+                    name,
+                    event_date,
+                    address,
+                    description,
+                    limit_attending,
+                  })
+                }
               />
             );
           }}
