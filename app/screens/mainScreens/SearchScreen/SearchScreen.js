@@ -3,7 +3,8 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Button } from 'react-native-paper'
 import { AxiosContext } from '../../../context/AxiosContext'
 import SelectDropdown from 'react-native-select-dropdown'
-import CustomButton from '../../components/CustomButton'
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
 
@@ -77,6 +78,7 @@ const SearchScreen = () => {
 						<SelectDropdown
 							data={availableCities}
 							defaultButtonText={'Select a city'}
+							buttonStyle={styles.dropdown3BtnStyle}
 							onSelect={(selectedItem, index) => {
 								setCity(selectedItem)
 							}}
@@ -92,6 +94,7 @@ const SearchScreen = () => {
 						<SelectDropdown
 							data={availableProfessions}
 							defaultButtonText={'Select Profession'}
+							buttonStyle={styles.dropdown3BtnStyle}
 							onSelect={(selectedItem, index) => {
 								setDesiredProfession(selectedItem)
 							}}
@@ -103,24 +106,26 @@ const SearchScreen = () => {
 							}}
 						/>
 					</View>
-				</View>
-				<View style={styles.dropDownContainer}>
-					<SelectDropdown
-							data={['asc','desc']}
-							defaultButtonText={`Select Price ordering`}
+					<View style={styles.dropDownContainer}>
+						<SelectDropdown
+							data={['asc', 'desc']}
+							defaultButtonText={`Ordering: ${priceOrdering}`}
+							buttonStyle={styles.dropdown3BtnStyle}
 							onSelect={(selectedItem, index) => {
 								setPriceOrdering(selectedItem)
 							}}
 							buttonTextAfterSelection={(selectedItem, index) => {
-								return `Price ordering: ${priceOrdering}`
+								return `Ordering: ${priceOrdering}`
 							}}
 							rowTextForSelection={(item, index) => {
 								return item
 							}}
 						/>
 					</View>
-				
-				<CustomButton text="Search" onPress={onSearchClick} />
+				</View>
+				<View style={{ marginTop: 10 }}>
+					<Ionicons name={'search-outline'} size={35} color={'blue'} onPress={onSearchClick} />
+				</View>
 				<Button color="black" uppercase={false} onPress={cleanData}>
 					Clear
 				</Button>
@@ -155,6 +160,16 @@ const styles = StyleSheet.create({
 		borderBottomRightRadius: 5,
 		marginTop: 15,
 	},
+	dropdown3BtnStyle: {
+    width: '80%',
+    height: 50,
+    backgroundColor: '#FFF',
+    paddingHorizontal: 0,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#444',
+		marginLeft: 20
+  },
 	searchResultWrapper: {
 		paddingTop: 10,
 		justifyContent: 'space-between',
@@ -168,7 +183,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 	},
 	dropDownContainer: {
-		width: screenWidth / 2,
+		width: screenWidth / 3,
 	},
 	container: {
 		flex: 1,
