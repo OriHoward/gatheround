@@ -6,7 +6,7 @@ import { AxiosContext } from "../../../context/AxiosContext";
 import { useNavigation } from "@react-navigation/core";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 
-const EventScreen = () => {
+const CreateEventScreen = () => {
   const [name, setName] = useState("");
   const [eventDate, setEventDate] = useState(new Date());
   const [eventTime, setEventTime] = useState(new Date());
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
     maxHeight: 70,
   },
 });
-export default EventScreen;
+export default CreateEventScreen;

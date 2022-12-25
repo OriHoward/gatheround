@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import EventScreen from "./EventScreen";
+import CreateEventScreen from "./CreateEventScreen";
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen";
 import SearchScreen from "./SearchScreen";
@@ -41,7 +41,7 @@ const HostNavigator = () => {
     >
       <Tab.Screen name={HomeScreenName} component={HomeScreen} />
       <Tab.Screen name={SearchScreenName} component={SearchScreen} />
-      <Tab.Screen name={CreateEventScreenName} component={EventScreen} />
+      <Tab.Screen name={CreateEventScreenName} component={CreateEventScreen} />
       <Tab.Screen name={ProfileScreenName} component={ProfileScreen} />
     </Tab.Navigator>
   );
