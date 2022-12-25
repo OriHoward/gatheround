@@ -14,7 +14,7 @@ import EventScreen from "./EventScreen";
 import BusinessHomeScreen from "./BusinessHomeScreen";
 import BusinessProfileScreen from "./BusinessProfileScreen";
 import BusinessPackageScreen from "./BusinessPackageScreen";
-import BusinessCalendarScreen from "./BusinessCalendarScreen";
+import BusinessCalendarScreen from "./BusinessCalendar/BusinessCalendarScreen";
 
 // Host screen names
 const homeName = "Home";

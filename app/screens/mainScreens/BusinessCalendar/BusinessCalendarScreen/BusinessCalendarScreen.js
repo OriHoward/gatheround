@@ -1,24 +1,33 @@
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import React, { useState } from "react";
-import SectionTitle from "../../components/SectionTitle";
+import SectionTitle from "../../../components/SectionTitle";
 import {
   Button,
+  Card,
   Divider,
   FAB,
+  IconButton,
   Menu,
   Provider,
   RadioButton,
+  Title,
+  Paragraph,
+  Avatar,
 } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 
-const BusinessCalendarScreen = () => {
-  const [open, setOpen] = useState(false);
-  const [dates, setDates] = useState([]);
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
-  const [isMenuVisible, setMenuVisible] = useState(false);
+const BusinessCalendarScreen = ({ navigation }) => {
+  const [open, setOpen] = useState(false); // FAB Group
+  const [dates, setDates] = useState([]); // DatePickerModal
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false); // DatePickerModal
+  const [isMenuVisible, setMenuVisible] = useState(false); // Menu
   const [isUnavailableDatesVisible, setUnavailableDatesVisibility] =
-    useState(false);
-  const [dateFilterValue, setDateFilterValue] = useState("first");
+    useState(false); // Menu Item
+  const [dateFilterValue, setDateFilterValue] = useState("first"); // RadioButton.Group
+  const [isDetailsPressed, setDetailsPressed] = useState(false); //
+  const [data, setData] = useState({
+    unavailable: [{ date: "25/12/2022", details: { description: "Babi" } }],
+  });
 
   const onDismiss = () => setDatePickerVisible(false);
   const onConfirm = (selectedDates) => {
@@ -28,11 +37,21 @@ const BusinessCalendarScreen = () => {
   };
 
   const peachColor = "#FF7F50";
+  const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
+  const RightContent = (props) => (
+    <IconButton
+      {...props}
+      icon={isDetailsPressed ? "menu-up" : "menu-down"}
+      onPress={() => {
+        setDetailsPressed(!isDetailsPressed);
+        navigation.navigate("Details", { data });
+      }}
+    />
+  );
 
   return (
     <Provider>
       <View style={styles.root}>
-        <SectionTitle title="My Calendar" />
         <SafeAreaView style={styles.menuContainer}>
           <Menu
             visible={isMenuVisible}
@@ -101,6 +120,32 @@ const BusinessCalendarScreen = () => {
           ]}
           onStateChange={({ open }) => setOpen(open)}
         />
+        <Card
+          mode="outlined"
+          style={{ alignSelf: "center", width: 500, borderRadius: 15 }}
+        >
+          <Card.Title
+            title="Card Title"
+            subtitle="Card Subtitle"
+            left={LeftContent}
+            right={RightContent}
+          />
+          {/* {isDetailsPressed ? (
+            <>
+              <Card.Content>
+                <Title>Card title</Title>
+                <Paragraph>Card content</Paragraph>
+              </Card.Content>
+              <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+              <Card.Actions>
+                <Button>Cancel</Button>
+                <Button>Ok</Button>
+              </Card.Actions>
+            </>
+          ) : (
+            <></>
+          )} */}
+        </Card>
       </View>
     </Provider>
   );

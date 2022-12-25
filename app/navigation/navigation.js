@@ -1,13 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {View ,Text, Platform } from "react-native";
+import { View, Text, Platform } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import * as SecureStore from "expo-secure-store";
 import Cookies from "js-cookie";
-import { getValue } from '../utils/user-utils';
+import { getValue } from "../utils/user-utils";
 import LoginContainer from "../screens/loginScreens/LoginContainer";
 import MainContainer from "../screens/mainScreens/MainContainer";
+import BusinessContainer from "../screens/mainScreens/BusinessContainer";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,11 +26,11 @@ const Navigation = () => {
         const tokenString = Cookies.get("token") || {};
         jwt = JSON.parse(tokenString);
       }
-      const value = await getValue("isBusiness")
+      const value = await getValue("isBusiness");
       authContext.setUserInfo({
         isBusiness: value === "true",
       });
-      
+
       authContext.setAuthState({
         accessToken: jwt.accessToken || null,
         refreshToken: jwt.refreshToken || null,
@@ -44,8 +45,8 @@ const Navigation = () => {
         authenticated: false,
       });
       authContext.setUserInfo({
-        isBusiness:null
-      })
+        isBusiness: null,
+      });
       setLoading(false);
     }
   }, []);
@@ -60,6 +61,32 @@ const Navigation = () => {
         <Text>Loading...</Text>
       </View>
     );
+  } else {
+    if (authContext?.authState?.authenticated === false) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={LoginContainer} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    } else if (authContext.userInfo.isBusiness) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Business Main" component={BusinessContainer} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    } else {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Main" component={MainContainer} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    }
   }
 
   return (
