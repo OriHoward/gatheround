@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from "react-native-select-dropdown";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { checkCurrency } from "../../../utils/input-validation";
+import { SearchStyles } from "../../../CommonStyles";
 
 const BusinessPackageScreen = () => {
   const [packageName, setPackageName] = useState("");
@@ -32,7 +33,11 @@ const BusinessPackageScreen = () => {
           packageData
         );
         if (packageResponse.status == 200) {
-          navigation.navigate("Business Home");
+          setPackageName("");
+          setDescription("");
+          setPrice("");
+          setCurrency("");
+          navigation.navigate("Home");
         }
       } else {
         alert("Please choose a currency");
@@ -69,8 +74,8 @@ const BusinessPackageScreen = () => {
         onSelect={(selectedItem, index) => {
           setCurrency(selectedItem);
         }}
-        buttonStyle={styles.dropDown}
-        defaultButtonText={"Select Currunecy"}
+        buttonStyle={SearchStyles.dropdownButtonStyle}
+        defaultButtonText={"Select Currency"}
         buttonTextAfterSelection={(selectedItem) => {
           return selectedItem;
         }}
