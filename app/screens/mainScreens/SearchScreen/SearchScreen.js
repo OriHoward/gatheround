@@ -14,6 +14,7 @@ const SearchScreen = () => {
 	const [availableProfessions, setAvailableProfessions] = useState([])
 	const [city, setCity] = useState('')
 	const [desiredProfession, setDesiredProfession] = useState('')
+	const [priceOrdering, setPriceOrdering] = useState('asc')
 
 	const fetchDistinctValues = async () => {
 		const resp = await authAxios.get(`/business-search-meta`)
@@ -32,7 +33,7 @@ const SearchScreen = () => {
 
 	const onSearchClick = async () => {
 		try {
-			const searchObj = { city, desiredProfession }
+			const searchObj = { city, desiredProfession, priceOrdering }
 			let queryParamsArray = Object.keys(searchObj)
 				.filter((itemKey) => searchObj[itemKey])
 				.map((key) => `${key}=${searchObj[key]}`)
@@ -50,6 +51,7 @@ const SearchScreen = () => {
 		setDataToDispay([])
 		setCity('')
 		setDesiredProfession('')
+		setPriceOrdering('asc')
 	}
 
 	const renderSearchItem = ({ item }) => {
@@ -102,12 +104,28 @@ const SearchScreen = () => {
 						/>
 					</View>
 				</View>
+				<View style={styles.dropDownContainer}>
+					<SelectDropdown
+							data={['asc','desc']}
+							defaultButtonText={`Select Price ordering`}
+							onSelect={(selectedItem, index) => {
+								setPriceOrdering(selectedItem)
+							}}
+							buttonTextAfterSelection={(selectedItem, index) => {
+								return `Price ordering: ${priceOrdering}`
+							}}
+							rowTextForSelection={(item, index) => {
+								return item
+							}}
+						/>
+					</View>
+				
 				<CustomButton text="Search" onPress={onSearchClick} />
 				<Button color="black" uppercase={false} onPress={cleanData}>
 					Clear
 				</Button>
 			</View>
-			<View style={{ height: screenHeight * 0.7 }}>
+			<View style={{ height: screenHeight * 0.7, paddingBottom: 20 }}>
 				<SafeAreaView style={styles.container}>
 					<FlatList
 						style={{ width: '100%' }}
