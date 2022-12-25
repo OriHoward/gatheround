@@ -11,7 +11,7 @@ const CalendarStack = createNativeStackNavigator();
 const CalendarScreenName = "My Calendar";
 const HomeScreenName = "Home";
 
-const BusinessNavigator = ({ navigation }) => {
+const BusinessNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name={HomeScreenName} component={BusinessHomeScreen} />
@@ -24,6 +24,7 @@ const BusinessNavigator = ({ navigation }) => {
               options={{
                 headerTitleAlign: "center",
                 headerTransparent: true,
+                contentStyle: { padding: 50 },
                 headerTitle: () => <SectionTitle title={CalendarScreenName} />,
               }}
             />

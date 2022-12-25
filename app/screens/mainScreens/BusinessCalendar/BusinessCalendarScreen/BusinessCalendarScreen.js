@@ -1,6 +1,5 @@
 import { View, StyleSheet, SafeAreaView } from "react-native";
 import React, { useState } from "react";
-import SectionTitle from "../../../components/SectionTitle";
 import {
   Button,
   Card,
@@ -10,8 +9,6 @@ import {
   Menu,
   Provider,
   RadioButton,
-  Title,
-  Paragraph,
   Avatar,
 } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
@@ -24,7 +21,6 @@ const BusinessCalendarScreen = ({ navigation }) => {
   const [isUnavailableDatesVisible, setUnavailableDatesVisibility] =
     useState(false); // Menu Item
   const [dateFilterValue, setDateFilterValue] = useState("first"); // RadioButton.Group
-  const [isDetailsPressed, setDetailsPressed] = useState(false); //
   const [data, setData] = useState({
     unavailable: [{ date: "25/12/2022", details: { description: "Babi" } }],
   });
@@ -41,9 +37,8 @@ const BusinessCalendarScreen = ({ navigation }) => {
   const RightContent = (props) => (
     <IconButton
       {...props}
-      icon={isDetailsPressed ? "menu-up" : "menu-down"}
+      icon="chevron-right"
       onPress={() => {
-        setDetailsPressed(!isDetailsPressed);
         navigation.navigate("Details", { data });
       }}
     />
@@ -122,7 +117,8 @@ const BusinessCalendarScreen = ({ navigation }) => {
         />
         <Card
           mode="outlined"
-          style={{ alignSelf: "center", width: 500, borderRadius: 15 }}
+          style={styles.cardContainer}
+          onPress={() => navigation.navigate("Details", { data })}
         >
           <Card.Title
             title="Card Title"
@@ -130,21 +126,6 @@ const BusinessCalendarScreen = ({ navigation }) => {
             left={LeftContent}
             right={RightContent}
           />
-          {/* {isDetailsPressed ? (
-            <>
-              <Card.Content>
-                <Title>Card title</Title>
-                <Paragraph>Card content</Paragraph>
-              </Card.Content>
-              <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-              <Card.Actions>
-                <Button>Cancel</Button>
-                <Button>Ok</Button>
-              </Card.Actions>
-            </>
-          ) : (
-            <></>
-          )} */}
         </Card>
       </View>
     </Provider>
@@ -169,6 +150,11 @@ const styles = StyleSheet.create({
   menuContainer: {
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+  cardContainer: {
+    alignSelf: "center",
+    width: 500,
+    borderRadius: 15,
   },
 });
 
