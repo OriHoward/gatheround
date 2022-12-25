@@ -1,10 +1,11 @@
-import { Text, StyleSheet, View, Dimensions } from 'react-native'
+import { Text, StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import { Button } from 'react-native-paper'
 import { AxiosContext } from '../../../context/AxiosContext'
 import SelectDropdown from 'react-native-select-dropdown'
 import CustomButton from '../../components/CustomButton'
 const screenWidth = Dimensions.get('window').width
+const screenHeight = Dimensions.get('window').height
 
 const SearchScreen = () => {
 	const [dataToDisplay, setDataToDispay] = useState([])
@@ -50,6 +51,22 @@ const SearchScreen = () => {
 		setCity('')
 		setDesiredProfession('')
 	}
+
+	const renderSearchItem = ({ item }) => {
+		const { id, profession, country, city, phone_number, price, currency, package_name, description } = item
+		return (
+			<View style={styles.searchResult}>
+				<Text style={styles.resultText}>Profession: {profession}</Text>
+				<Text style={styles.resultText}>Country : {country}</Text>
+				<Text style={styles.resultText}>City: {city}</Text>
+				<Text style={styles.resultText}>Package Name: {package_name}</Text>
+				<Text style={styles.resultText}>Description: {description}</Text>
+				<Text style={styles.resultText}>Price :{price}</Text>
+				<Text style={styles.resultText}>Currency :{currency}</Text>
+				<Text style={styles.resultText}>Phone number :{phone_number}</Text>
+			</View>
+		)
+	}
 	return (
 		<View style={styles.root}>
 			<View style={styles.root}>
@@ -90,24 +107,15 @@ const SearchScreen = () => {
 					Clear
 				</Button>
 			</View>
-			<View>
-				{dataToDisplay.map((entry) => {
-					const { id, profession, country, city, phone_number, price, currency, package_name, description } = entry
-					return (
-						<View key={id} style={styles.searchResultWrapper}>
-							<View style={styles.searchResult}>
-								<Text style={styles.resultText}>Profession: {profession}</Text>
-								<Text style={styles.resultText}>Country : {country}</Text>
-								<Text style={styles.resultText}>City: {city}</Text>
-								<Text style={styles.resultText}>Package Name: {package_name}</Text>
-								<Text style={styles.resultText}>Description: {description}</Text>
-								<Text style={styles.resultText}>Price :{price}</Text>
-								<Text style={styles.resultText}>Currency :{currency}</Text>
-								<Text style={styles.resultText}>Phone number :{phone_number}</Text>
-							</View>
-						</View>
-					)
-				})}
+			<View style={{ height: screenHeight * 0.7 }}>
+				<SafeAreaView style={styles.container}>
+					<FlatList
+						style={{ width: '100%' }}
+						data={dataToDisplay}
+						renderItem={renderSearchItem}
+						keyExtractor={(item) => item.id}
+					/>
+				</SafeAreaView>
 			</View>
 		</View>
 	)
@@ -123,25 +131,31 @@ const styles = StyleSheet.create({
 		borderColor: 'black',
 		backgroundColor: '#dddddd',
 		borderWidth: 2,
-		borderTopLeftRadius: 10,
-		borderTopRightRadius: 10,
-		borderBottomLeftRadius: 10,
-		borderBottomRightRadius: 10,
+		borderTopLeftRadius: 5,
+		borderTopRightRadius: 5,
+		borderBottomLeftRadius: 5,
+		borderBottomRightRadius: 5,
+		marginTop: 15,
 	},
 	searchResultWrapper: {
 		paddingTop: 10,
 		justifyContent: 'space-between',
 	},
 	resultText: {
-		fontSize: 16,
+		fontSize: 14,
 		fontWeight: 'bold',
-		padding: 6,
+		padding: 4,
 	},
 	parentFilter: {
 		flexDirection: 'row',
 	},
 	dropDownContainer: {
 		width: screenWidth / 2,
+	},
+	container: {
+		flex: 1,
+		width: screenWidth * 0.5,
+		height: screenHeight * 0.6,
 	},
 })
 
