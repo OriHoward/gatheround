@@ -1,10 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import React, { useState, useContext } from "react";
-import { Button, TextInput } from "react-native-paper";
+import { Button, HelperText, TextInput } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useNavigation } from "@react-navigation/core";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
+import { isPrintable } from "../../../utils/input-validation";
+import { render } from "react-dom";
 
 const CreateEventScreen = () => {
   const [name, setName] = useState("");
@@ -34,28 +36,40 @@ const CreateEventScreen = () => {
     }/${eventDate.getFullYear()}`;
   };
 
+  const alertAccordingly = (isValidEventName) => {
+    if (!isValidEventName) {
+      alert("You must enter a valid event name!");
+    }
+  };
+
   /*
     This function sends a post request to create a new event in the data base.
   */
 
   const onCreateNewEventPressed = async () => {
-    // backend format: %d/%m/%Y %H:%M
-    const fdatetime = `${getFormattedDate()} ${getFormattedTime()}`;
-    const eventData = {
-      name,
-      eventDate: fdatetime,
-      address,
-      description,
-    };
-    try {
-      const eventResponse = await authAxios.post("/events", eventData);
-      if (eventResponse.status === 200) {
-        navigation.navigate("Home");
+    const isValidEventName = isPrintable(name);
+    if (isValidEventName) {
+      // backend format: %d/%m/%Y %H:%M
+      const fdatetime = `${getFormattedDate()} ${getFormattedTime()}`;
+      const eventData = {
+        name,
+        eventDate: fdatetime,
+        address,
+        description,
+      };
+      try {
+        const eventResponse = await authAxios.post("/events", eventData);
+        if (eventResponse.status === 200) {
+          navigation.navigate("Home");
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    } else {
+      alertAccordingly(isValidEventName);
     }
   };
+
   const peachColor = "#FF7F50";
   return (
     <View style={styles.root}>
@@ -66,7 +80,15 @@ const CreateEventScreen = () => {
         activeUnderlineColor={peachColor}
         onChangeText={(text) => setName(text)}
         style={styles.input}
+        right={<TextInput.Icon icon="asterisk" color="maroon" />}
       />
+      {name.length < 1 ? (
+        <HelperText type="error" visible={!isPrintable(name)}>
+          Please fill out this field.
+        </HelperText>
+      ) : (
+        <></>
+      )}
       <DatePickerInput
         value={eventDate}
         onChange={(date) => setEventDate(date)}
