@@ -7,8 +7,8 @@ import * as SecureStore from "expo-secure-store";
 import Cookies from "js-cookie";
 import { getValue } from "../utils/user-utils";
 import LoginContainer from "../screens/loginScreens/LoginContainer";
-import MainContainer from "../screens/mainScreens/MainContainer";
-import BusinessContainer from "../screens/mainScreens/BusinessContainer";
+import BusinessNavigator from "../screens/mainScreens/BusinessNavigator";
+import HostNavigator from "../screens/mainScreens/HostNavigator";
 
 const Stack = createNativeStackNavigator();
 
@@ -74,7 +74,7 @@ const Navigation = () => {
       return (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Business Main" component={BusinessContainer} />
+            <Stack.Screen name="Business Main" component={BusinessNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       );
@@ -82,24 +82,12 @@ const Navigation = () => {
       return (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Main" component={MainContainer} />
+            <Stack.Screen name="Host Main" component={HostNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       );
     }
   }
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {authContext?.authState?.authenticated === false ? (
-          <Stack.Screen name="Login" component={LoginContainer} />
-        ) : (
-          <Stack.Screen name="Main" component={MainContainer} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
 };
 
 export default Navigation;
