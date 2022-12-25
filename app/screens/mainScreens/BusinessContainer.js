@@ -4,18 +4,52 @@ import SectionTitle from "../components/SectionTitle";
 import BusinessCalendarScreen from "./BusinessCalendar/BusinessCalendarScreen";
 import CalendarDetailsScreen from "./BusinessCalendar/CalendarDetailsScreen";
 import BusinessHomeScreen from "./BusinessHomeScreen";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import BusinessProfileScreen from "./BusinessProfileScreen";
+import BusinessPackageScreen from "./BusinessPackageScreen";
 
 const Tab = createBottomTabNavigator();
 const CalendarStack = createNativeStackNavigator();
 
-const CalendarScreenName = "My Calendar";
+const CalendarScreenName = "Calendar";
+const CalendarTabName = "Calendar Tab";
 const HomeScreenName = "Home";
+const ProfileScreenName = "My Profile";
+const PackageScreenName = "Create New Package";
 
 const BusinessNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      initialRouteName={HomeScreenName}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          let rn = route.name;
+          if (rn === HomeScreenName) {
+            iconName = focused ? "home" : "home-outline";
+          } else if (rn === ProfileScreenName) {
+            iconName = focused ? "person" : "person-outline";
+          } else if (rn === PackageScreenName) {
+            iconName = focused ? "cube" : "cube-outline";
+          } else if (rn === CalendarTabName) {
+            iconName = focused ? "calendar" : "calendar-outline";
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        headerShown: false,
+        activeTintColor: "tomato",
+        inactiveTintColor: "gray",
+        labelStlye: { paddingBottom: 10, fontSize: 10 },
+        style: { padding: 10, height: 70 },
+      })}
+    >
       <Tab.Screen name={HomeScreenName} component={BusinessHomeScreen} />
-      <Tab.Screen name="Second">
+      <Tab.Screen name={ProfileScreenName} component={BusinessProfileScreen} />
+      <Tab.Screen name={PackageScreenName} component={BusinessPackageScreen} />
+      <Tab.Screen
+        name={CalendarTabName}
+        options={{ title: CalendarScreenName }}
+      >
         {() => (
           <CalendarStack.Navigator>
             <CalendarStack.Screen
@@ -25,7 +59,7 @@ const BusinessNavigator = () => {
                 headerTitleAlign: "center",
                 headerTransparent: true,
                 contentStyle: { padding: 50 },
-                headerTitle: () => <SectionTitle title={CalendarScreenName} />,
+                headerTitle: () => <SectionTitle title={"My Calendar"} />,
               }}
             />
             <CalendarStack.Screen
