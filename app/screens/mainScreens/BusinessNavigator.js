@@ -65,6 +65,12 @@ const BusinessNavigator = () => {
             <CalendarStack.Screen
               name="Details"
               component={CalendarDetailsScreen}
+              options={{
+                headerTitleAlign: "center",
+                headerTransparent: true,
+                contentStyle: { padding: 50 },
+                headerTitle: () => <SectionTitle title={"Details"} />,
+              }}
             />
           </CalendarStack.Navigator>
         )}

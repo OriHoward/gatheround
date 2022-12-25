@@ -3,7 +3,6 @@ import React from "react";
 import { Card, Button, Title, Paragraph } from "react-native-paper";
 
 const CalendarDetailsScreen = ({ route }) => {
-  console.log(route.params.data);
   return (
     <View style={styles.root}>
       <Card mode="outlined">
