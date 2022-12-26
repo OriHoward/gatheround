@@ -80,7 +80,7 @@ const CreateEventScreen = () => {
         activeUnderlineColor={peachColor}
         onChangeText={(text) => setName(text)}
         style={styles.input}
-        right={<TextInput.Icon icon="asterisk" color="maroon" />}
+        right={<TextInput.Icon icon="asterisk" color="maroon" size={15} />}
       />
       {name.length < 1 ? (
         <HelperText type="error" visible={!isPrintable(name)}>
