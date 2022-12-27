@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Card,
   Button,
@@ -13,8 +13,10 @@ import {
   Provider,
 } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
+import { AxiosContext } from "../../../context/AxiosContext";
 
 const EventDetailsScreen = ({ route, navigation }) => {
+  const { authAxios } = useContext(AxiosContext);
   const { id, name, event_date, address, description, limit_attending } =
     route.params;
   const [date, time] = event_date.split(" ");
@@ -27,10 +29,16 @@ const EventDetailsScreen = ({ route, navigation }) => {
   const showDialog = () => setDialogVisible(true);
   const hideDialog = () => setDialogVisible(false);
 
-  const deleteEvent = () => {
+  const deleteEvent = async () => {
     // todo: send to back
-    hideDialog();
-    navigation.navigate("Home");
+    try {
+      const response = await authAxios.delete(`/events/${id}`);
+      console.log(`delete response ${response.status}`);
+      hideDialog();
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return isSaved ? (
@@ -112,10 +120,7 @@ const EventDetailsScreen = ({ route, navigation }) => {
           <Provider>
             <View>
               <Portal>
-                <Dialog
-                  visible={isDialogVisible}
-                  onDismiss={() => hideDialog()}
-                >
+                <Dialog visible={isDialogVisible} onDismiss={hideDialog}>
                   <Dialog.Title>Alert</Dialog.Title>
                   <Dialog.Content>
                     <Paragraph>
@@ -133,7 +138,11 @@ const EventDetailsScreen = ({ route, navigation }) => {
                     <Button
                       uppercase={false}
                       color="black"
-                      onPress={deleteEvent}
+                      onPress={() =>
+                        deleteEvent()
+                          .then()
+                          .catch((e) => console.error(e))
+                      }
                     >
                       Yes
                     </Button>
