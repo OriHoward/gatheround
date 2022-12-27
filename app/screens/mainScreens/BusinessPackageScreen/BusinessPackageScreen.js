@@ -1,23 +1,26 @@
 import { StyleSheet, View, Text } from "react-native";
 import React, { useState, useContext } from "react";
-import { Button, TextInput } from "react-native-paper";
+import { Button, TextInput, RadioButton } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 import { useNavigation } from "@react-navigation/native";
-import SelectDropdown from "react-native-select-dropdown";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { checkCurrency } from "../../../utils/input-validation";
-import { SearchStyles } from "../../../CommonStyles";
 
 const BusinessPackageScreen = () => {
   const [packageName, setPackageName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [currency, setCurrency] = useState("ILS");
   const { authAxios } = useContext(AxiosContext);
+  const [checked, setChecked] = React.useState("first");
   const navigation = useNavigation();
 
   const peachColor = "#FF7F50";
-  const currencyList = ["Select Currunecy", "ILS", "USD", "EUR"];
+
+  const setCurrencyStatus = (currency, checked) => {
+    setCurrency(currency);
+    setChecked(checked);
+  };
 
   const OnAddPackagePressed = async () => {
     const packageData = {
@@ -69,20 +72,32 @@ const BusinessPackageScreen = () => {
         }}
         style={[styles.input]}
       />
-      <SelectDropdown
-        data={currencyList}
-        onSelect={(selectedItem, index) => {
-          setCurrency(selectedItem);
+      <View
+        style={{
+          alignItems: "center",
+          flexDirection: "row",
+          justifyContent: "space-between",
         }}
-        buttonStyle={SearchStyles.dropdownButtonStyle}
-        defaultButtonText={"Select Currency"}
-        buttonTextAfterSelection={(selectedItem) => {
-          return selectedItem;
-        }}
-        rowTextForSelection={(item) => {
-          return item;
-        }}
-      />
+      >
+        <Text style={styles.switch_style}>ILS</Text>
+        <RadioButton
+          value="first"
+          status={checked === "first" ? "checked" : "unchecked"}
+          onPress={() => setCurrencyStatus("ILS", "first")}
+        />
+        <Text style={styles.switch_style}>USD</Text>
+        <RadioButton
+          value="second"
+          status={checked === "second" ? "checked" : "unchecked"}
+          onPress={() => setCurrencyStatus("USD", "second")}
+        />
+        <Text style={styles.switch_style}>EUR</Text>
+        <RadioButton
+          value="third"
+          status={checked === "third" ? "checked" : "unchecked"}
+          onPress={() => setCurrencyStatus("EUR", "third")}
+        />
+      </View>
       <TextInput
         label="price"
         value={price}
