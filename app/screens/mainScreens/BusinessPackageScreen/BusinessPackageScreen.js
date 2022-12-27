@@ -4,7 +4,10 @@ import { Button, TextInput, RadioButton } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 import { useNavigation } from "@react-navigation/native";
 import { AxiosContext } from "../../../context/AxiosContext";
-import { checkCurrency } from "../../../utils/input-validation";
+import {
+  isValidStr,
+  isNumber,
+} from "../../../utils/input-validation";
 
 const BusinessPackageScreen = () => {
   const [packageName, setPackageName] = useState("");
@@ -30,7 +33,11 @@ const BusinessPackageScreen = () => {
       price,
     };
     try {
-      if (checkCurrency(currency)) {
+      if (
+        isValidStr(packageName) &&
+        isValidStr(description) &&
+        isNumber(price)
+      ) {
         const packageResponse = await authAxios.post(
           "/business-package",
           packageData
@@ -43,7 +50,7 @@ const BusinessPackageScreen = () => {
           navigation.navigate("Home");
         }
       } else {
-        alert("Please choose a currency");
+        alert("Make sure you fill everything correctly");
       }
     } catch (error) {
       console.error(error);

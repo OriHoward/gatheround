@@ -27,11 +27,6 @@ export function isNumber(number) {
   return number.match(validRegex) && number.length > 0;
 }
 
-export function checkCurrency(currency) {
-  let validRegex = /^[A-Z]{3}$/;
-  return currency.match(validRegex) && currency.length > 0;
-}
-
 export function isPrintable(str) {
   // regex checks for any printable ASCII character one or more times
   let regex = /^[\x20-\x7E]+$/;
