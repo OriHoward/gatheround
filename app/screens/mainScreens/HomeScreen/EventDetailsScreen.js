@@ -8,17 +8,30 @@ import {
   Text,
   Divider,
   TextInput,
+  Dialog,
+  Portal,
+  Provider,
 } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 
-const EventDetailsScreen = ({ route }) => {
+const EventDetailsScreen = ({ route, navigation }) => {
   const { id, name, event_date, address, description, limit_attending } =
     route.params;
   const [date, time] = event_date.split(" ");
 
   const [isSaved, setIsSaved] = useState(true);
+  const [isDialogVisible, setDialogVisible] = useState(false);
 
   const peachColor = "#FF7F50";
+
+  const showDialog = () => setDialogVisible(true);
+  const hideDialog = () => setDialogVisible(false);
+
+  const deleteEvent = () => {
+    // todo: send to back
+    hideDialog();
+    navigation.navigate("Home");
+  };
 
   return isSaved ? (
     <View style={styles.root}>
@@ -88,6 +101,47 @@ const EventDetailsScreen = ({ route }) => {
           >
             Save
           </Button>
+          <Button
+            icon="delete"
+            uppercase={false}
+            color="black"
+            onPress={showDialog}
+          >
+            Delete
+          </Button>
+          <Provider>
+            <View>
+              <Portal>
+                <Dialog
+                  visible={isDialogVisible}
+                  onDismiss={() => hideDialog()}
+                >
+                  <Dialog.Title>Alert</Dialog.Title>
+                  <Dialog.Content>
+                    <Paragraph>
+                      Are you sure you want to delete this event?
+                    </Paragraph>
+                  </Dialog.Content>
+                  <Dialog.Actions>
+                    <Button
+                      uppercase={false}
+                      color="black"
+                      onPress={hideDialog}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      uppercase={false}
+                      color="black"
+                      onPress={deleteEvent}
+                    >
+                      Yes
+                    </Button>
+                  </Dialog.Actions>
+                </Dialog>
+              </Portal>
+            </View>
+          </Provider>
         </Card.Actions>
       </Card>
     </View>
