@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
     padding: 15,
     marginVertical: 7,
     borderRadius: 15,
+    minWidth: 450,
+    flexWrap : "wrap"
   },
   header1_name: { fontSize: 24, fontWeight: "bold" },
   header2_price: { fontSize: 16, fontWeight: "bold", padding: 2 },
