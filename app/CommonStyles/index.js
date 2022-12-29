@@ -12,3 +12,13 @@ export const SearchStyles = StyleSheet.create({
     marginLeft: 20,
   },
 });
+
+export const CardStyles = StyleSheet.create({
+  cardContainer: {
+    alignSelf: "center",
+    width: 500,
+    borderRadius: 15,
+  },
+  boldText: { textAlign: "center", fontWeight: "bold" },
+  normalText: { textAlign: "center" },
+});

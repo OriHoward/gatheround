@@ -14,6 +14,7 @@ import {
 } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
+import { CardStyles } from "../../../CommonStyles";
 
 const EventDetailsScreen = ({ route, navigation }) => {
   const { authAxios } = useContext(AxiosContext);
@@ -43,12 +44,12 @@ const EventDetailsScreen = ({ route, navigation }) => {
 
   return isSaved ? (
     <View style={styles.root}>
-      <Card mode="outlined" style={styles.cardContainer}>
+      <Card mode="outlined" style={CardStyles.cardContainer}>
         <Card.Content>
-          <Title style={styles.boldText}>{name}</Title>
-          <Text style={styles.boldText}>{date}</Text>
-          <Text style={styles.normalText}>{time}</Text>
-          <Text style={styles.normalText}>{address}</Text>
+          <Title style={CardStyles.boldText}>{name}</Title>
+          <Text style={CardStyles.boldText}>{date}</Text>
+          <Text style={CardStyles.normalText}>{time}</Text>
+          <Text style={CardStyles.normalText}>{address}</Text>
           <Text> </Text>
           <Divider />
           <SectionTitle title={"Invitation Details"} />
@@ -68,9 +69,9 @@ const EventDetailsScreen = ({ route, navigation }) => {
     </View>
   ) : (
     <View style={styles.root}>
-      <Card mode="outlined" style={styles.cardContainer}>
+      <Card mode="outlined" style={CardStyles.cardContainer}>
         <Card.Content>
-          <Title style={styles.boldText}>{"Edit Event Details"}</Title>
+          <Title style={CardStyles.boldText}>{"Edit Event Details"}</Title>
           <TextInput
             label={"Event Name"}
             value={name}
@@ -163,12 +164,5 @@ const styles = StyleSheet.create({
     width: 500,
     borderRadius: 15,
   },
-  cardContainer: {
-    alignSelf: "center",
-    width: 500,
-    borderRadius: 15,
-  },
-  boldText: { textAlign: "center", fontWeight: "bold" },
-  normalText: { textAlign: "center" },
 });
 export default EventDetailsScreen;
