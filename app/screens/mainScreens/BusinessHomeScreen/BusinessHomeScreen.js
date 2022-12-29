@@ -36,11 +36,6 @@ const BusinessHomeScreen = () => {
       console.error(error);
     }
   };
-  // useEffect(() => {
-  //   getPackageData()
-  //     .then()
-  //     .catch((e) => console.error(e));
-  // });
 
   useFocusEffect(
     React.useCallback(() => {
