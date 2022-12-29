@@ -1,5 +1,5 @@
-import { View, StyleSheet, SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import { View, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import React, { useState, useContext } from "react";
 import {
   Button,
   Card,
@@ -12,23 +12,42 @@ import {
   Avatar,
 } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
+import { AxiosContext } from "../../../../context/AxiosContext";
+import { getBackendDateFormat } from "../../../../utils/datetime-utils";
 
 const BusinessCalendarScreen = ({ navigation }) => {
+  const { authAxios } = useContext(AxiosContext);
+
   const [open, setOpen] = useState(false); // FAB Group
-  const [dates, setDates] = useState([]); // DatePickerModal
+  const [dates, setDates] = useState([]); // DatePickerModal (array of dates)
   const [isDatePickerVisible, setDatePickerVisible] = useState(false); // DatePickerModal
   const [isMenuVisible, setMenuVisible] = useState(false); // Menu
   const [isUnavailableDatesVisible, setUnavailableDatesVisibility] =
     useState(false); // Menu Item
   const [dateFilterValue, setDateFilterValue] = useState("first"); // RadioButton.Group
-  const [data, setData] = useState({
-    unavailable: [{ date: "25/12/2022", details: { description: "Babi" } }],
-  });
+  const [data, setData] = useState([]);
 
   const onDismiss = () => setDatePickerVisible(false);
-  const onConfirm = (selectedDates) => {
-    const { dates } = selectedDates;
-    setDates(dates);
+  const onConfirm = async (selectedDates) => {
+    try {
+      const { dates } = selectedDates;
+      setDates(dates);
+      const unavailableDatesData = [];
+      dates.forEach((element) => {
+        unavailableDatesData.push({
+          date: getBackendDateFormat(element),
+          category: "Unavailable",
+          description: "",
+        });
+        console.log(unavailableDatesData);
+      });
+      const response = await authAxios.post(
+        "/booked-dates",
+        unavailableDatesData
+      );
+    } catch (e) {
+      console.error(e);
+    }
     setDatePickerVisible(false);
   };
 
@@ -43,6 +62,32 @@ const BusinessCalendarScreen = ({ navigation }) => {
       }}
     />
   );
+
+  const renderItem = ({ item }) => {
+    const { id, date, category, description } = item;
+    const fDate = getFormattedDate_Front2Back(date);
+    return (
+      <Card
+        mode="outlined"
+        style={styles.cardContainer}
+        onPress={() =>
+          navigation.navigate("Details", {
+            id,
+            date: fDate,
+            category,
+            description,
+          })
+        }
+      >
+        <Card.Title
+          title={date.toLocaleDateString()}
+          subtitle={category}
+          left={LeftContent}
+          right={RightContent}
+        />
+      </Card>
+    );
+  };
 
   return (
     <Provider>
@@ -115,18 +160,13 @@ const BusinessCalendarScreen = ({ navigation }) => {
           ]}
           onStateChange={({ open }) => setOpen(open)}
         />
-        <Card
-          mode="outlined"
-          style={styles.cardContainer}
-          onPress={() => navigation.navigate("Details", { data })}
-        >
-          <Card.Title
-            title="Card Title"
-            subtitle="Card Subtitle"
-            left={LeftContent}
-            right={RightContent}
+        <View>
+          <FlatList
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
           />
-        </Card>
+        </View>
       </View>
     </Provider>
   );

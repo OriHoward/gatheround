@@ -1,31 +1,25 @@
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import React from "react";
-import { Card, Button, Title, Paragraph } from "react-native-paper";
+import { Card, Title, Paragraph, Text, Divider } from "react-native-paper";
+import { CardStyles } from "../../../../CommonStyles";
 
 const CalendarDetailsScreen = ({ route }) => {
+  const { id, date, category, description } = route.params;
   return (
-    <View style={styles.root}>
-      <Card mode="outlined">
+    <View>
+      <Card mode="outlined" style={CardStyles.cardContainer}>
         <Card.Content>
-          <Title>Card title</Title>
-          <Paragraph>Card content</Paragraph>
+          <Title style={CardStyles.boldText}>{category}</Title>
+          <Text style={CardStyles.boldText}>{date}</Text>
+          <Text> </Text>
+          <Divider />
+          <Paragraph>{description}</Paragraph>
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-        <Card.Actions>
-          <Button>Cancel</Button>
-          <Button>Ok</Button>
-        </Card.Actions>
+        <Text> </Text>
       </Card>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  root: {
-    alignSelf: "center",
-    width: 500,
-    borderRadius: 15,
-  },
-});
 
 export default CalendarDetailsScreen;
