@@ -13,7 +13,10 @@ import {
 } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 import { AxiosContext } from "../../../../context/AxiosContext";
-import { getBackendDateFormat } from "../../../../utils/datetime-utils";
+import {
+  getBackendDateFormat,
+  getFrontendDateFormat,
+} from "../../../../utils/datetime-utils";
 import { useFocusEffect } from "@react-navigation/native";
 
 const BusinessCalendarScreen = ({ navigation }) => {
@@ -54,9 +57,8 @@ const BusinessCalendarScreen = ({ navigation }) => {
   const getCalendarEvents = async () => {
     try {
       const response = await authAxios.get("/booked-dates");
-      const { data } = response;
       // todo: update dates in date picker state
-      setData(data);
+      setData(response.data);
     } catch (e) {
       console.error(e);
     }
