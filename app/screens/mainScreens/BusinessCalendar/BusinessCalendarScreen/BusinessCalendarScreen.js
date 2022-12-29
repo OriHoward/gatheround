@@ -14,6 +14,7 @@ import {
 import { DatePickerModal } from "react-native-paper-dates";
 import { AxiosContext } from "../../../../context/AxiosContext";
 import { getBackendDateFormat } from "../../../../utils/datetime-utils";
+import { useFocusEffect } from "@react-navigation/native";
 
 const BusinessCalendarScreen = ({ navigation }) => {
   const { authAxios } = useContext(AxiosContext);
@@ -39,7 +40,6 @@ const BusinessCalendarScreen = ({ navigation }) => {
           category: "Unavailable",
           description: "",
         });
-        console.log(unavailableDatesData);
       });
       const response = await authAxios.post(
         "/booked-dates",
@@ -50,6 +50,24 @@ const BusinessCalendarScreen = ({ navigation }) => {
     }
     setDatePickerVisible(false);
   };
+
+  const getCalendarEvents = async () => {
+    try {
+      const response = await authAxios.get("/booked-dates");
+      const { data } = response;
+      // todo: update dates in date picker state
+      setData(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useFocusEffect(
+    React.useCallback(() => {
+      getCalendarEvents()
+        .then()
+        .catch((e) => console.error(e));
+    }, [isDatePickerVisible]) // refreshes data after closing the date picker modal
+  );
 
   const peachColor = "#FF7F50";
   const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
@@ -65,22 +83,22 @@ const BusinessCalendarScreen = ({ navigation }) => {
 
   const renderItem = ({ item }) => {
     const { id, date, category, description } = item;
-    const fDate = getFormattedDate_Front2Back(date);
     return (
       <Card
         mode="outlined"
         style={styles.cardContainer}
+        key={id}
         onPress={() =>
           navigation.navigate("Details", {
             id,
-            date: fDate,
+            date,
             category,
             description,
           })
         }
       >
         <Card.Title
-          title={date.toLocaleDateString()}
+          title={date}
           subtitle={category}
           left={LeftContent}
           right={RightContent}
@@ -161,11 +179,7 @@ const BusinessCalendarScreen = ({ navigation }) => {
           onStateChange={({ open }) => setOpen(open)}
         />
         <View>
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
+          <FlatList data={data} renderItem={renderItem} />
         </View>
       </View>
     </Provider>
