@@ -3,15 +3,14 @@ import React from "react";
 import { Button } from "react-native-paper";
 
 const PackageButton = ({
-  onPressEdit,
-  onPressDelete,
+  onPressOpacity,
   packageName,
   description,
   currency,
   price,
 }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPressOpacity}>
       <Text style={styles.header1_name}>{packageName}</Text>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.header2_price}>
@@ -28,26 +27,7 @@ const PackageButton = ({
       >
         <Text style={styles.header3_desc}>{description}</Text>
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-        <Button
-          style={styles.editButton}
-          uppercase={false}
-          onPress={onPressEdit}
-          color="black"
-          labelStyle={{ fontWeight: "bold" }}
-        >
-          Edit
-        </Button>
-        <Button
-          style={styles.deleteButton}
-          uppercase={false}
-          onPress={onPressDelete}
-          color="black"
-          labelStyle={{ fontWeight: "bold" }}
-        >
-          Delete
-        </Button>
-      </View>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}></View>
     </TouchableOpacity>
   );
 };
@@ -62,7 +42,7 @@ const styles = StyleSheet.create({
     marginVertical: 7,
     borderRadius: 15,
     minWidth: 450,
-    flexWrap : "wrap"
+    flexWrap: "wrap",
   },
   header1_name: { fontSize: 24, fontWeight: "bold" },
   header2_price: { fontSize: 16, fontWeight: "bold", padding: 2 },
