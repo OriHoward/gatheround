@@ -3,17 +3,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SectionTitle from "../components/SectionTitle";
 import BusinessCalendarScreen from "./BusinessCalendar/BusinessCalendarScreen";
 import CalendarDetailsScreen from "./BusinessCalendar/CalendarDetailsScreen";
-import BusinessHomeScreen from "./BusinessHomeScreen";
+import { BusinessHomeScreen,PackageDetailsScreen } from "./BusinessHomeScreen/BusinessHomeScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import BusinessProfileScreen from "./BusinessProfileScreen";
 import BusinessPackageScreen from "./BusinessPackageScreen";
 
+// import here the packageDetailsScreen
 const Tab = createBottomTabNavigator();
 const CalendarStack = createNativeStackNavigator();
+const homeStack = createNativeStackNavigator();
 
 const CalendarScreenName = "Calendar";
 const CalendarTabName = "Calendar Tab";
 const HomeScreenName = "Home";
+const PackageDetailsName = "My Packages";
 const ProfileScreenName = "My Profile";
 const PackageScreenName = "Create New Package";
 
@@ -43,7 +46,27 @@ const BusinessNavigator = () => {
         style: { padding: 10, height: 70 },
       })}
     >
-      <Tab.Screen name={HomeScreenName} component={BusinessHomeScreen} />
+      <Tab.Screen name={HomeScreenName}>
+        {() => (
+          <homeStack.Navigator>
+            <homeStack.Screen
+              name={HomeScreenName}
+              component={BusinessHomeScreen}
+              options={{ headerShown: false }}
+            />
+            <homeStack.Screen
+              name={PackageDetailsName}
+              component={PackageDetailsScreen}
+              options={{
+                headerTitleAlign: "center",
+                headerTransparent: true,
+                contentStyle: { padding: 50 },
+                headerTitle: () => <SectionTitle title={"My Package Details"} />,
+              }}
+            />
+          </homeStack.Navigator>
+        )}
+      </Tab.Screen>
       <Tab.Screen name={ProfileScreenName} component={BusinessProfileScreen} />
       <Tab.Screen name={PackageScreenName} component={BusinessPackageScreen} />
       <Tab.Screen
