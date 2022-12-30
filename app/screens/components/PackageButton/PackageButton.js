@@ -16,7 +16,6 @@ const PackageButton = ({
         <Text style={styles.header2_price}>
           {price} {currency}
         </Text>
-        {/* <Text style={styles.header2_currency}>{currency}</Text> */}
       </View>
       <View
         style={{
@@ -48,20 +47,6 @@ const styles = StyleSheet.create({
   header2_price: { fontSize: 16, fontWeight: "bold", padding: 2 },
   header2_currency: { fontSize: 16 },
   header3_desc: { fontSize: 16, color: "gray" },
-  editButton: {
-    backgroundColor: "gray",
-    padding: 4,
-    margin: 4,
-    borderRadius: 15,
-    alignSelf: "flex-end",
-  },
-  deleteButton: {
-    backgroundColor: "#e74c3c",
-    padding: 4,
-    margin: 4,
-    borderRadius: 15,
-    alignSelf: "flex-end",
-  },
 });
 
 export default PackageButton;
