@@ -13,7 +13,6 @@ const BusinessHomeScreen = ({ navigation }) => {
   const { authAxios } = useContext(AxiosContext);
   const logout = authContext.logout;
 
-
   const getPackageData = async () => {
     try {
       const response = await authAxios.get("/business-package?package-limit=4");
@@ -43,7 +42,6 @@ const BusinessHomeScreen = ({ navigation }) => {
   } else {
     return (
       <View style={{ alignItems: "center" }}>
-        <SectionTitle title={"My Packages"} />
         <SectionList
           sections={myPackages}
           keyExtractor={(item, index) => item + index}
