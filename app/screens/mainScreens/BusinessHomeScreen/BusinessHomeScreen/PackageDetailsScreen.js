@@ -164,7 +164,7 @@ const PackageDetailsScreen = ({ route, navigation }) => {
                 <Dialog
                   visible={IsVisible}
                   onDismiss={hideDialog}
-                  style={{ minWidth: 300, alignSelf: "center", marginTop: 250 }}
+                  style={{ minWidth: 300,minHeight:200, alignSelf: "center", marginTop: "auto",marginBottom: "auto" }}
                 >
                   <Dialog.Title>Alert</Dialog.Title>
                   <Dialog.Content>
@@ -216,7 +216,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
     elevation: 5,
-    maxWidth: 500,
+    minWidth: "50%",
+    maxHeight: "70%",
+    marginTop: 60,
   },
   title: {
     textAlign: "center",
