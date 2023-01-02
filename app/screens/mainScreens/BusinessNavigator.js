@@ -52,7 +52,12 @@ const BusinessNavigator = () => {
             <homeStack.Screen
               name={HomeScreenName}
               component={BusinessHomeScreen}
-              options={{ headerShown: false }}
+              options={{
+                headerTitleAlign: "center",
+                headerTransparent: true,
+                contentStyle: { padding: 50 },
+                headerTitle: () => <SectionTitle title={"My Package"} />,
+              }}
             />
             <homeStack.Screen
               name={PackageDetailsName}
