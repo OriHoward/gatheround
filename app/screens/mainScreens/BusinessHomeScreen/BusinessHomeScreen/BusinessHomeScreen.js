@@ -5,6 +5,7 @@ import SectionTitle from "../../../components/SectionTitle";
 import { AuthContext } from "../../../../context/AuthContext";
 import { AxiosContext } from "../../../../context/AxiosContext";
 import PackageButton from "../../../components/PackageButton";
+import { useFocusEffect } from "@react-navigation/native";
 
 const BusinessHomeScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
@@ -22,11 +23,13 @@ const BusinessHomeScreen = ({ navigation }) => {
       console.error(error);
     }
   };
-  useEffect(() => {
-    getPackageData()
-      .then()
-      .catch((e) => console.error(e));
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      getPackageData()
+        .then()
+        .catch((e) => console.error(e));
+    }, [])
+  );
 
   if (isLoading) {
     getPackageData()
