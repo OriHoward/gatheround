@@ -36,6 +36,7 @@ const BusinessCalendarScreen = ({ navigation }) => {
     try {
       const { dates } = selectedDates;
       setDates(dates);
+      console.log("SELECTED: ", dates);
       const unavailableDatesData = [];
       dates.forEach((element) => {
         unavailableDatesData.push({
@@ -57,7 +58,16 @@ const BusinessCalendarScreen = ({ navigation }) => {
   const getCalendarEvents = async () => {
     try {
       const response = await authAxios.get("/booked-dates");
-      // todo: update dates in date picker state
+      // todo: delete dates that were unselected in date picker state
+      const unavailableDates = [];
+      response.data.forEach((element) => {
+        if (element.category === "Unavailable") {
+          const [day, month, year] = element.date.split("/");
+          const formattedDate = `${year}-${month}-${day}`;
+          unavailableDates.push(new Date(formattedDate));
+        }
+      });
+      setDates(unavailableDates);
       setData(response.data);
     } catch (e) {
       console.error(e);
@@ -112,7 +122,7 @@ const BusinessCalendarScreen = ({ navigation }) => {
   return (
     <Provider>
       <View style={styles.root}>
-        <SafeAreaView style={styles.menuContainer}>
+        {/* <SafeAreaView style={styles.menuContainer}>
           <Menu
             visible={isMenuVisible}
             onDismiss={() => setMenuVisible(false)}
@@ -155,7 +165,7 @@ const BusinessCalendarScreen = ({ navigation }) => {
               <></>
             )}
           </Menu>
-        </SafeAreaView>
+        </SafeAreaView> */}
         <DatePickerModal
           visible={isDatePickerVisible}
           onDismiss={onDismiss}
