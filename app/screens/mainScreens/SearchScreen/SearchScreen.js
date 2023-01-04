@@ -1,5 +1,5 @@
 import { Text, StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-native'
-import {ScrollView} from 'react-native'
+import { ScrollView } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import { Button } from 'react-native-paper'
 import { AxiosContext } from '../../../context/AxiosContext'
@@ -33,7 +33,7 @@ const SearchScreen = () => {
 		fetchDistinctValues()
 	}, [])
 	/*
-    This function sends a get request to recieve all the business profiles that match the search query.
+	This function sends a get request to recieve all the business profiles that match the search query.
   */
 
 	const onSearchClick = async () => {
@@ -92,57 +92,62 @@ const SearchScreen = () => {
 		<View style={styles.root}>
 			<View style={styles.root}>
 				<View style={styles.parentFilter}>
+					<View style={{ height: 200 }}>
+						<List.Section>
+							<ScrollView style={{ maxHeight: 150 }}>
+								<List.Accordion
+									title={city ? `${city}` : 'City'}
+									style={{ width: 250, maxWidth: screenWidth / 4 }}
+									titleStyle={{ fontSize: 12 }}
+									expanded={expandCity}
+									onPress={() => {
+										setExpandCity(!expandCity)
+									}}
+								>
+									{getListItems(expandCity)(availableCities, setCity, setExpandCity)}
+								</List.Accordion>
+							</ScrollView>
+						</List.Section>
+					</View>
+					<View style={{ height: 200 }}>
 					<List.Section>
-					<ScrollView style={{maxHeight:150}}>
-						<List.Accordion
-							title={city ? `${city}` : 'City'}
-							style={{ width: 250, maxWidth: screenWidth/4 }}
-							titleStyle={{fontSize:12}}
-							expanded={expandCity}
-							onPress={() => {
-								setExpandCity(!expandCity)
-							}}
-						>
-							{getListItems(expandCity)(availableCities, setCity, setExpandCity)}
-						</List.Accordion>
+						<ScrollView style={{ maxHeight: 150 }}>
+							<List.Accordion
+								title={desiredProfession ? `${desiredProfession}` : 'Profession'}
+								style={{ width: 250, maxWidth: screenWidth / 4 }}
+								titleStyle={{ fontSize: 12 }}
+								expanded={expandProfession}
+								onPress={() => {
+									setExpandProfession(!expandProfession)
+								}}
+							>
+								{getListItems(expandProfession)(availableProfessions, setDesiredProfession, setExpandProfession)}
+							</List.Accordion>
 						</ScrollView>
 					</List.Section>
+					</View>
+					<View style={{ height: 200 }}>
 					<List.Section>
-					<ScrollView style={{maxHeight:150}}>
-						<List.Accordion
-							title={desiredProfession ? `${desiredProfession}` : 'Profession'}
-							style={{ width: 250, maxWidth: screenWidth/4 }}
-							titleStyle={{fontSize:12}}
-							expanded={expandProfession}
-							onPress={() => {
-								setExpandProfession(!expandProfession)
-							}}
-						>
-							{getListItems(expandProfession)(availableProfessions, setDesiredProfession, setExpandProfession)}
-						</List.Accordion>
+						<ScrollView style={{ maxHeight: 150 }}>
+							<List.Accordion
+								title={`Ordering: ${priceOrdering}`}
+								style={{ width: 250, maxWidth: screenWidth / 4 }}
+								titleStyle={{ fontSize: 12 }}
+								expanded={expandOrder}
+								onPress={() => {
+									setExpandOrder(!expandOrder)
+								}}
+							>
+								{getListItems(expandOrder)(['asc', 'desc'], setPriceOrdering, setExpandOrder)}
+							</List.Accordion>
 						</ScrollView>
 					</List.Section>
-
-					<List.Section>
-					<ScrollView style={{maxHeight:150}}>
-						<List.Accordion
-							title={`Ordering: ${priceOrdering}`}
-							style={{ width: 250, maxWidth: screenWidth/4 }}
-							titleStyle={{fontSize:12}}
-							expanded={expandOrder}
-							onPress={() => {
-								setExpandOrder(!expandOrder)
-							}}
-						>
-							{getListItems(expandOrder)(['asc', 'desc'], setPriceOrdering, setExpandOrder)}
-						</List.Accordion>
-						</ScrollView>
-					</List.Section>
+					</View>
 					<View style={{ marginTop: 12 }}>
-					<Ionicons name={'search-outline'} size={40} color={'blue'} onPress={onSearchClick} />
+						<Ionicons name={'search-outline'} size={40} color={'blue'} onPress={onSearchClick} />
+					</View>
 				</View>
-				</View>
-				
+
 				<Button style={{ marginTop: 10 }} color="black" uppercase={false} onPress={cleanData}>
 					Clear
 				</Button>
