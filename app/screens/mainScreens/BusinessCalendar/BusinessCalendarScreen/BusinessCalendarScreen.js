@@ -1,22 +1,9 @@
-import { View, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import React, { useState, useContext } from "react";
-import {
-  Button,
-  Card,
-  Divider,
-  FAB,
-  IconButton,
-  Menu,
-  Provider,
-  RadioButton,
-  Avatar,
-} from "react-native-paper";
+import { Card, FAB, IconButton, Avatar } from "react-native-paper";
 import { DatePickerModal } from "react-native-paper-dates";
 import { AxiosContext } from "../../../../context/AxiosContext";
-import {
-  getBackendDateFormat,
-  getFrontendDateFormat,
-} from "../../../../utils/datetime-utils";
+import { getBackendDateFormat } from "../../../../utils/datetime-utils";
 import { useFocusEffect } from "@react-navigation/native";
 
 const BusinessCalendarScreen = ({ navigation }) => {
@@ -25,10 +12,6 @@ const BusinessCalendarScreen = ({ navigation }) => {
   const [open, setOpen] = useState(false); // FAB Group
   const [dates, setDates] = useState([]); // DatePickerModal (array of dates)
   const [isDatePickerVisible, setDatePickerVisible] = useState(false); // DatePickerModal
-  const [isMenuVisible, setMenuVisible] = useState(false); // Menu
-  const [isUnavailableDatesVisible, setUnavailableDatesVisibility] =
-    useState(false); // Menu Item
-  const [dateFilterValue, setDateFilterValue] = useState("first"); // RadioButton.Group
   const [data, setData] = useState([]);
 
   const onDismiss = () => setDatePickerVisible(false);
@@ -36,7 +19,6 @@ const BusinessCalendarScreen = ({ navigation }) => {
     try {
       const { dates } = selectedDates;
       setDates(dates);
-      console.log("SELECTED: ", dates);
       const unavailableDatesData = [];
       dates.forEach((element) => {
         unavailableDatesData.push({
@@ -120,81 +102,35 @@ const BusinessCalendarScreen = ({ navigation }) => {
   };
 
   return (
-    <Provider>
-      <View style={styles.root}>
-        {/* <SafeAreaView style={styles.menuContainer}>
-          <Menu
-            visible={isMenuVisible}
-            onDismiss={() => setMenuVisible(false)}
-            anchor={
-              <Button
-                onPress={() => setMenuVisible(true)}
-                uppercase={false}
-                color={"black"}
-                labelStyle={styles.filterButtonLabel}
-                style={styles.filterButton}
-              >
-                Filter
-              </Button>
-            }
-          >
-            <Menu.Item
-              title={
-                isUnavailableDatesVisible
-                  ? "Hide Unavailable Dates"
-                  : "Show Unavailable Dates"
-              }
-              onPress={() =>
-                setUnavailableDatesVisibility(!isUnavailableDatesVisible)
-              }
-            />
-            {isUnavailableDatesVisible ? (
-              <>
-                <Divider />
-                <RadioButton.Group
-                  onValueChange={(value) => setDateFilterValue(value)}
-                  value={dateFilterValue}
-                >
-                  <RadioButton.Item label="Week" value="first" />
-                  <RadioButton.Item label="Month" value="second" />
-                  <RadioButton.Item label="6 Months" value="third" />
-                  <RadioButton.Item label="Year" value="fourth" />
-                </RadioButton.Group>
-              </>
-            ) : (
-              <></>
-            )}
-          </Menu>
-        </SafeAreaView> */}
-        <DatePickerModal
-          visible={isDatePickerVisible}
-          onDismiss={onDismiss}
-          onConfirm={onConfirm}
-          validRange={{ startDate: new Date() }}
-          dates={dates}
-          label="Select Dates"
-          saveLabel="Save"
-          mode="multiple"
-          uppercase={false}
-        />
-        <FAB.Group
-          open={open}
-          visible
-          icon="plus"
-          actions={[
-            {
-              icon: "calendar-minus",
-              label: "Select Unavailable Dates",
-              onPress: () => setDatePickerVisible(true),
-            },
-          ]}
-          onStateChange={({ open }) => setOpen(open)}
-        />
-        <View>
-          <FlatList data={data} renderItem={renderItem} />
-        </View>
+    <View style={styles.root}>
+      <DatePickerModal
+        visible={isDatePickerVisible}
+        onDismiss={onDismiss}
+        onConfirm={onConfirm}
+        validRange={{ startDate: new Date() }}
+        dates={dates}
+        label="Select Dates"
+        saveLabel="Save"
+        mode="multiple"
+        uppercase={false}
+      />
+      <FAB.Group
+        open={open}
+        visible
+        icon="plus"
+        actions={[
+          {
+            icon: "calendar-minus",
+            label: "Select Unavailable Dates",
+            onPress: () => setDatePickerVisible(true),
+          },
+        ]}
+        onStateChange={({ open }) => setOpen(open)}
+      />
+      <View>
+        <FlatList data={data} renderItem={renderItem} />
       </View>
-    </Provider>
+    </View>
   );
 };
 
