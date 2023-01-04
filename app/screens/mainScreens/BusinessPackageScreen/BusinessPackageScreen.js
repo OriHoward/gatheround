@@ -5,7 +5,7 @@ import SectionTitle from "../../components/SectionTitle";
 import { useNavigation } from "@react-navigation/native";
 import { AxiosContext } from "../../../context/AxiosContext";
 import {
-  isValidStr,
+  isPrintable,
   isNumber,
 } from "../../../utils/input-validation";
 
@@ -34,8 +34,8 @@ const BusinessPackageScreen = () => {
     };
     try {
       if (
-        isValidStr(packageName) &&
-        isValidStr(description) &&
+        isPrintable(packageName) &&
+        isPrintable(description) &&
         isNumber(price)
       ) {
         const packageResponse = await authAxios.post(

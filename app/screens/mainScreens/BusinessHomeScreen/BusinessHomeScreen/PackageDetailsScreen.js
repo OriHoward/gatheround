@@ -129,6 +129,7 @@ const PackageDetailsScreen = ({ route, navigation }) => {
           />
         </View>
         <TextInput
+          multiline={true}
           label={"Description"}
           value={description}
           activeUnderlineColor={peachColor}
@@ -164,7 +165,7 @@ const PackageDetailsScreen = ({ route, navigation }) => {
                 <Dialog
                   visible={IsVisible}
                   onDismiss={hideDialog}
-                  style={{ minWidth: 300,minHeight:200, alignSelf: "center", marginTop: "auto",marginBottom: "auto" }}
+                  style={styles.dialogStyle}
                 >
                   <Dialog.Title>Alert</Dialog.Title>
                   <Dialog.Content>
@@ -254,6 +255,12 @@ const styles = StyleSheet.create({
   input: {
     minWidth: 300,
     maxHeight: 70,
+  },
+  dialogStyle: {
+    minWidth: 300,
+    alignSelf: "center",
+    marginTop: "auto",
+    marginBottom: "auto",
   },
 });
 export default PackageDetailsScreen;
