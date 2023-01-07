@@ -2,7 +2,7 @@ import { StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-nati
 import { ScrollView } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import { AxiosContext } from '../../../context/AxiosContext'
-import { List, Button, Card, Text, Avatar, TouchableRipple, Divider } from 'react-native-paper'
+import { List, Button, Card, Text, Avatar, TouchableRipple} from 'react-native-paper'
 import BookingDialog from '../BookingDialog'
 
 const screenWidth = Dimensions.get('window').width
