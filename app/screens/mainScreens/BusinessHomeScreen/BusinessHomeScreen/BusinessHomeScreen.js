@@ -58,7 +58,7 @@ const BusinessHomeScreen = ({ navigation }) => {
             } = item;
             return (
               <PackageButton
-                onPressOpacity={() =>
+                onPressCard={() =>
                   navigation.navigate("My Packages", {
                     id,
                     packageName,
