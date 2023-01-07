@@ -81,8 +81,8 @@ const PackageDetailsScreen = ({ route, navigation }) => {
       </Card>
     </View>
   ) : (
-    <View style={styles.root}>
-      <Card style={styles.cardContainer}>
+    <View style={styles.editRoot}>
+      <Card style={styles.cardEditContainer}>
         <Title style={styles.title}>{"Edit Package Details"}</Title>
         <TextInput
           label={"Package Name"}
@@ -107,10 +107,11 @@ const PackageDetailsScreen = ({ route, navigation }) => {
             alignItems: "center",
             flexDirection: "row",
             justifyContent: "flex-start",
+            marginHorizontal: 15
           }}
         >
           <Text>ILS</Text>
-          <RadioButton
+          <RadioButton 
             value="first"
             status={checked === "first" ? "checked" : "unchecked"}
             onPress={() => setCurrencyStatus("ILS", "first")}
@@ -136,7 +137,7 @@ const PackageDetailsScreen = ({ route, navigation }) => {
           onChange={(newDesc) =>
             setPackageInfo({ ...packageInfo, description: newDesc })
           }
-          style={styles.input}
+          style={styles.inputDesc}
         />
         <Card.Actions>
           <Button
@@ -206,11 +207,17 @@ const PackageDetailsScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   root: {
     alignSelf: "center",
-    marginTop: 30,
+    marginTop: 15,
+    marginBottom : 15,
+  },
+  editRoot: {
+    marginTop: 10,
+    alignSelf: "center",
+    minWidth: "25%",
+    minHeight: "35%",
   },
   cardContainer: {
     backgroundColor: "#fff",
-    padding: 20,
     borderRadius: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -218,8 +225,18 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     minWidth: "50%",
-    maxHeight: "70%",
-    marginTop: 60,
+  },
+  cardEditContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+    minHeight: 350,
+    minWidth: 250,
+ 
   },
   title: {
     textAlign: "center",
@@ -255,6 +272,13 @@ const styles = StyleSheet.create({
   input: {
     minWidth: 300,
     maxHeight: 70,
+    marginHorizontal: 15,
+  },
+  inputDesc : {
+    minWidth: 300,
+    height: 100,
+    marginHorizontal: 15,
+    paddingBottom: 30,
   },
   dialogStyle: {
     minWidth: 300,
