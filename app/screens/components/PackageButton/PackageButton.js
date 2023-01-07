@@ -1,54 +1,113 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import React from "react";
-import { Button } from "react-native-paper";
+import { Title, Text, Card, Button } from "react-native-paper";
 
 const PackageButton = ({
-  onPressOpacity,
+  onPressCard,
   packageName,
   description,
   currency,
   price,
 }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPressOpacity}>
-      <Text style={styles.header1_name}>{packageName}</Text>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={styles.header2_price}>
-          {price} {currency}
-        </Text>
-      </View>
-      <View
-        style={{
-          alignItems: "center",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={styles.header3_desc}>{description}</Text>
-      </View>
-      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}></View>
-    </TouchableOpacity>
+    <View style={styles.root}>
+      <Card style={styles.cardContainer}>
+        <View style={styles.imageContainer}>
+          {/* <Image
+            source={require("./../../../../assets/Images/packages.jpg")}
+            style={styles.image}
+          /> */}
+        </View>
+        <Card.Content style={{ zIndex: 1 }}>
+          <Title style={styles.title}>{packageName}</Title>
+          <View style={styles.priceContainer}>
+            <Text style={styles.label}>Price: </Text>
+            <Text style={styles.price}>{price}</Text>
+            <Text style={styles.currency}>{currency}</Text>
+          </View>
+          <Text style={styles.description}>{description}</Text>
+        </Card.Content>
+        <Card.Actions>
+          <Button
+            icon="eye-outline"
+            uppercase={false}
+            color="black"
+            onPress={onPressCard}
+          >
+            View Package
+          </Button>
+        </Card.Actions>
+      </Card>
+    </View>
   );
 };
-
 const styles = StyleSheet.create({
-  container: {
+  root: {
     alignSelf: "center",
-    backgroundColor: "#dddddd",
-    width: "100%",
-    maxWidth: 500,
-    padding: 15,
-    marginVertical: 7,
-    borderRadius: 15,
-    marginTop : 50,
-    minWidth: 300,
-    maxWidth: "80%",
-    flexWrap: "wrap",
+    marginTop: 15,
+    marginBottom: 15,
   },
-  header1_name: { fontSize: 24, fontWeight: "bold" },
-  header2_price: { fontSize: 16, fontWeight: "bold", padding: 2 },
-  header2_currency: { fontSize: 16 },
-  header3_desc: { fontSize: 16, color: "gray" },
+  cardContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 5,
+    minWidth: "50%",
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "900",
+    marginBottom: 10,
+  },
+
+  priceContainer: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
+  price: {
+    marginLeft: 4,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  currency: {
+    fontSize: 16,
+    marginLeft: 5,
+    fontWeight: "bold",
+  },
+  description: {
+    fontSize: 14,
+    color: "#666",
+    maxWidth: 400,
+    marginBottom: 5,
+    fontWeight: "bold",
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  input: {
+    minWidth: 300,
+    maxHeight: 70,
+  },
+  imageContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: -1,
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+  },
 });
 
 export default PackageButton;
