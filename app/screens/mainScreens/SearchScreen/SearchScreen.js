@@ -20,6 +20,7 @@ const SearchScreen = () => {
 	const [expandProfession, setExpandProfession] = useState(false)
 	const [expandOrder, setExpandOrder] = useState(false)
 	const [visibleBookDialog, setvisibleBookDialog] = useState(false)
+	const [bookingData, setBookingData] = useState({})
 
 	const fetchDistinctValues = async () => {
 		const resp = await authAxios.get(`/business-search-meta`)
@@ -53,14 +54,15 @@ const SearchScreen = () => {
 		}
 	}
 
-	const onBookClick = () => {
-		console.log("Here")
+	const onBookClick = (dataForBooking) => {
+		setBookingData(dataForBooking)
 		setvisibleBookDialog(true)
 	}
 
 	const closeDialog = () => {
 		setvisibleBookDialog(false);
-	  }
+		setBookingData({})
+	}
 
 	const cleanData = () => {
 		setDataToDispay([])
@@ -70,7 +72,7 @@ const SearchScreen = () => {
 	}
 
 	const renderSearchItem = ({ item }) => {
-		const { id, profession, country, city, phone_number, price, currency, package_name, description } = item
+		const { business_id: businessId, package_id: packageId, profession, country, city, phone_number, price, currency, package_name, description } = item
 		return (
 			<View style={styles.searchResultWrapper}>
 				<Card mode='outlined'>
@@ -84,7 +86,7 @@ const SearchScreen = () => {
 						<Text variant="bodyMedium">Contact :{phone_number}</Text>
 					</Card.Content>
 					<Card.Actions>
-						<Button onPress={() => onBookClick()}>Book Service</Button>
+						<Button onPress={() => onBookClick({ businessId, packageId })}>Book Service</Button>
 					</Card.Actions>
 				</Card>
 			</View>
@@ -180,11 +182,11 @@ const SearchScreen = () => {
 						style={{ width: '100%' }}
 						data={dataToDisplay}
 						renderItem={renderSearchItem}
-						keyExtractor={(item) => item.id}
+						keyExtractor={(item) => `${item.package_id}_${item.business_id}`}
 					/>
 				</SafeAreaView>
 			</View>
-			<BookingDialog visible={visibleBookDialog} onClose={closeDialog} />
+			<BookingDialog visible={visibleBookDialog} onClose={closeDialog} data={bookingData}/>
 		</View>
 	)
 }
@@ -219,14 +221,14 @@ const styles = StyleSheet.create({
 	parentFilter: {
 		flexDirection: 'row',
 		flex: 1,
-    	alignContent: "center",
-    	justifyContent: "center",
+		alignContent: "center",
+		justifyContent: "center",
 	},
 	container: {
 		flex: 1,
 		// width: screenWidth * 0.5,
 		// height: screenHeight * 0.6,
-		
+
 	},
 })
 
