@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useCallback, useContext, useState } from 'react';
 import { View, Dimensions, ScrollView } from 'react-native';
-import { List, Button, Dialog, Portal, Provider, Text, TextInput } from 'react-native-paper';
+import { List, Button, Dialog, Portal, Provider, Text, TextInput, Avatar } from 'react-native-paper';
 import { useFocusEffect } from "@react-navigation/native";
 import { AxiosContext } from '../../../context/AxiosContext';
 
@@ -20,6 +20,7 @@ const MyComponent = (props) => {
     const [desiredEvent, setDesiredEvent] = useState("")
     const [desiredEventId, setDesiredEventId] = useState()
     const [description, setDescription] = useState("");
+    const [bookingError, setBookingError] = useState("")
 
     const getMyEvents = async () => {
         const response = await authAxios.get("/events");
@@ -46,7 +47,13 @@ const MyComponent = (props) => {
             await sendBookingRequest()
             onClose()
         } catch (error) {
-            console.log(error)
+            console.log(error, error.response.status, error.response.status === 409)
+            if (error.response.status === 409) {
+                setBookingError("Booking already exists")
+            } else {
+                setBookingError("Booking Error")
+            }
+
         }
     }
 
@@ -99,9 +106,11 @@ const MyComponent = (props) => {
                                     </ScrollView>
                                 </List.Section>
                             </View>
+                            {bookingError ? <Text variant="bodyMedium">{bookingError}</Text> : null}
                         </Dialog.Content>
                         <Dialog.Actions>
-                            <Button onPress={onBookingPress}>Done</Button>
+                            <Button onPress={onBookingPress}>Book</Button>
+                            <Button onPress={onClose}>Close</Button>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>
