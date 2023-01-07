@@ -170,17 +170,16 @@ const SearchScreen = () => {
 						</List.Section>
 					</View>
 
-					<View style={{ marginTop: 12 }}>
+					<View style={styles.searchAssist}>
 						<TouchableRipple onPress={onSearchClick}>
 							<Avatar.Icon size={44} icon="magnify" />
+						</TouchableRipple>
+						<TouchableRipple onPress={cleanData}>
+							<Avatar.Icon size={44} icon="close-circle" />
 						</TouchableRipple>
 					</View>
 
 				</View>
-
-				<Button color="black" uppercase={false} onPress={cleanData}>
-					Clear
-				</Button>
 			</View>
 
 			<View style={{ height: screenHeight * 0.68, paddingBottom: 20 }}>
@@ -237,6 +236,10 @@ const styles = StyleSheet.create({
 		// height: screenHeight * 0.6,
 
 	},
+	searchAssist:{
+		flexDirection: 'row',
+		marginTop: 12
+	}
 })
 
 export default SearchScreen
