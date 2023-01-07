@@ -118,7 +118,7 @@ const SearchScreen = () => {
 		<View style={styles.root}>
 			<View>
 				<View style={styles.parentFilter}>
-					<View style={{ height: 200 }}>
+					<View style={{ height: 150 }}>
 						<List.Section>
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
@@ -135,7 +135,7 @@ const SearchScreen = () => {
 							</ScrollView>
 						</List.Section>
 					</View>
-					<View style={{ height: 200 }}>
+					<View style={{ height: 150 }}>
 						<List.Section>
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
@@ -152,7 +152,7 @@ const SearchScreen = () => {
 							</ScrollView>
 						</List.Section>
 					</View>
-					<View style={{ height: 200 }}>
+					<View style={{ height: 150 }}>
 						<List.Section>
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
@@ -182,7 +182,7 @@ const SearchScreen = () => {
 				</View>
 			</View>
 
-			<View style={{ height: screenHeight * 0.68, paddingBottom: 20 }}>
+			<View style={{ height: screenHeight * 0.75, paddingBottom: 20 }}>
 				<SafeAreaView style={styles.container}>
 					<FlatList
 						style={{ width: '100%' }}
