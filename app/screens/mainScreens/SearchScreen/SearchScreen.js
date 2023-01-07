@@ -1,9 +1,10 @@
 import { StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-native'
 import { ScrollView } from 'react-native'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useCallback } from 'react'
 import { AxiosContext } from '../../../context/AxiosContext'
 import { List, Button, Card, Text, Avatar, TouchableRipple} from 'react-native-paper'
 import BookingDialog from '../BookingDialog'
+import { useFocusEffect } from "@react-navigation/native";
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -30,9 +31,6 @@ const SearchScreen = () => {
 		setAvailableProfessions(distinctProfessions)
 	}
 
-	useEffect(() => {
-		fetchDistinctValues()
-	}, [])
 	/*
 	This function sends a get request to recieve all the business profiles that match the search query.
   */
@@ -53,6 +51,15 @@ const SearchScreen = () => {
 			setDataToDispay([])
 		}
 	}
+
+	useFocusEffect(
+        useCallback(() => {
+			fetchDistinctValues().catch((e) => console.error(e))
+            onSearchClick()
+                .then()
+                .catch((e) => console.error(e));
+        }, [])
+    );
 
 	const onBookClick = (dataForBooking) => {
 		setBookingData(dataForBooking)
