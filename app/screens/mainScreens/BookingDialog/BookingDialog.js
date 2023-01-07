@@ -20,7 +20,7 @@ const MyComponent = (props) => {
     const [desiredEvent, setDesiredEvent] = useState("")
     const [desiredEventId, setDesiredEventId] = useState()
     const [description, setDescription] = useState("");
-    
+
     const getMyEvents = async () => {
         const response = await authAxios.get("/events");
         const { data } = response;
@@ -74,7 +74,7 @@ const MyComponent = (props) => {
                                 <List.Section>
                                     <ScrollView style={{ maxHeight: 150 }}>
                                         <List.Accordion
-                                            title={desiredEvent ? desiredEvent : 'Profession'}
+                                            title={desiredEvent ? desiredEvent : 'Choose an event'}
                                             style={{ width: 250, maxWidth: screenWidth }}
                                             titleStyle={{ fontSize: 12 }}
                                             expanded={expandEvent}
