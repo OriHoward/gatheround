@@ -1,10 +1,8 @@
-import { Text, StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-native'
+import { StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-native'
 import { ScrollView } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
-import { Button } from 'react-native-paper'
 import { AxiosContext } from '../../../context/AxiosContext'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { List } from 'react-native-paper'
+import { List, Button, Card, Text, Avatar, TouchableRipple, Divider } from 'react-native-paper'
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -62,16 +60,23 @@ const SearchScreen = () => {
 	const renderSearchItem = ({ item }) => {
 		const { id, profession, country, city, phone_number, price, currency, package_name, description } = item
 		return (
-			<View style={styles.searchResult}>
-				<Text style={styles.resultText}>Profession: {profession}</Text>
-				<Text style={styles.resultText}>Country : {country}</Text>
-				<Text style={styles.resultText}>City: {city}</Text>
-				<Text style={styles.resultText}>Package Name: {package_name}</Text>
-				<Text style={styles.resultText}>Description: {description}</Text>
-				<Text style={styles.resultText}>Price :{price}</Text>
-				<Text style={styles.resultText}>Currency :{currency}</Text>
-				<Text style={styles.resultText}>Phone number :{phone_number}</Text>
+			<View style={styles.searchResultWrapper}>
+			<Card mode='outlined'>
+				<Card.Title title={package_name} subtitle={description} />
+				<Card.Content>
+					<Text variant="bodyLarge">City: {city}</Text>
+					<Text variant="bodyLarge">Country : {country}</Text>
+					<Text variant="bodyLarge">Profession: {profession}</Text>
+					<Text variant="bodyLarge">Price :{price}</Text>
+					<Text variant="bodyLarge">Currency :{currency}</Text>
+					<Text variant="bodyLarge">Contact :{phone_number}</Text>
+				</Card.Content>
+				<Card.Actions>
+					<Button>Book Service</Button>
+				</Card.Actions>
+			</Card>
 			</View>
+
 		)
 	}
 	const getListItems = (expandVal) => (availableOptions, setFunc, setExpander) => {
@@ -110,42 +115,46 @@ const SearchScreen = () => {
 						</List.Section>
 					</View>
 					<View style={{ height: 200 }}>
-					<List.Section>
-						<ScrollView style={{ maxHeight: 150 }}>
-							<List.Accordion
-								title={desiredProfession ? `${desiredProfession}` : 'Profession'}
-								style={{ width: 250, maxWidth: screenWidth / 4 }}
-								titleStyle={{ fontSize: 12 }}
-								expanded={expandProfession}
-								onPress={() => {
-									setExpandProfession(!expandProfession)
-								}}
-							>
-								{getListItems(expandProfession)(availableProfessions, setDesiredProfession, setExpandProfession)}
-							</List.Accordion>
-						</ScrollView>
-					</List.Section>
+						<List.Section>
+							<ScrollView style={{ maxHeight: 150 }}>
+								<List.Accordion
+									title={desiredProfession ? `${desiredProfession}` : 'Profession'}
+									style={{ width: 250, maxWidth: screenWidth / 4 }}
+									titleStyle={{ fontSize: 12 }}
+									expanded={expandProfession}
+									onPress={() => {
+										setExpandProfession(!expandProfession)
+									}}
+								>
+									{getListItems(expandProfession)(availableProfessions, setDesiredProfession, setExpandProfession)}
+								</List.Accordion>
+							</ScrollView>
+						</List.Section>
 					</View>
 					<View style={{ height: 200 }}>
-					<List.Section>
-						<ScrollView style={{ maxHeight: 150 }}>
-							<List.Accordion
-								title={`Ordering: ${priceOrdering}`}
-								style={{ width: 250, maxWidth: screenWidth / 4 }}
-								titleStyle={{ fontSize: 12 }}
-								expanded={expandOrder}
-								onPress={() => {
-									setExpandOrder(!expandOrder)
-								}}
-							>
-								{getListItems(expandOrder)(['asc', 'desc'], setPriceOrdering, setExpandOrder)}
-							</List.Accordion>
-						</ScrollView>
-					</List.Section>
+						<List.Section>
+							<ScrollView style={{ maxHeight: 150 }}>
+								<List.Accordion
+									title={`Ordering: ${priceOrdering}`}
+									style={{ width: 250, maxWidth: screenWidth / 4 }}
+									titleStyle={{ fontSize: 12 }}
+									expanded={expandOrder}
+									onPress={() => {
+										setExpandOrder(!expandOrder)
+									}}
+								>
+									{getListItems(expandOrder)(['asc', 'desc'], setPriceOrdering, setExpandOrder)}
+								</List.Accordion>
+							</ScrollView>
+						</List.Section>
 					</View>
+
 					<View style={{ marginTop: 12 }}>
-						<Ionicons name={'search-outline'} size={40} color={'blue'} onPress={onSearchClick} />
+						<TouchableRipple onPress={onSearchClick}>
+							<Avatar.Icon size={44} icon="magnify" />
+						</TouchableRipple>
 					</View>
+
 				</View>
 
 				<Button style={{ marginTop: 10 }} color="black" uppercase={false} onPress={cleanData}>
@@ -153,7 +162,7 @@ const SearchScreen = () => {
 				</Button>
 			</View>
 
-			<View style={{ height: screenHeight * 0.7, paddingBottom: 20 }}>
+			<View style={{ height: screenHeight * 0.6, paddingBottom: 20 }}>
 				<SafeAreaView style={styles.container}>
 					<FlatList
 						style={{ width: '100%' }}
