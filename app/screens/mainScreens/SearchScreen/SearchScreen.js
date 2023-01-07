@@ -1,9 +1,10 @@
 import { StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-native'
 import { ScrollView } from 'react-native'
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useCallback } from 'react'
 import { AxiosContext } from '../../../context/AxiosContext'
 import { List, Button, Card, Text, Avatar, TouchableRipple} from 'react-native-paper'
 import BookingDialog from '../BookingDialog'
+import { useFocusEffect } from "@react-navigation/native";
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -30,9 +31,6 @@ const SearchScreen = () => {
 		setAvailableProfessions(distinctProfessions)
 	}
 
-	useEffect(() => {
-		fetchDistinctValues()
-	}, [])
 	/*
 	This function sends a get request to recieve all the business profiles that match the search query.
   */
@@ -53,6 +51,15 @@ const SearchScreen = () => {
 			setDataToDispay([])
 		}
 	}
+
+	useFocusEffect(
+        useCallback(() => {
+			fetchDistinctValues().catch((e) => console.error(e))
+            onSearchClick()
+                .then()
+                .catch((e) => console.error(e));
+        }, [])
+    );
 
 	const onBookClick = (dataForBooking) => {
 		setBookingData(dataForBooking)
@@ -111,7 +118,7 @@ const SearchScreen = () => {
 		<View style={styles.root}>
 			<View>
 				<View style={styles.parentFilter}>
-					<View style={{ height: 200 }}>
+					<View style={{ height: 150 }}>
 						<List.Section>
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
@@ -128,7 +135,7 @@ const SearchScreen = () => {
 							</ScrollView>
 						</List.Section>
 					</View>
-					<View style={{ height: 200 }}>
+					<View style={{ height: 150 }}>
 						<List.Section>
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
@@ -145,7 +152,7 @@ const SearchScreen = () => {
 							</ScrollView>
 						</List.Section>
 					</View>
-					<View style={{ height: 200 }}>
+					<View style={{ height: 150 }}>
 						<List.Section>
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
@@ -163,20 +170,19 @@ const SearchScreen = () => {
 						</List.Section>
 					</View>
 
-					<View style={{ marginTop: 12 }}>
+					<View style={styles.searchAssist}>
 						<TouchableRipple onPress={onSearchClick}>
 							<Avatar.Icon size={44} icon="magnify" />
+						</TouchableRipple>
+						<TouchableRipple onPress={cleanData}>
+							<Avatar.Icon size={44} icon="close-circle" />
 						</TouchableRipple>
 					</View>
 
 				</View>
-
-				<Button color="black" uppercase={false} onPress={cleanData}>
-					Clear
-				</Button>
 			</View>
 
-			<View style={{ height: screenHeight * 0.68, paddingBottom: 20 }}>
+			<View style={{ height: screenHeight * 0.75, paddingBottom: 20 }}>
 				<SafeAreaView style={styles.container}>
 					<FlatList
 						style={{ width: '100%' }}
@@ -230,6 +236,10 @@ const styles = StyleSheet.create({
 		// height: screenHeight * 0.6,
 
 	},
+	searchAssist:{
+		flexDirection: 'row',
+		marginTop: 12
+	}
 })
 
 export default SearchScreen
