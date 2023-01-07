@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import { AxiosContext } from '../../../context/AxiosContext'
 import { List, Button, Card, Text, Avatar, TouchableRipple, Divider } from 'react-native-paper'
+import BookingDialog from '../BookingDialog'
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -18,6 +19,7 @@ const SearchScreen = () => {
 	const [expandCity, setExpandCity] = useState(false)
 	const [expandProfession, setExpandProfession] = useState(false)
 	const [expandOrder, setExpandOrder] = useState(false)
+	const [visibleBookDialog, setvisibleBookDialog] = useState(false)
 
 	const fetchDistinctValues = async () => {
 		const resp = await authAxios.get(`/business-search-meta`)
@@ -50,6 +52,16 @@ const SearchScreen = () => {
 			setDataToDispay([])
 		}
 	}
+
+	const onBookClick = () => {
+		console.log("Here")
+		setvisibleBookDialog(true)
+	}
+
+	const closeDialog = () => {
+		setvisibleBookDialog(false);
+	  }
+
 	const cleanData = () => {
 		setDataToDispay([])
 		setCity('')
@@ -61,20 +73,20 @@ const SearchScreen = () => {
 		const { id, profession, country, city, phone_number, price, currency, package_name, description } = item
 		return (
 			<View style={styles.searchResultWrapper}>
-			<Card mode='outlined'>
-				<Card.Title title={package_name} subtitle={description} />
-				<Card.Content>
-					<Text variant="bodyLarge">City: {city}</Text>
-					<Text variant="bodyLarge">Country : {country}</Text>
-					<Text variant="bodyLarge">Profession: {profession}</Text>
-					<Text variant="bodyLarge">Price :{price}</Text>
-					<Text variant="bodyLarge">Currency :{currency}</Text>
-					<Text variant="bodyLarge">Contact :{phone_number}</Text>
-				</Card.Content>
-				<Card.Actions>
-					<Button>Book Service</Button>
-				</Card.Actions>
-			</Card>
+				<Card mode='outlined'>
+					<Card.Title title={package_name} subtitle={description} />
+					<Card.Content>
+						<Text variant="bodyMedium">City: {city}</Text>
+						<Text variant="bodyMedium">Country : {country}</Text>
+						<Text variant="bodyMedium">Profession: {profession}</Text>
+						<Text variant="bodyMedium">Price :{price}</Text>
+						<Text variant="bodyMedium">Currency :{currency}</Text>
+						<Text variant="bodyMedium">Contact :{phone_number}</Text>
+					</Card.Content>
+					<Card.Actions>
+						<Button onPress={() => onBookClick()}>Book Service</Button>
+					</Card.Actions>
+				</Card>
 			</View>
 
 		)
@@ -95,7 +107,7 @@ const SearchScreen = () => {
 	}
 	return (
 		<View style={styles.root}>
-			<View style={styles.root}>
+			<View>
 				<View style={styles.parentFilter}>
 					<View style={{ height: 200 }}>
 						<List.Section>
@@ -157,12 +169,12 @@ const SearchScreen = () => {
 
 				</View>
 
-				<Button style={{ marginTop: 10 }} color="black" uppercase={false} onPress={cleanData}>
+				<Button color="black" uppercase={false} onPress={cleanData}>
 					Clear
 				</Button>
 			</View>
 
-			<View style={{ height: screenHeight * 0.6, paddingBottom: 20 }}>
+			<View style={{ height: screenHeight * 0.68, paddingBottom: 20 }}>
 				<SafeAreaView style={styles.container}>
 					<FlatList
 						style={{ width: '100%' }}
@@ -172,42 +184,49 @@ const SearchScreen = () => {
 					/>
 				</SafeAreaView>
 			</View>
+			<BookingDialog visible={visibleBookDialog} onClose={closeDialog} />
 		</View>
 	)
 }
 const styles = StyleSheet.create({
 	root: {
-		alignSelf: 'center',
-		alignItems: 'center',
-		paddingTop: 30,
-		maxWidth: 350,
+		// alignSelf: 'center',
+		// alignItems: 'center',
+		// paddingTop: 30,
+		// maxWidth: 350,
 	},
 	searchResult: {
 		borderColor: 'black',
 		backgroundColor: '#dddddd',
-		borderWidth: 2,
+		// borderWidth: 2,
 		borderTopLeftRadius: 5,
 		borderTopRightRadius: 5,
 		borderBottomLeftRadius: 5,
 		borderBottomRightRadius: 5,
-		marginTop: 15,
+		// marginTop: 15,
 	},
 	searchResultWrapper: {
-		paddingTop: 10,
+		paddingBottom: 10,
+		paddingLeft: 5,
+		paddingRight: 5,
 		justifyContent: 'space-between',
 	},
 	resultText: {
 		fontSize: 14,
 		fontWeight: 'bold',
-		padding: 4,
+		// padding: 4,
 	},
 	parentFilter: {
 		flexDirection: 'row',
+		flex: 1,
+    	alignContent: "center",
+    	justifyContent: "center",
 	},
 	container: {
 		flex: 1,
-		width: screenWidth * 0.5,
-		height: screenHeight * 0.6,
+		// width: screenWidth * 0.5,
+		// height: screenHeight * 0.6,
+		
 	},
 })
 
