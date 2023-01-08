@@ -8,6 +8,7 @@ const EventButton = ({
   name,
   event_date,
   event_time,
+  category,
   address,
 }) => {
   return (

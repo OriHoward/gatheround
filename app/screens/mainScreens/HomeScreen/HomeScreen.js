@@ -64,6 +64,7 @@ const HomeScreen = ({ navigation }) => {
               id,
               name,
               event_date,
+              category,
               address,
               description,
               limit_attending,
@@ -75,6 +76,7 @@ const HomeScreen = ({ navigation }) => {
                 name={name}
                 event_date={date}
                 event_time={time}
+                category = {category}
                 address={address}
                 onPress={() =>
                   navigation.navigate("Details", {
