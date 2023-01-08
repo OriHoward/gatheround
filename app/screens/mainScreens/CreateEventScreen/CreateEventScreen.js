@@ -15,7 +15,7 @@ const CreateEventScreen = () => {
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState(""); // We will use this state in the future
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
-  const [option, setOption] = useState("Choose Category");
+  const [category, setCategory] = useState("Choose Category");
   const [otherCategory, setOtherCategory] = useState("");
 
   const { authAxios } = useContext(AxiosContext);
@@ -124,8 +124,8 @@ const CreateEventScreen = () => {
         }
       />
       <Picker
-        selectedValue={option}
-        onValueChange={(itemValue, itemIndex) => setOption(itemValue)}
+        selectedValue={category}
+        onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
         style={styles.picker}
         itemStyle={styles.pickerItem}
       >
@@ -137,7 +137,7 @@ const CreateEventScreen = () => {
         <Picker.Item label="Karaoke Night" value={"Karaoke Night"} />
         <Picker.Item label="Other" value={"Other"} />
       </Picker>
-      {option === "Other" ? (
+      {category === "Other" ? (
         <TextInput
           label="Add Category"
           value={otherCategory}
@@ -146,7 +146,7 @@ const CreateEventScreen = () => {
           style={styles.input}
         />
       ) : null}
-      {option === "Other" && otherCategory.length < 1 ? (
+      {category === "Other" && otherCategory.length < 1 ? (
         <HelperText type="error" visible={!isPrintable(name)}>
           Please fill out this field.
         </HelperText>
