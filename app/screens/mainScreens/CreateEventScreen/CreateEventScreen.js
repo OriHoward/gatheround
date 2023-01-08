@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Picker } from "react-native";
 import React, { useState, useContext } from "react";
 import { Button, HelperText, TextInput } from "react-native-paper";
 import SectionTitle from "../../components/SectionTitle";
@@ -6,7 +6,6 @@ import { AxiosContext } from "../../../context/AxiosContext";
 import { useNavigation } from "@react-navigation/core";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 import { isPrintable } from "../../../utils/input-validation";
-import { render } from "react-dom";
 
 const CreateEventScreen = () => {
   const [name, setName] = useState("");
@@ -16,6 +15,8 @@ const CreateEventScreen = () => {
   const [description, setDescription] = useState("");
   const [limitAttending, setLimitAttending] = useState(""); // We will use this state in the future
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
+  const [option, setOption] = useState("Choose Category");
+  const [otherCategory, setOtherCategory] = useState("");
 
   const { authAxios } = useContext(AxiosContext);
   const navigation = useNavigation();
@@ -43,8 +44,8 @@ const CreateEventScreen = () => {
   };
 
   /*
-    This function sends a post request to create a new event in the data base.
-  */
+      This function sends a post request to create a new event in the data base.
+    */
 
   const onCreateNewEventPressed = async () => {
     const isValidEventName = isPrintable(name);
@@ -122,6 +123,34 @@ const CreateEventScreen = () => {
           />
         }
       />
+      <Picker
+        selectedValue={option}
+        onValueChange={(itemValue, itemIndex) => setOption(itemValue)}
+        style={styles.picker}
+        itemStyle={styles.pickerItem}
+      >
+        <Picker.Item label="Choose Category" />
+        <Picker.Item label="Wedding" value={"Wedding"} />
+        <Picker.Item label="Birthday" value={"Birthday"} />
+        <Picker.Item label="Reunion" value={"Reunion"} />
+        <Picker.Item label="Anniversary" value={"Anniversary"} />
+        <Picker.Item label="Karaoke Night" value={"Karaoke Night"} />
+        <Picker.Item label="Other" value={"Other"} />
+      </Picker>
+      {option === "Other" ? (
+        <TextInput
+          label="Add Category"
+          value={otherCategory}
+          activeUnderlineColor={peachColor}
+          onChangeText={(text) => setOtherCategory(text)}
+          style={styles.input}
+        />
+      ) : null}
+      {option === "Other" && otherCategory.length < 1 ? (
+        <HelperText type="error" visible={!isPrintable(name)}>
+          Please fill out this field.
+        </HelperText>
+      ) : null}
       <TextInput
         label="Address"
         value={address}
@@ -163,6 +192,18 @@ const styles = StyleSheet.create({
   input: {
     minWidth: 300,
     maxHeight: 70,
+  },
+  picker: {
+    minWidth: 300,
+    height: 50,
+    backgroundColor: "#FFF",
+    borderColor: "#000",
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  pickerItem: {
+    color: "#000",
+    fontSize: 18,
   },
 });
 export default CreateEventScreen;
