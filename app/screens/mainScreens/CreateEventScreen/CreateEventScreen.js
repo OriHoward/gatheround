@@ -52,9 +52,11 @@ const CreateEventScreen = () => {
     if (isValidEventName) {
       // backend format: %d/%m/%Y %H:%M
       const fdatetime = `${getFormattedDate()} ${getFormattedTime()}`;
+      let categoryName = category === "Other" ? otherCategory : category;
       const eventData = {
         name,
         eventDate: fdatetime,
+        categoryName,
         address,
         description,
       };
