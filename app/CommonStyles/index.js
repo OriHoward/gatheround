@@ -22,3 +22,13 @@ export const CardStyles = StyleSheet.create({
   boldText: { textAlign: "center", fontWeight: "bold" },
   normalText: { textAlign: "center" },
 });
+
+export const TextStyles = StyleSheet.create({
+  sectionTitleText: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "gray",
+    fontWeight: "bold",
+    padding: 15,
+  },
+});
