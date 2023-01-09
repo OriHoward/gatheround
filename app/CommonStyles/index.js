@@ -32,3 +32,10 @@ export const TextStyles = StyleSheet.create({
     padding: 15,
   },
 });
+
+export const EventCardStyles = StyleSheet.create({
+  header1: { fontSize: 24, fontWeight: "bold" },
+  header2_date: { fontSize: 16, fontWeight: "bold" },
+  header2_time: { fontSize: 16 },
+  header3: { fontSize: 16, color: "gray" },
+});

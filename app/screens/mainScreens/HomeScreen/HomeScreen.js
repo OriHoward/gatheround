@@ -1,17 +1,15 @@
 import { View, Text, SectionList } from "react-native";
 import React, { useContext, useState } from "react";
-import CustomButton from "../../components/CustomButton";
-import EventButton from "../../components/EventButton";
 import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useFocusEffect } from "@react-navigation/native";
-import { TextStyles } from "../../../CommonStyles";
+import { EventCardStyles, TextStyles } from "../../../CommonStyles";
+import { ActivityIndicator, Card, IconButton } from "react-native-paper";
 
 const HomeScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const { authAxios } = useContext(AxiosContext);
-  const logout = authContext.logout;
   const [isLoading, setLoading] = useState(true);
   const [myEvents, setMyEvents] = useState([{}]);
   const [userName, setUserName] = useState({});
@@ -60,6 +58,51 @@ const HomeScreen = ({ navigation }) => {
     }, [])
   );
 
+  const RightContent = ({ props }) => (
+    <IconButton {...props} icon="chevron-right" disabled={true} />
+  );
+
+  const renderItem = ({ item }) => {
+    const {
+      id,
+      name,
+      event_date,
+      category,
+      address,
+      description,
+      limit_attending,
+    } = item;
+    const [date, time] = event_date.split(" ");
+    return (
+      <Card
+        onPress={() =>
+          navigation.navigate("Details", {
+            id,
+            name,
+            event_date,
+            category,
+            address,
+            description,
+            limit_attending,
+          })
+        }
+      >
+        <Card.Title title={name} right={RightContent}></Card.Title>
+        <Card.Content>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={EventCardStyles.header2_date}>{date}</Text>
+            <Text style={EventCardStyles.header2_time}>{time}</Text>
+          </View>
+        </Card.Content>
+      </Card>
+    );
+  };
+
   if (isLoading) {
     getMyEvents()
       .then(() =>
@@ -71,13 +114,13 @@ const HomeScreen = ({ navigation }) => {
         console.error(e);
       });
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={{ padding: 20 }}>
+        <ActivityIndicator animating={true} />
       </View>
     );
   } else {
     return (
-      <View style={{ alignContent: "center" }}>
+      <View style={{ alignContent: "center", flex: 1 }}>
         <Text
           style={[
             TextStyles.sectionTitleText,
@@ -89,38 +132,7 @@ const HomeScreen = ({ navigation }) => {
         <SectionList
           sections={myEvents}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => {
-            const {
-              id,
-              name,
-              event_date,
-              category,
-              address,
-              description,
-              limit_attending,
-            } = item;
-            const [date, time] = event_date.split(" ");
-            return (
-              <EventButton
-                isHost={true}
-                name={name}
-                event_date={date}
-                event_time={time}
-                category={category}
-                address={address}
-                onPress={() =>
-                  navigation.navigate("Details", {
-                    id,
-                    name,
-                    event_date,
-                    address,
-                    description,
-                    limit_attending,
-                  })
-                }
-              />
-            );
-          }}
+          renderItem={renderItem}
           renderSectionHeader={({ section: { title } }) => (
             <SectionTitle title={title} />
           )}
