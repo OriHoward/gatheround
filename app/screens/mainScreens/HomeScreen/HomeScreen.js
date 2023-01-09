@@ -78,12 +78,7 @@ const HomeScreen = ({ navigation }) => {
     );
   } else {
     return (
-      <View
-        style={{
-          alignContent: "center",
-          padding: 30,
-        }}
-      >
+      <View style={{ alignContent: "center" }}>
         <Text
           style={[
             TextStyles.sectionTitleText,

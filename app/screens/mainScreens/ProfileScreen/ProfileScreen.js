@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from "react-native";
 import React, { useState, useContext } from "react";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { Button, TextInput } from "react-native-paper";
-import SectionTitle from "../../components/SectionTitle";
 
 const ProfileScreen = () => {
   const { authAxios } = useContext(AxiosContext);
@@ -59,7 +58,6 @@ const ProfileScreen = () => {
     const peachColor = "#FF7F50";
     return (
       <View style={styles.root}>
-        <SectionTitle title={"My Profile"} />
         <TextInput
           label="First Name"
           value={userInfo.firstName}

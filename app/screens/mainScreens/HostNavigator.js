@@ -7,6 +7,7 @@ import HomeScreen from "./HomeScreen";
 import EventDetailsScreen from "./HomeScreen/EventDetailsScreen";
 import ProfileScreen from "./ProfileScreen";
 import SearchScreen from "./SearchScreen";
+import { TextStyles } from "../../CommonStyles";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -34,14 +35,12 @@ const HostNavigator = () => {
           } else if (rn === CreateEventScreenName) {
             iconName = focused ? "add" : "add-outline";
           }
-
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        headerShown: false,
-        activeTintColor: "tomato",
-        inactiveTintColor: "gray",
+        tabBarShowLabel: false,
+        headerTitleAlign: "center",
         labelStlye: { paddingBottom: 10, fontSize: 10 },
-        style: { padding: 10, height: 70 },
+        headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
       })}
     >
       <Tab.Screen name={HomeScreenName}>
@@ -59,7 +58,6 @@ const HostNavigator = () => {
                 headerTitleAlign: "center",
                 headerTransparent: true,
                 contentStyle: { padding: 50 },
-                headerTitle: () => <></>,
               }}
             />
           </HomeStack.Navigator>
