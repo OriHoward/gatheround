@@ -66,13 +66,7 @@ const BusinessCalendarScreen = ({ navigation }) => {
   const peachColor = "#FF7F50";
   const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
   const RightContent = (props) => (
-    <IconButton
-      {...props}
-      icon="chevron-right"
-      onPress={() => {
-        navigation.navigate("Details", { data });
-      }}
-    />
+    <IconButton {...props} icon="chevron-right" disabled={true} />
   );
 
   const renderItem = ({ item }) => {
@@ -155,7 +149,8 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     alignSelf: "center",
-    width: 500,
+    // width: 500,
+    // flex: 1,
     borderRadius: 15,
   },
 });
