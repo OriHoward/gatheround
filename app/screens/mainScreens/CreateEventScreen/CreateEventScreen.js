@@ -1,6 +1,6 @@
-import { StyleSheet, View, Picker } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import React, { useState, useContext } from "react";
-import { Button, HelperText, TextInput } from "react-native-paper";
+import { List, Button, HelperText, TextInput } from "react-native-paper";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useNavigation } from "@react-navigation/core";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
@@ -16,6 +16,16 @@ const CreateEventScreen = () => {
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [category, setCategory] = useState("Choose Category");
   const [otherCategory, setOtherCategory] = useState("");
+  const [expanded, setExpanded] = useState(false);
+
+  const options = [
+    { label: "Wedding", value: "Wedding" },
+    { label: "Birthday", value: "Birthday" },
+    { label: "Reunion", value: "Reunion" },
+    { label: "Anniversary", value: "Anniversary" },
+    { label: "Karaoke Night", value: "Karaoke Night" },
+    { label: "Other", value: "Other" },
+  ];
 
   const { authAxios } = useContext(AxiosContext);
   const navigation = useNavigation();
@@ -123,20 +133,25 @@ const CreateEventScreen = () => {
           />
         }
       />
-      <Picker
-        selectedValue={category}
-        onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
-        style={styles.picker}
-        itemStyle={styles.pickerItem}
+      <List.Accordion
+        title={category}
+        style={styles.dropDown}
+        titleStyle={{ fontSize: 12 }}
+        expanded={expanded}
+        onPress={() => setExpanded(!expanded)}
       >
-        <Picker.Item label="Choose Category" />
-        <Picker.Item label="Wedding" value={"Wedding"} />
-        <Picker.Item label="Birthday" value={"Birthday"} />
-        <Picker.Item label="Reunion" value={"Reunion"} />
-        <Picker.Item label="Anniversary" value={"Anniversary"} />
-        <Picker.Item label="Karaoke Night" value={"Karaoke Night"} />
-        <Picker.Item label="Other" value={"Other"} />
-      </Picker>
+        {options.map((option) => (
+          <List.Item
+            key={option.value}
+            title={option.label}
+            onPress={() => {
+              setCategory(option.value);
+              setExpanded(false);
+            }}
+          />
+        ))}
+      </List.Accordion>
+
       {category === "Other" ? (
         <TextInput
           label="Add Category"
@@ -193,7 +208,7 @@ const styles = StyleSheet.create({
     minWidth: 300,
     maxHeight: 70,
   },
-  picker: {
+  dropDown: {
     minWidth: 300,
     height: 50,
     backgroundColor: "#FFF",
@@ -201,9 +216,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
   },
-  pickerItem: {
-    color: "#000",
-    fontSize: 18,
-  },
+  // dropDown: {
+  //   color: "#000",
+  //   fontSize: 18,
+  // },
 });
 export default CreateEventScreen;
