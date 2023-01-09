@@ -6,7 +6,6 @@ import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useFocusEffect } from "@react-navigation/native";
-import { Title } from "react-native-paper";
 import { TextStyles } from "../../../CommonStyles";
 
 const HomeScreen = ({ navigation }) => {
@@ -128,7 +127,6 @@ const HomeScreen = ({ navigation }) => {
           onRefresh={() => setLoading(true)}
           refreshing={isLoading}
         />
-        <CustomButton text="Sign Out" onPress={logout} />
       </View>
     );
   }

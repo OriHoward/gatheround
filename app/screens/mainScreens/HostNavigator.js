@@ -1,13 +1,15 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import SectionTitle from "../components/SectionTitle";
 import CreateEventScreen from "./CreateEventScreen";
 import HomeScreen from "./HomeScreen";
 import EventDetailsScreen from "./HomeScreen/EventDetailsScreen";
 import ProfileScreen from "./ProfileScreen";
 import SearchScreen from "./SearchScreen";
 import { TextStyles } from "../../CommonStyles";
+import { IconButton } from "react-native-paper";
+import { AuthContext } from "../../context/AuthContext";
+import React, { useContext } from "react";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -19,6 +21,9 @@ const SearchScreenName = "Search";
 const CreateEventScreenName = "Create New Event";
 
 const HostNavigator = () => {
+  const authContext = useContext(AuthContext);
+  const logout = authContext.logout;
+
   return (
     <Tab.Navigator
       initialRootName={HomeScreenName}
@@ -41,6 +46,7 @@ const HostNavigator = () => {
         headerTitleAlign: "center",
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
+        headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
       })}
     >
       <Tab.Screen name={HomeScreenName}>
