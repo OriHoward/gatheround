@@ -161,7 +161,6 @@ const EventDetailsScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   root: {
     alignSelf: "center",
-    width: 500,
     borderRadius: 15,
   },
 });
