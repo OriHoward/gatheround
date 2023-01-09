@@ -1,17 +1,17 @@
 import { View, Text, SectionList } from "react-native";
 import React, { useState, useContext } from "react";
 import SectionTitle from "../../../components/SectionTitle";
-import { AuthContext } from "../../../../context/AuthContext";
 import { AxiosContext } from "../../../../context/AxiosContext";
 import PackageButton from "../../../components/PackageButton";
 import { useFocusEffect } from "@react-navigation/native";
+import { ActivityIndicator } from "react-native-paper";
+import { TextStyles } from "../../../../CommonStyles";
 
 const BusinessHomeScreen = ({ navigation }) => {
-  const authContext = useContext(AuthContext);
   const [myPackages, setMyPackages] = useState([{}]);
   const [isLoading, setLoading] = useState(true);
   const { authAxios } = useContext(AxiosContext);
-  const logout = authContext.logout;
+  const [userName, setUserName] = useState({});
 
   const getPackageData = async () => {
     try {
@@ -22,28 +22,57 @@ const BusinessHomeScreen = ({ navigation }) => {
       console.error(error);
     }
   };
+
+  const getUserName = async () => {
+    try {
+      const response = await authAxios.get("/users");
+      const { data } = response;
+      const {
+        id,
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        join_date,
+      } = data;
+      setUserName({ firstName, lastName });
+    } catch (error) {
+      console.error(error);
+      // todo: anything else?
+    }
+  };
+
   useFocusEffect(
     React.useCallback(() => {
-      getPackageData()
-        .then()
-        .catch((e) => console.error(e));
+      setLoading(true);
     }, [])
   );
 
   if (isLoading) {
     getPackageData()
-      .then(() => setLoading(false))
+      .then(() =>
+        getUserName()
+          .then(() => setLoading(false))
+          .catch((e) => console.error(e))
+      )
       .catch((e) => {
         console.error(e);
       });
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={{ padding: 20 }}>
+        <ActivityIndicator animating={true} />
       </View>
     );
   } else {
     return (
       <View style={{ alignItems: "center" }}>
+        <Text
+          style={[
+            TextStyles.sectionTitleText,
+            { color: "black", fontSize: 20 },
+          ]}
+        >
+          {`Hello there, ${userName.firstName}!`}
+        </Text>
         <SectionTitle title={"My Packages"} />
         <SectionList
           sections={myPackages}
