@@ -49,21 +49,35 @@ const HostNavigator = () => {
         headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
       })}
     >
-      <Tab.Screen name={HomeScreenName}>
+      <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
         {() => (
           <HomeStack.Navigator>
             <HomeStack.Screen
               name={HomeScreenName}
               component={HomeScreen}
-              options={{ headerShown: false }}
+              options={{
+                headerShown: true,
+                headerTitleAlign: "center",
+                headerTitleStyle: [
+                  TextStyles.sectionTitleText,
+                  { color: "black" },
+                ],
+                headerRight: () => (
+                  <IconButton icon={"logout"} onPress={logout} />
+                ),
+              }}
             />
             <HomeStack.Screen
               name={EventDetailsScreenName}
               component={EventDetailsScreen}
               options={{
+                headerShown: true,
                 headerTitleAlign: "center",
-                headerTransparent: true,
-                contentStyle: { padding: 50 },
+                headerTitleStyle: [
+                  TextStyles.sectionTitleText,
+                  { color: "black" },
+                ],
+                contentStyle: { padding: 30 },
               }}
             />
           </HomeStack.Navigator>
