@@ -107,11 +107,11 @@ const PackageDetailsScreen = ({ route, navigation }) => {
             alignItems: "center",
             flexDirection: "row",
             justifyContent: "flex-start",
-            marginHorizontal: 15
+            marginHorizontal: 15,
           }}
         >
           <Text>ILS</Text>
-          <RadioButton 
+          <RadioButton
             value="first"
             status={checked === "first" ? "checked" : "unchecked"}
             onPress={() => setCurrencyStatus("ILS", "first")}
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   root: {
     alignSelf: "center",
     marginTop: 15,
-    marginBottom : 15,
+    marginBottom: 15,
   },
   editRoot: {
     marginTop: 10,
@@ -236,7 +236,6 @@ const styles = StyleSheet.create({
     elevation: 5,
     minHeight: 350,
     minWidth: 250,
- 
   },
   title: {
     textAlign: "center",
@@ -274,7 +273,7 @@ const styles = StyleSheet.create({
     maxHeight: 70,
     marginHorizontal: 15,
   },
-  inputDesc : {
+  inputDesc: {
     minWidth: 300,
     height: 100,
     marginHorizontal: 15,

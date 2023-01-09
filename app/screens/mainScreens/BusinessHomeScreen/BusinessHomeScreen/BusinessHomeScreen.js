@@ -1,6 +1,5 @@
 import { View, Text, SectionList } from "react-native";
-import React, { useState, useContext, useEffect } from "react";
-import CustomButton from "../../../components/CustomButton";
+import React, { useState, useContext } from "react";
 import SectionTitle from "../../../components/SectionTitle";
 import { AuthContext } from "../../../../context/AuthContext";
 import { AxiosContext } from "../../../../context/AxiosContext";
@@ -45,6 +44,7 @@ const BusinessHomeScreen = ({ navigation }) => {
   } else {
     return (
       <View style={{ alignItems: "center" }}>
+        <SectionTitle title={"My Packages"} />
         <SectionList
           sections={myPackages}
           keyExtractor={(item, index) => item + index}
@@ -77,7 +77,6 @@ const BusinessHomeScreen = ({ navigation }) => {
           onRefresh={() => setLoading(true)}
           refreshing={isLoading}
         />
-        <CustomButton text="Sign Out" onPress={logout} />
       </View>
     );
   }
