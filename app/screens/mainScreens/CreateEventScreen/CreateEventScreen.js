@@ -1,7 +1,6 @@
 import { StyleSheet, View, Picker } from "react-native";
 import React, { useState, useContext } from "react";
 import { Button, HelperText, TextInput } from "react-native-paper";
-import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useNavigation } from "@react-navigation/core";
 import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
@@ -76,7 +75,6 @@ const CreateEventScreen = () => {
   const peachColor = "#FF7F50";
   return (
     <View style={styles.root}>
-      <SectionTitle title={"Create New Event"} />
       <TextInput
         label="Event Name"
         value={name}
