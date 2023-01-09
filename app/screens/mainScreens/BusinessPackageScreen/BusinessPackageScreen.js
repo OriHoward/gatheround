@@ -1,13 +1,9 @@
 import { StyleSheet, View, Text } from "react-native";
 import React, { useState, useContext } from "react";
 import { Button, TextInput, RadioButton } from "react-native-paper";
-import SectionTitle from "../../components/SectionTitle";
 import { useNavigation } from "@react-navigation/native";
 import { AxiosContext } from "../../../context/AxiosContext";
-import {
-  isPrintable,
-  isNumber,
-} from "../../../utils/input-validation";
+import { isPrintable, isNumber } from "../../../utils/input-validation";
 
 const BusinessPackageScreen = () => {
   const [packageName, setPackageName] = useState("");
@@ -59,7 +55,6 @@ const BusinessPackageScreen = () => {
 
   return (
     <View style={styles.root}>
-      <SectionTitle title={"Create New Package"} />
       <TextInput
         label="Package Name"
         value={packageName}

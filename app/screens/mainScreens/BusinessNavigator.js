@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SectionTitle from "../components/SectionTitle";
 import BusinessCalendarScreen from "./BusinessCalendar/BusinessCalendarScreen";
 import CalendarDetailsScreen from "./BusinessCalendar/CalendarDetailsScreen";
 import {

@@ -90,7 +90,6 @@ const BusinessProfileScreen = () => {
   } else {
     return (
       <View style={styles.root}>
-        <SectionTitle title={"My Profile"} />
         <Text style={styles.name}>
           {businessProfile.firstName} {businessProfile.lastName}
         </Text>
