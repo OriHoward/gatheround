@@ -5,6 +5,9 @@ import EventButton from "../../components/EventButton";
 import SectionTitle from "../../components/SectionTitle";
 import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
+import { useFocusEffect } from "@react-navigation/native";
+import { Title } from "react-native-paper";
+import { TextStyles } from "../../../CommonStyles";
 
 const HomeScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
@@ -12,21 +15,17 @@ const HomeScreen = ({ navigation }) => {
   const logout = authContext.logout;
   const [isLoading, setLoading] = useState(true);
   const [myEvents, setMyEvents] = useState([{}]);
-
+  const [userName, setUserName] = useState({});
   /*
     This function sends a get request for the 2 upcoming events.
   */
 
   const getMyEvents = async () => {
     try {
-      const response = await authAxios.get("/events?host-limit=2");
+      const response = await authAxios.get("/events?host-limit=4");
       const { data } = response;
       const { my_events = [] } = data;
       setMyEvents([
-        {
-          title: "My Invites",
-          data: [],
-        },
         {
           title: "My Events",
           data: my_events,
@@ -37,9 +36,38 @@ const HomeScreen = ({ navigation }) => {
       setMyEvents([]);
     }
   };
+
+  const getUserName = async () => {
+    try {
+      const response = await authAxios.get("/users");
+      const { data } = response;
+      const {
+        id,
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        join_date,
+      } = data;
+      setUserName({ firstName, lastName });
+    } catch (error) {
+      console.error(error);
+      // todo: anything else?
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+    }, [])
+  );
+
   if (isLoading) {
     getMyEvents()
-      .then(() => setLoading(false))
+      .then(() =>
+        getUserName()
+          .then(() => setLoading(false))
+          .catch((e) => console.error(e))
+      )
       .catch((e) => {
         console.error(e);
       });
@@ -56,6 +84,14 @@ const HomeScreen = ({ navigation }) => {
           padding: 30,
         }}
       >
+        <Text
+          style={[
+            TextStyles.sectionTitleText,
+            { color: "black", fontSize: 20 },
+          ]}
+        >
+          {`Hello there, ${userName.firstName}!`}
+        </Text>
         <SectionList
           sections={myEvents}
           keyExtractor={(item, index) => item + index}
@@ -76,7 +112,7 @@ const HomeScreen = ({ navigation }) => {
                 name={name}
                 event_date={date}
                 event_time={time}
-                category = {category}
+                category={category}
                 address={address}
                 onPress={() =>
                   navigation.navigate("Details", {
