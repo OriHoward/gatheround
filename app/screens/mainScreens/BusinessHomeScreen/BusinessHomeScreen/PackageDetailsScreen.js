@@ -1,4 +1,4 @@
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React, { useState, useContext } from "react";
 import {
   Button,
@@ -10,22 +10,17 @@ import {
   Paragraph,
   TextInput,
   Dialog,
-  RadioButton,
 } from "react-native-paper";
 import { AxiosContext } from "../../../../context/AxiosContext";
-import SectionTitle from "../../../components/SectionTitle";
-
 const PackageDetailsScreen = ({ route, navigation }) => {
   const { id, packageName, description, price, currency } = route.params;
   const [IsVisible, setIsVisible] = React.useState(false);
-  const [currencyState, setCurrencyState] = useState("ILS");
   const [packageInfo, setPackageInfo] = React.useState({
     id,
     packageName,
     description,
     price,
   });
-  const [checked, setChecked] = React.useState("first");
   const [isSaved, setIsSaved] = useState(true);
   const { authAxios } = useContext(AxiosContext);
 
@@ -33,11 +28,6 @@ const PackageDetailsScreen = ({ route, navigation }) => {
   const hideDialog = () => setIsVisible(false);
 
   const peachColor = "#FF7F50";
-
-  const setCurrencyStatus = (currency, checked) => {
-    setCurrencyState(currency);
-    setChecked(checked);
-  };
 
   const onPressedDelete = async () => {
     try {
@@ -53,20 +43,28 @@ const PackageDetailsScreen = ({ route, navigation }) => {
   };
 
   const onPressedEdit = async () => {
-    console.log("Not implemented yet");
+    try {
+      await authAxios.put("/business-package", {
+        ...packageInfo,
+        packageId: id,
+        package_name: packageInfo.packageName,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return isSaved ? (
     <View style={styles.root}>
       <Card style={styles.cardContainer}>
         <Card.Content>
-          <Title style={styles.title}>{packageName}</Title>
+          <Title style={styles.title}>{packageInfo.packageName}</Title>
           <View style={styles.priceContainer}>
             <Text style={styles.label}>Price: </Text>
-            <Text style={styles.price}>{price}</Text>
+            <Text style={styles.price}>{packageInfo.price}</Text>
             <Text style={styles.currency}>{currency}</Text>
           </View>
-          <Text style={styles.description}>{description}</Text>
+          <Text style={styles.description}>{packageInfo.description}</Text>
         </Card.Content>
         <Card.Actions>
           <Button
@@ -86,20 +84,20 @@ const PackageDetailsScreen = ({ route, navigation }) => {
         <Title style={styles.title}>{"Edit Package Details"}</Title>
         <TextInput
           label={"Package Name"}
-          value={packageName}
+          value={packageInfo.packageName}
           activeUnderlineColor={peachColor}
           style={styles.input}
-          onChange={(newPackageName) =>
-            setPackageInfo({ ...packageInfo, packageName: newPackageName })
-          }
+          onChangeText={(newPackageName) => {
+            setPackageInfo({ ...packageInfo, packageName: newPackageName });
+          }}
         />
         <TextInput
           label={"Price"}
-          value={price}
+          value={packageInfo.price}
           activeUnderlineColor={peachColor}
-          onChange={(newPrice) =>
-            setPackageInfo({ ...packageInfo, price: newPrice })
-          }
+          onChangeText={(newPrice) => {
+            setPackageInfo({ ...packageInfo, price: newPrice });
+          }}
           style={styles.input}
         />
         <View
@@ -109,32 +107,13 @@ const PackageDetailsScreen = ({ route, navigation }) => {
             justifyContent: "flex-start",
             marginHorizontal: 15,
           }}
-        >
-          <Text>ILS</Text>
-          <RadioButton
-            value="first"
-            status={checked === "first" ? "checked" : "unchecked"}
-            onPress={() => setCurrencyStatus("ILS", "first")}
-          />
-          <Text>USD</Text>
-          <RadioButton
-            value="second"
-            status={checked === "second" ? "checked" : "unchecked"}
-            onPress={() => setCurrencyStatus("USD", "second")}
-          />
-          <Text>EUR</Text>
-          <RadioButton
-            value="third"
-            status={checked === "third" ? "checked" : "unchecked"}
-            onPress={() => setCurrencyStatus("EUR", "third")}
-          />
-        </View>
+        ></View>
         <TextInput
           multiline={true}
           label={"Description"}
-          value={description}
+          value={packageInfo.description}
           activeUnderlineColor={peachColor}
-          onChange={(newDesc) =>
+          onChangeText={(newDesc) =>
             setPackageInfo({ ...packageInfo, description: newDesc })
           }
           style={styles.inputDesc}
