@@ -1,8 +1,8 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, ScrollView } from "react-native";
 import React from "react";
 import { Title, Text, Card, Button } from "react-native-paper";
 
-const PackageButton = ({
+const PackageCard = ({
   onPressCard,
   packageName,
   description,
@@ -10,42 +10,45 @@ const PackageButton = ({
   price,
 }) => {
   return (
-    <View style={styles.root}>
-      <Card style={styles.cardContainer}>
-        <View style={styles.imageContainer}>
-          {/* <Image
+    <ScrollView>
+      <View style={styles.root}>
+        <Card style={styles.cardContainer}>
+          <View style={styles.imageContainer}>
+            {/* <Image
             source={require("./../../../../assets/Images/packages.jpg")}
             style={styles.image}
           /> */}
-        </View>
-        <Card.Content style={{ zIndex: 1 }}>
-          <Title style={styles.title}>{packageName}</Title>
-          <View style={styles.priceContainer}>
-            <Text style={styles.label}>Price: </Text>
-            <Text style={styles.price}>{price}</Text>
-            <Text style={styles.currency}>{currency}</Text>
           </View>
-          <Text style={styles.description}>{description}</Text>
-        </Card.Content>
-        <Card.Actions>
-          <Button
-            icon="eye-outline"
-            uppercase={false}
-            color="black"
-            onPress={onPressCard}
-          >
-            View Package
-          </Button>
-        </Card.Actions>
-      </Card>
-    </View>
+          <Card.Content style={{ zIndex: 1 }}>
+            <Title style={styles.title}>{packageName}</Title>
+            <View style={styles.priceContainer}>
+              <Text style={styles.label}>Price: </Text>
+              <Text style={styles.price}>{price}</Text>
+              <Text style={styles.currency}>{currency}</Text>
+            </View>
+            <Text style={styles.description}>{description}</Text>
+          </Card.Content>
+          <Card.Actions>
+            <Button
+              icon="eye-outline"
+              uppercase={false}
+              color="black"
+              onPress={onPressCard}
+            >
+              View Package
+            </Button>
+          </Card.Actions>
+        </Card>
+      </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
   root: {
-    alignSelf: "center",
+    alignSelf: "strech",
     marginTop: 15,
     marginBottom: 15,
+    flex: 1,
   },
   cardContainer: {
     backgroundColor: "#fff",
@@ -56,6 +59,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     minWidth: "50%",
+    flex: 1,
   },
   title: {
     textAlign: "center",
@@ -110,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PackageButton;
+export default PackageCard;
