@@ -10,6 +10,7 @@ import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import React, { useContext } from "react";
+import { View } from "react-native-web";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -20,9 +21,21 @@ const ProfileScreenName = "My Profile";
 const SearchScreenName = "Search";
 const CreateEventScreenName = "Create New Event";
 
-const HostNavigator = () => {
+const HostNavigator = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const logout = authContext.logout;
+
+  const headerRight = () => {
+    return (
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <IconButton
+          icon={"archive-outline"}
+          onPress={() => navigation.navigate("Archive")}
+        />
+        <IconButton icon={"logout"} onPress={logout} />
+      </View>
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -46,8 +59,15 @@ const HostNavigator = () => {
         headerTitleAlign: "center",
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
-        headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
-        headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
+        headerRight: headerRight,
+        headerLeft: () => (
+          <IconButton
+            icon={"bell"}
+            onPress={() => {
+              console.log("notif");
+            }}
+          />
+        ),
       })}
     >
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
@@ -63,10 +83,15 @@ const HostNavigator = () => {
                   TextStyles.sectionTitleText,
                   { color: "black" },
                 ],
-                headerRight: () => (
-                  <IconButton icon={"logout"} onPress={logout} />
+                headerRight: headerRight,
+                headerLeft: () => (
+                  <IconButton
+                    icon={"bell"}
+                    onPress={() => {
+                      console.log("notif");
+                    }}
+                  />
                 ),
-                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
               }}
             />
             <HomeStack.Screen
