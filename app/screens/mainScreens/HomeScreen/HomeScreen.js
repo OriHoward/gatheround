@@ -1,14 +1,13 @@
 import { View, Text, SectionList } from "react-native";
 import React, { useContext, useState } from "react";
 import SectionTitle from "../../components/SectionTitle";
-import { AuthContext } from "../../../context/AuthContext";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useFocusEffect } from "@react-navigation/native";
 import { EventCardStyles, TextStyles } from "../../../CommonStyles";
 import { ActivityIndicator, Card, IconButton } from "react-native-paper";
+import { CardStyles } from "../../../CommonStyles";
 
 const HomeScreen = ({ navigation }) => {
-  const authContext = useContext(AuthContext);
   const { authAxios } = useContext(AxiosContext);
   const [isLoading, setLoading] = useState(true);
   const [myEvents, setMyEvents] = useState([{}]);
@@ -75,6 +74,7 @@ const HomeScreen = ({ navigation }) => {
     const [date, time] = event_date.split(" ");
     return (
       <Card
+        style={CardStyles.cardContainer}
         onPress={() =>
           navigation.navigate("Details", {
             id,

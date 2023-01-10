@@ -9,6 +9,8 @@ import { getValue } from "../utils/user-utils";
 import LoginContainer from "../screens/loginScreens/LoginContainer";
 import BusinessNavigator from "../screens/mainScreens/BusinessNavigator";
 import HostNavigator from "../screens/mainScreens/HostNavigator";
+import ArchiveScreen from "../screens/mainScreens/ArchiveScreen";
+import { TextStyles } from "../CommonStyles";
 
 const Stack = createNativeStackNavigator();
 
@@ -83,6 +85,18 @@ const Navigation = () => {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Host Main" component={HostNavigator} />
+            <Stack.Screen
+              name="Archive"
+              component={ArchiveScreen}
+              options={{
+                headerShown: true,
+                headerTitleAlign: "center",
+                headerTitleStyle: [
+                  TextStyles.sectionTitleText,
+                  { color: "black" },
+                ],
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       );

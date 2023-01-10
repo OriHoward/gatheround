@@ -160,8 +160,9 @@ const EventDetailsScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   root: {
-    alignSelf: "center",
+    alignContent: "center",
     borderRadius: 15,
+    flex: 1,
   },
 });
 export default EventDetailsScreen;
