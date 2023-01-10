@@ -2,7 +2,7 @@ import { View, Text, SectionList } from "react-native";
 import React, { useState, useContext } from "react";
 import SectionTitle from "../../../components/SectionTitle";
 import { AxiosContext } from "../../../../context/AxiosContext";
-import PackageButton from "../../../components/PackageButton";
+import PackageCard from "../../../components/PackageCard";
 import { useFocusEffect } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 import { TextStyles } from "../../../../CommonStyles";
@@ -86,7 +86,7 @@ const BusinessHomeScreen = ({ navigation }) => {
               currency,
             } = item;
             return (
-              <PackageButton
+              <PackageCard
                 onPressCard={() =>
                   navigation.navigate("My Packages", {
                     id,
