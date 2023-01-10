@@ -29,11 +29,7 @@ const BusinessPackageScreen = () => {
       price,
     };
     try {
-      if (
-        isPrintable(packageName) &&
-        isPrintable(description) &&
-        isNumber(price)
-      ) {
+      if (isPrintable(packageName) && isNumber(price)) {
         const packageResponse = await authAxios.post(
           "/business-package",
           packageData
