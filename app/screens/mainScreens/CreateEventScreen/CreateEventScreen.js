@@ -216,9 +216,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
   },
-  // dropDown: {
-  //   color: "#000",
-  //   fontSize: 18,
-  // },
 });
 export default CreateEventScreen;
