@@ -185,15 +185,17 @@ const PackageDetailsScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   root: {
-    alignSelf: "center",
+    alignSelf: "strech",
     marginTop: 15,
     marginBottom: 15,
+    flex: 1,
+    maxHeight: 300,
   },
   editRoot: {
     marginTop: 10,
     alignSelf: "center",
     minWidth: "25%",
-    minHeight: "35%",
+    minHeight: "25%",
   },
   cardContainer: {
     backgroundColor: "#fff",
@@ -204,6 +206,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     minWidth: "50%",
+    flex: 1
   },
   cardEditContainer: {
     backgroundColor: "#fff",
