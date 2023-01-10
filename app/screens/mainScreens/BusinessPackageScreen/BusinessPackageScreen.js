@@ -68,7 +68,7 @@ const BusinessPackageScreen = () => {
         onChangeText={(newDesc) => {
           setDescription(newDesc);
         }}
-        style={[styles.input]}
+        style={[styles.inputDesc]}
       />
       <View
         style={{
@@ -97,7 +97,7 @@ const BusinessPackageScreen = () => {
         />
       </View>
       <TextInput
-        label="price"
+        label="Price"
         value={price}
         activeUnderlineColor={peachColor}
         onChangeText={(newPrice) => {
@@ -136,6 +136,12 @@ const styles = StyleSheet.create({
   },
   dropDown: {
     width: "50%",
+  },
+  inputDesc: {
+    minWidth: 300,
+    height: 100,
+    marginHorizontal: 15,
+    paddingBottom: 30,
   },
 });
 export default BusinessPackageScreen;
