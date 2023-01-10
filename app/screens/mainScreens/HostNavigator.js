@@ -47,6 +47,7 @@ const HostNavigator = () => {
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
         headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
+        headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
       })}
     >
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
@@ -65,6 +66,7 @@ const HostNavigator = () => {
                 headerRight: () => (
                   <IconButton icon={"logout"} onPress={logout} />
                 ),
+                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
               }}
             />
             <HomeStack.Screen

@@ -53,6 +53,7 @@ const BusinessNavigator = () => {
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
         headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
+        headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
       })}
     >
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
@@ -71,6 +72,7 @@ const BusinessNavigator = () => {
                 headerRight: () => (
                   <IconButton icon={"logout"} onPress={logout} />
                 ),
+                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
               }}
             />
             <homeStack.Screen
@@ -107,6 +109,7 @@ const BusinessNavigator = () => {
                 headerRight: () => (
                   <IconButton icon={"logout"} onPress={logout} />
                 ),
+                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
               }}
             />
             <CalendarStack.Screen
