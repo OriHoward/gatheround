@@ -18,6 +18,7 @@ import { AxiosContext } from "../../../context/AxiosContext";
 import { CardStyles } from "../../../CommonStyles";
 import backgroundImage from "../../../../assets/Images/app-background.jpg";
 import { categoryIcons } from "../../../utils/category-icons";
+import { DatePickerInput, TimePickerModal } from "react-native-paper-dates";
 
 const EventDetailsScreen = ({ route, navigation }) => {
   const { authAxios } = useContext(AxiosContext);
@@ -34,6 +35,9 @@ const EventDetailsScreen = ({ route, navigation }) => {
 
   const [isSaved, setIsSaved] = useState(true);
   const [isDialogVisible, setDialogVisible] = useState(false);
+  const [eventDate, setEventDate] = useState(new Date());
+  const [eventTime, setEventTime] = useState(new Date());
+  const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [data, setData] = useState({
     id,
     name,
@@ -61,12 +65,28 @@ const EventDetailsScreen = ({ route, navigation }) => {
     }
   };
 
+  const getFormattedTime = () => {
+    const hours = eventTime.getHours();
+    const minutes = eventTime.getMinutes();
+    return `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`;
+  };
+
+  const getFormattedDate = () => {
+    //  backend format: %d/%m/%Y
+    // +1 because Month starts from 0
+    return `${eventDate.getUTCDate()}/${
+      eventDate.getMonth() + 1
+    }/${eventDate.getFullYear()}`;
+  };
+
   const putEventInfo = async () => {
     try {
-      const formattedDate = `${date} ${time}`;
+      const fdatetime = `${getFormattedDate()} ${getFormattedTime()}`;
       const dataToSend = {
         ...data,
-        eventDate: formattedDate,
+        eventDate: fdatetime,
       };
       const response = await authAxios.put("/events", dataToSend);
       if (response.status === 200) {
@@ -134,15 +154,39 @@ const EventDetailsScreen = ({ route, navigation }) => {
               activeUnderlineColor={peachColor}
               onChangeText={(text) => setData({ ...data, name: text })}
             />
-            <TextInput
-              label={"Date"}
-              value={data.date}
+            <DatePickerInput
+              value={eventDate}
+              onChange={(date) => setEventDate(date)}
+              label={"Event Date"}
+              withDateFormatInLabel={false}
               activeUnderlineColor={peachColor}
+              backgroundColor="#dddddd"
+              validRange={{ startDate: new Date() }}
+              style={styles.input}
+            />
+            <TimePickerModal
+              visible={isTimePickerVisible}
+              onDismiss={() => setTimePickerVisible(false)}
+              onConfirm={({ hours, minutes }) => {
+                eventTime.setHours(hours);
+                eventTime.setMinutes(minutes);
+                setTimePickerVisible(false);
+              }}
+              label="Select time"
+              uppercase={false}
             />
             <TextInput
-              label={"Time"}
-              value={data.time}
+              label={"Event Time"}
+              placeholder="Event Time"
+              value={getFormattedTime()}
+              style={styles.input}
               activeUnderlineColor={peachColor}
+              right={
+                <TextInput.Icon
+                  icon="clock"
+                  onPress={() => setTimePickerVisible(true)}
+                />
+              }
             />
             <TextInput
               label={"Address"}
