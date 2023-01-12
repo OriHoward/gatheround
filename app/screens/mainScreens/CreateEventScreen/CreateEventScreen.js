@@ -72,6 +72,11 @@ const CreateEventScreen = () => {
       try {
         const eventResponse = await authAxios.post("/events", eventData);
         if (eventResponse.status === 200) {
+          setName("");
+          setEventDate(new Date());
+          setEventTime(new Date());
+          setAddress("");
+          setDescription("");
           navigation.navigate("Home");
         }
       } catch (error) {
