@@ -26,7 +26,7 @@ const PackageDetailsName = "My Packages";
 const ProfileScreenName = "My Profile";
 const PackageScreenName = "Create New Package";
 
-const BusinessNavigator = () => {
+const BusinessNavigator = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const logout = authContext.logout;
 
@@ -53,7 +53,7 @@ const BusinessNavigator = () => {
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
         headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
-        headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
+        headerLeft: () => <IconButton icon={"bell"} onPress={()=>{navigation.navigate("Notifications")}} />
       })}
     >
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
@@ -72,7 +72,7 @@ const BusinessNavigator = () => {
                 headerRight: () => (
                   <IconButton icon={"logout"} onPress={logout} />
                 ),
-                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
+                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{navigation.navigate("Notifications")}} />
               }}
             />
             <homeStack.Screen
@@ -109,7 +109,7 @@ const BusinessNavigator = () => {
                 headerRight: () => (
                   <IconButton icon={"logout"} onPress={logout} />
                 ),
-                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{console.log("notif")}} />
+                headerLeft: () => <IconButton icon={"bell"} onPress={()=>{navigation.navigate("Notifications")}} />
               }}
             />
             <CalendarStack.Screen

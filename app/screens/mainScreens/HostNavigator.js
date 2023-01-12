@@ -64,7 +64,7 @@ const HostNavigator = ({ navigation }) => {
           <IconButton
             icon={"bell"}
             onPress={() => {
-              console.log("notif");
+              navigation.navigate("Notifications")
             }}
           />
         ),
@@ -88,7 +88,7 @@ const HostNavigator = ({ navigation }) => {
                   <IconButton
                     icon={"bell"}
                     onPress={() => {
-                      console.log("notif");
+                      navigation.navigate("Notifications")
                     }}
                   />
                 ),

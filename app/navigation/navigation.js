@@ -11,6 +11,7 @@ import BusinessNavigator from "../screens/mainScreens/BusinessNavigator";
 import HostNavigator from "../screens/mainScreens/HostNavigator";
 import ArchiveScreen from "../screens/mainScreens/ArchiveScreen";
 import { TextStyles } from "../CommonStyles";
+import NotificationScreen from "../screens/mainScreens/NotificationScreen/";
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +78,18 @@ const Navigation = () => {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Business Main" component={BusinessNavigator} />
+            <Stack.Screen
+              name="Notifications"
+              component={NotificationScreen}
+              options={{
+                headerShown: true,
+                headerTitleAlign: "center",
+                headerTitleStyle: [
+                  TextStyles.sectionTitleText,
+                  { color: "black" },
+                ],
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       );
@@ -88,6 +101,18 @@ const Navigation = () => {
             <Stack.Screen
               name="Archive"
               component={ArchiveScreen}
+              options={{
+                headerShown: true,
+                headerTitleAlign: "center",
+                headerTitleStyle: [
+                  TextStyles.sectionTitleText,
+                  { color: "black" },
+                ],
+              }}
+            />
+            <Stack.Screen
+              name="Notifications"
+              component={NotificationScreen}
               options={{
                 headerShown: true,
                 headerTitleAlign: "center",
