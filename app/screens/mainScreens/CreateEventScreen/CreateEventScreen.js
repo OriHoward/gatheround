@@ -127,6 +127,7 @@ const CreateEventScreen = () => {
         uppercase={false}
       />
       <TextInput
+        label={"Event Time"}
         placeholder="Event Time"
         value={getFormattedTime()}
         style={styles.input}
