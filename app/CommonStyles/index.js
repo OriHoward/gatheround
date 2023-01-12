@@ -16,6 +16,7 @@ export const SearchStyles = StyleSheet.create({
 export const CardStyles = StyleSheet.create({
   cardContainer: {
     borderRadius: 15,
+    marginBottom: 10,
   },
   boldText: { textAlign: "center", fontWeight: "bold" },
   normalText: { textAlign: "center" },
