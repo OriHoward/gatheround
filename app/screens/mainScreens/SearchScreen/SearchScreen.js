@@ -2,7 +2,7 @@ import { StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-nati
 import { ScrollView } from 'react-native'
 import React, { useContext, useState, useCallback } from 'react'
 import { AxiosContext } from '../../../context/AxiosContext'
-import { List, Button, Card, Text, Avatar, TouchableRipple} from 'react-native-paper'
+import { List, Button, Card, Text, Avatar, TouchableRipple } from 'react-native-paper'
 import BookingDialog from '../BookingDialog'
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -53,13 +53,13 @@ const SearchScreen = () => {
 	}
 
 	useFocusEffect(
-        useCallback(() => {
+		useCallback(() => {
 			fetchDistinctValues().catch((e) => console.error(e))
-            onSearchClick()
-                .then()
-                .catch((e) => console.error(e));
-        }, [])
-    );
+			onSearchClick()
+				.then()
+				.catch((e) => console.error(e));
+		}, [])
+	);
 
 	const onBookClick = (dataForBooking) => {
 		setBookingData(dataForBooking)
@@ -123,7 +123,7 @@ const SearchScreen = () => {
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
 									title={city ? `${city}` : 'City'}
-									style={{ width: 250, maxWidth: screenWidth / 4 }}
+									style={styles.dropDown}
 									titleStyle={{ fontSize: 12 }}
 									expanded={expandCity}
 									onPress={() => {
@@ -140,7 +140,7 @@ const SearchScreen = () => {
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
 									title={desiredProfession ? `${desiredProfession}` : 'Profession'}
-									style={{ width: 250, maxWidth: screenWidth / 4 }}
+									style={styles.dropDown}
 									titleStyle={{ fontSize: 12 }}
 									expanded={expandProfession}
 									onPress={() => {
@@ -157,7 +157,7 @@ const SearchScreen = () => {
 							<ScrollView style={{ maxHeight: 150 }}>
 								<List.Accordion
 									title={`Ordering: ${priceOrdering}`}
-									style={{ width: 250, maxWidth: screenWidth / 4 }}
+									style={styles.dropDown}
 									titleStyle={{ fontSize: 12 }}
 									expanded={expandOrder}
 									onPress={() => {
@@ -192,7 +192,7 @@ const SearchScreen = () => {
 					/>
 				</SafeAreaView>
 			</View>
-			<BookingDialog visible={visibleBookDialog} onClose={closeDialog} data={bookingData}/>
+			<BookingDialog visible={visibleBookDialog} onClose={closeDialog} data={bookingData} />
 		</View>
 	)
 }
@@ -236,9 +236,17 @@ const styles = StyleSheet.create({
 		// height: screenHeight * 0.6,
 
 	},
-	searchAssist:{
+	searchAssist: {
 		flexDirection: 'row',
 		marginTop: 12
+	},
+	dropDown: {
+		backgroundColor: "#FFF",
+		borderColor: "#000",
+		borderWidth: 1,
+		borderRadius: 5,
+		width: 250,
+		maxWidth: screenWidth / 4
 	}
 })
 
