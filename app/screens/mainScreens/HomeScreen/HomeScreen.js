@@ -12,6 +12,7 @@ import {
 } from "react-native-paper";
 import { CardStyles } from "../../../CommonStyles";
 import backgroundImage from "../../../../assets/Images/app-background.jpg";
+import { categoryIcons } from "../../../utils/category-icons";
 
 const HomeScreen = ({ navigation }) => {
   const { authAxios } = useContext(AxiosContext);
@@ -63,17 +64,6 @@ const HomeScreen = ({ navigation }) => {
     }, [])
   );
 
-  const categoryIcons = {
-    Wedding: { icon: "ring", color: "gold" },
-    Birthday: { icon: "party-popper", color: "limegreen" },
-    Reunion: { icon: "handshake", color: "dodgerblue" },
-    Anniversary: { icon: "glass-cocktail", color: "maroon" },
-  };
-
-  const LeftContent = (props, { category }) => (
-    <Avatar.Icon {...props} icon="folder" />
-  );
-
   const RightContent = (props) => (
     <IconButton {...props} icon="chevron-right" disabled={true} />
   );
@@ -92,6 +82,7 @@ const HomeScreen = ({ navigation }) => {
     return (
       <Card
         style={CardStyles.cardContainer}
+        mode="outlined"
         onPress={() =>
           navigation.navigate("Details", {
             id,
@@ -116,7 +107,7 @@ const HomeScreen = ({ navigation }) => {
             />
           )}
           right={RightContent}
-        ></Card.Title>
+        />
         <Card.Content>
           <View style={{ flexDirection: "row" }}>
             <Text style={EventCardStyles.header2_date}>{date}</Text>
