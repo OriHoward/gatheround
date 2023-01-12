@@ -1,11 +1,17 @@
-import { View, Text, SectionList } from "react-native";
+import { View, Text, SectionList, ImageBackground } from "react-native";
 import React, { useContext, useState } from "react";
 import SectionTitle from "../../components/SectionTitle";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { useFocusEffect } from "@react-navigation/native";
 import { EventCardStyles, TextStyles } from "../../../CommonStyles";
-import { ActivityIndicator, Card, IconButton } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Card,
+  IconButton,
+  Avatar,
+} from "react-native-paper";
 import { CardStyles } from "../../../CommonStyles";
+import backgroundImage from "../../../../assets/Images/app-background.jpg";
 
 const HomeScreen = ({ navigation }) => {
   const { authAxios } = useContext(AxiosContext);
@@ -57,7 +63,18 @@ const HomeScreen = ({ navigation }) => {
     }, [])
   );
 
-  const RightContent = ({ props }) => (
+  const categoryIcons = {
+    Wedding: { icon: "ring", color: "gold" },
+    Birthday: { icon: "party-popper", color: "limegreen" },
+    Reunion: { icon: "handshake", color: "dodgerblue" },
+    Anniversary: { icon: "glass-cocktail", color: "maroon" },
+  };
+
+  const LeftContent = (props, { category }) => (
+    <Avatar.Icon {...props} icon="folder" />
+  );
+
+  const RightContent = (props) => (
     <IconButton {...props} icon="chevron-right" disabled={true} />
   );
 
@@ -87,16 +104,23 @@ const HomeScreen = ({ navigation }) => {
           })
         }
       >
-        <Card.Title title={name} right={RightContent}></Card.Title>
+        <Card.Title
+          title={name}
+          subtitle={address}
+          left={(props) => (
+            <Avatar.Icon
+              {...props}
+              icon={categoryIcons[`${category}`].icon}
+              color={"white"}
+              style={{ backgroundColor: categoryIcons[`${category}`].color }}
+            />
+          )}
+          right={RightContent}
+        ></Card.Title>
         <Card.Content>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
+          <View style={{ flexDirection: "row" }}>
             <Text style={EventCardStyles.header2_date}>{date}</Text>
-            <Text style={EventCardStyles.header2_time}>{time}</Text>
+            <Text style={EventCardStyles.header2_time}>{`, ${time}`}</Text>
           </View>
         </Card.Content>
       </Card>
@@ -121,24 +145,30 @@ const HomeScreen = ({ navigation }) => {
   } else {
     return (
       <View style={{ alignContent: "center", flex: 1 }}>
-        <Text
-          style={[
-            TextStyles.sectionTitleText,
-            { color: "black", fontSize: 20 },
-          ]}
+        <ImageBackground
+          source={backgroundImage}
+          style={{ flex: 1 }}
+          imageStyle={{ opacity: 0.4 }}
         >
-          {`Hello there, ${userName.firstName}!`}
-        </Text>
-        <SectionList
-          sections={myEvents}
-          keyExtractor={(item, index) => item + index}
-          renderItem={renderItem}
-          renderSectionHeader={({ section: { title } }) => (
-            <SectionTitle title={title} />
-          )}
-          onRefresh={() => setLoading(true)}
-          refreshing={isLoading}
-        />
+          <Text
+            style={[
+              TextStyles.sectionTitleText,
+              { color: "black", fontSize: 20 },
+            ]}
+          >
+            {`Hello there, ${userName.firstName}!`}
+          </Text>
+          <SectionList
+            sections={myEvents}
+            keyExtractor={(item, index) => item + index}
+            renderItem={renderItem}
+            renderSectionHeader={({ section: { title } }) => (
+              <SectionTitle title={title} />
+            )}
+            onRefresh={() => setLoading(true)}
+            refreshing={isLoading}
+          />
+        </ImageBackground>
       </View>
     );
   }
