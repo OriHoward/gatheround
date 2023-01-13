@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import { Title, Text, Card, Button } from "react-native-paper";
 
@@ -14,10 +14,6 @@ const PackageCard = ({
       <View style={styles.root}>
         <Card style={styles.cardContainer}>
           <View style={styles.imageContainer}>
-            {/* <Image
-            source={require("./../../../../assets/Images/packages.jpg")}
-            style={styles.image}
-          /> */}
           </View>
           <Card.Content style={{ zIndex: 1 }}>
             <Title style={styles.title}>{packageName}</Title>
