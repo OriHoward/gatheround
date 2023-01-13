@@ -116,13 +116,13 @@ const EventDetailsScreen = ({ route, navigation }) => {
             <Paragraph>{data.description}</Paragraph>
           </Card.Content>
           <Avatar.Icon
-            icon={categoryIcons[`${data.category}`].icon}
+            icon={categoryIcons[`${data.category}`]?.icon|| 'calendar-star'}
             color={"white"}
             size={50}
             style={{
               marginTop: 20,
               alignSelf: "center",
-              backgroundColor: categoryIcons[`${data.category}`].color,
+              backgroundColor: categoryIcons[`${data.category}`]?.color || 'blue',
             }}
           />
           <Card.Actions>

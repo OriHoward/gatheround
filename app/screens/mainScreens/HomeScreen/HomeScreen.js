@@ -101,9 +101,9 @@ const HomeScreen = ({ navigation }) => {
           left={(props) => (
             <Avatar.Icon
               {...props}
-              icon={categoryIcons[`${category}`].icon}
+              icon={categoryIcons[`${category}`]?.icon|| 'calendar-star'}
               color={"white"}
-              style={{ backgroundColor: categoryIcons[`${category}`].color }}
+              style={{ backgroundColor: categoryIcons[`${category}`]?.color || 'blue' }}
             />
           )}
           right={RightContent}
