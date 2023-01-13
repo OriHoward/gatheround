@@ -54,10 +54,10 @@ const BusinessRequestsScreen = ({ navigation }) => {
                 left={(props) => (
                   <Avatar.Icon
                     {...props}
-                    icon={categoryIcons[`${event_category}`].icon}
+                    icon={categoryIcons[`${event_category}`]?.icon|| 'calendar-star'}
                     color={"white"}
                     style={{
-                      backgroundColor: categoryIcons[`${event_category}`].color,
+                      backgroundColor: categoryIcons[`${event_category}`]?.color || 'blue',
                       marginTop: -35,
                     }}
                   />
