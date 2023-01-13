@@ -9,9 +9,10 @@ import SearchScreen from "./SearchScreen";
 import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { View } from "react-native-web";
 import { AxiosContext } from "../../context/AxiosContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -47,9 +48,11 @@ const HostNavigator = ({ navigation }) => {
     setNotifAmount(notifCount)
   }
 
-  useEffect(() => {
-    getNotifAmount().then().catch((e) => console.log(e))
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      getNotifAmount().then().catch((e) => console.log(e))
+    }, [])
+  )
 
   const getLeftHeader = () => {
 

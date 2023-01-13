@@ -10,10 +10,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import BusinessProfileScreen from "./BusinessProfileScreen";
 import BusinessPackageScreen from "./BusinessPackageScreen";
 import { AuthContext } from "../../context/AuthContext";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
 import { AxiosContext } from "../../context/AxiosContext";
+import { useFocusEffect } from "@react-navigation/native";ד
 
 // import here the packageDetailsScreen
 const Tab = createBottomTabNavigator();
@@ -42,9 +43,12 @@ const BusinessNavigator = ({ navigation }) => {
     setNotifAmount(notifCount)
   }
 
-  useEffect(() => {
-    getNotifAmount().then().catch((e) => console.log(e))
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      getNotifAmount().then().catch((e) => console.log(e))
+    }, [])
+  )
+
 
   const getLeftHeader = () => {
 
