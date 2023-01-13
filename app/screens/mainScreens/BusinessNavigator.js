@@ -10,6 +10,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import BusinessProfileScreen from "./BusinessProfileScreen";
 import BusinessPackageScreen from "./BusinessPackageScreen";
 import { AuthContext } from "../../context/AuthContext";
+import BusinessRequestsScreen from "./BusinessRequestsScreen";
 import React, { useContext, useState, useCallback } from "react";
 import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
@@ -51,7 +52,6 @@ const BusinessNavigator = ({ navigation }) => {
 
 
   const getLeftHeader = () => {
-
     const notifIcon = notifAmount ? "bell-badge" : "bell"
     const iconColor = notifAmount ? "red" : "black"
     return (<IconButton icon={notifIcon} color={iconColor}
@@ -80,8 +80,18 @@ const BusinessNavigator = ({ navigation }) => {
         headerTitleAlign: "center",
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
-        headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
-        headerLeft: getLeftHeader
+        headerRight: () => (
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <IconButton
+              icon={"email"}
+              onPress={() => navigation.navigate("Requests")}
+            />
+            <IconButton icon={"logout"} onPress={logout} />,
+          </View>
+        ),
+        headerLeft: getLeftHeader,
       })}
     >
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
@@ -98,7 +108,18 @@ const BusinessNavigator = ({ navigation }) => {
                   { color: "black" },
                 ],
                 headerRight: () => (
-                  <IconButton icon={"logout"} onPress={logout} />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <IconButton
+                      icon={"email"}
+                      onPress={() => navigation.navigate("Requests")}
+                    />
+                    <IconButton icon={"logout"} onPress={logout} />,
+                  </View>
                 ),
                 headerLeft: getLeftHeader
               }}
