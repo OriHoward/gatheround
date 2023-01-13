@@ -8,9 +8,12 @@ import {
   Avatar,
   Text,
   ActivityIndicator,
+  Divider,
+  Paragraph,
 } from "react-native-paper";
-import { CardStyles } from "../../../CommonStyles";
+import { CardStyles, EventCardStyles } from "../../../CommonStyles";
 import SectionTitle from "../../components/SectionTitle";
+import { categoryIcons } from "../../../utils/category-icons";
 
 const ArchiveScreen = () => {
   const { authAxios } = useContext(AxiosContext);
@@ -45,23 +48,45 @@ const ArchiveScreen = () => {
 
   const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
-  const renderItem = () => {
+  const renderItem = ({ item }) => {
+    const {
+      id,
+      name,
+      event_date,
+      category,
+      address,
+      description,
+      limit_attending,
+    } = item;
+    const [date, time] = event_date.split(" ");
     return (
       <Card style={CardStyles.cardContainer}>
         <Card.Title
-          title="Card Title"
-          subtitle="Card Subtitle"
-          left={LeftContent}
+          title={name}
+          subtitle={address}
+          left={(props) => (
+            <Avatar.Icon
+              {...props}
+              icon={categoryIcons[`${category}`]?.icon || "calendar-star"}
+              color={"white"}
+              style={{
+                backgroundColor:
+                  categoryIcons[`${category}`]?.color || "blueviolet",
+              }}
+            />
+          )}
         />
         <Card.Content>
-          <Text variant="titleLarge">Card title</Text>
-          <Text variant="bodyMedium">Card content</Text>
+          <View style={{ flexDirection: "row", marginBottom: 10 }}>
+            <Text style={EventCardStyles.header2_date}>{date}</Text>
+            <Text style={EventCardStyles.header2_time}>{`, ${time}`}</Text>
+          </View>
+          <Paragraph>{description}</Paragraph>
+          <Text> </Text>
+          <Divider />
+          <SectionTitle title={"Services"} />
+          <Paragraph></Paragraph>
         </Card.Content>
-        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-        <Card.Actions>
-          <Button>Cancel</Button>
-          <Button>Ok</Button>
-        </Card.Actions>
       </Card>
     );
   };

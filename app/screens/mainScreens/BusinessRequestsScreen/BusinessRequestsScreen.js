@@ -76,8 +76,7 @@ const BusinessRequestsScreen = ({ navigation }) => {
                     }
                     color={"white"}
                     style={{
-                      backgroundColor:
-                        categoryIcons[`${event_category}`]?.color || "blue",
+                      backgroundColor: categoryIcons[`${event_category}`]?.color || 'blueviolet',
                       marginTop: -35,
                     }}
                   />
