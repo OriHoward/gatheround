@@ -2,7 +2,7 @@ import { StyleSheet, View, Dimensions, FlatList, SafeAreaView } from 'react-nati
 import { ScrollView } from 'react-native'
 import React, { useContext, useState, useCallback } from 'react'
 import { AxiosContext } from '../../../context/AxiosContext'
-import { List, Button, Card, Text, Avatar, TouchableRipple } from 'react-native-paper'
+import { List, Button, Card, Text, Avatar, TouchableRipple, IconButton } from 'react-native-paper'
 import BookingDialog from '../BookingDialog'
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -80,17 +80,36 @@ const SearchScreen = () => {
 
 	const renderSearchItem = ({ item }) => {
 		const { business_id: businessId, package_id: packageId, profession, country, city, phone_number, price, currency, package_name, description } = item
+		console.log(item, "!!!")
 		return (
 			<View style={styles.searchResultWrapper}>
 				<Card mode='outlined'>
 					<Card.Title title={package_name} subtitle={description} />
 					<Card.Content>
-						<Text variant="bodyMedium">City: {city}</Text>
-						<Text variant="bodyMedium">Country : {country}</Text>
-						<Text variant="bodyMedium">Profession: {profession}</Text>
-						<Text variant="bodyMedium">Price :{price}</Text>
-						<Text variant="bodyMedium">Currency :{currency}</Text>
-						<Text variant="bodyMedium">Contact :{phone_number}</Text>
+						<View style={styles.cardView}>
+							<IconButton icon="city" size={20} color="#000" style={{ marginRight: 10 }} /><Text variant="bodyMedium">{city}</Text>
+							<IconButton icon="earth" size={20} color="#000" style={{ marginRight: 10 }} />
+							<Text variant="bodyMedium">{country}</Text>
+						</View>
+						<View style={styles.cardView}>
+
+						</View>
+						<View style={styles.cardView}>
+							<IconButton icon="briefcase" size={20} color="#000" style={{ marginRight: 10 }} />
+							<Text variant="bodyMedium">{profession}</Text>
+						</View>
+						<View style={styles.cardView}>
+							<IconButton icon="cash" size={20} color="#000" style={{ marginRight: 10 }} />
+							<Text variant="bodyMedium">{price}</Text>
+						</View>
+						<View style={styles.cardView}>
+							<IconButton icon="currency-usd" size={20} color="#000" style={{ marginRight: 10 }} />
+							<Text variant="bodyMedium">{currency}</Text>
+						</View>
+						<View style={styles.cardView}>
+							<IconButton icon="phone" size={20} color="#000" style={{ marginRight: 10 }} />
+							<Text variant="bodyMedium">{phone_number}</Text>
+						</View>
 					</Card.Content>
 					<Card.Actions>
 						<Button onPress={() => onBookClick({ businessId, packageId })}>Book Service</Button>
@@ -247,6 +266,9 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 		width: 250,
 		maxWidth: screenWidth / 4
+	},
+	cardView: {
+		flexDirection: 'row', alignItems: 'center'
 	}
 })
 
