@@ -28,12 +28,21 @@ const HomeScreen = ({ navigation }) => {
       const response = await authAxios.get("/events?host-limit=4");
       const { data } = response;
       const { my_events = [] } = data;
-      setMyEvents([
-        {
-          title: "My Events",
-          data: my_events,
-        },
-      ]);
+      if (my_events.length === 0) {
+        setMyEvents([
+          {
+            title: "No events to display",
+            data: my_events,
+          },
+        ]);
+      } else {
+        setMyEvents([
+          {
+            title: "My Events",
+            data: my_events,
+          },
+        ]);
+      }
     } catch (error) {
       console.error(error);
       setMyEvents([]);
@@ -103,9 +112,11 @@ const HomeScreen = ({ navigation }) => {
           left={(props) => (
             <Avatar.Icon
               {...props}
-              icon={categoryIcons[`${category}`]?.icon|| 'calendar-star'}
+              icon={categoryIcons[`${category}`]?.icon || "calendar-star"}
               color={"white"}
-              style={{ backgroundColor: categoryIcons[`${category}`]?.color || 'blue' }}
+              style={{
+                backgroundColor: categoryIcons[`${category}`]?.color || "blue",
+              }}
             />
           )}
           right={RightContent}

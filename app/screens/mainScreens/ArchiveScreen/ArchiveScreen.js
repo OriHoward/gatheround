@@ -25,7 +25,7 @@ const ArchiveScreen = () => {
       if (past_events.length === 0) {
         setPastEvents([
           {
-            title: "No Past Events",
+            title: "No past events to display",
             data: past_events,
           },
         ]);
