@@ -13,6 +13,7 @@ import ArchiveScreen from "../screens/mainScreens/ArchiveScreen";
 import BusinessRequestsScreen from "../screens/mainScreens/BusinessRequestsScreen";
 import { TextStyles } from "../CommonStyles";
 import NotificationScreen from "../screens/mainScreens/NotificationScreen/";
+import { ActivityIndicator } from "react-native-paper";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,8 +62,8 @@ const Navigation = () => {
 
   if (isLoading) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={{ padding: 20 }}>
+        <ActivityIndicator animating={true} />
       </View>
     );
   } else {
