@@ -10,10 +10,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import BusinessProfileScreen from "./BusinessProfileScreen";
 import BusinessPackageScreen from "./BusinessPackageScreen";
 import { AuthContext } from "../../context/AuthContext";
-import BusinessRequestsScreen from "./BusinessRequestsScreen";
 import React, { useContext, useState, useCallback } from "react";
 import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
+import { View } from "react-native-web";
 import { AxiosContext } from "../../context/AxiosContext";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -29,34 +29,40 @@ const PackageDetailsName = "My Packages";
 const ProfileScreenName = "My Profile";
 const PackageScreenName = "Create New Package";
 
-
-
 const BusinessNavigator = ({ navigation }) => {
   const authContext = useContext(AuthContext);
-  const { authAxios } = useContext(AxiosContext)
-  const [notifAmount, setNotifAmount] = useState(0)
+  const { authAxios } = useContext(AxiosContext);
+  const [notifAmount, setNotifAmount] = useState(0);
   const logout = authContext.logout;
 
   const getNotifAmount = async () => {
-    const resp = await authAxios.get(`/notif-meta`)
-    const { data } = resp
-    const { notifCount = 0 } = data
-    setNotifAmount(notifCount)
-  }
+    const resp = await authAxios.get(`/notif-meta`);
+    const { data } = resp;
+    const { notifCount = 0 } = data;
+    setNotifAmount(notifCount);
+  };
 
   useFocusEffect(
     useCallback(() => {
-      getNotifAmount().then().catch((e) => console.log(e))
+      getNotifAmount()
+        .then()
+        .catch((e) => console.log(e));
     }, [])
-  )
-
+  );
 
   const getLeftHeader = () => {
-    const notifIcon = notifAmount ? "bell-badge" : "bell"
-    const iconColor = notifAmount ? "red" : "black"
-    return (<IconButton icon={notifIcon} color={iconColor}
-      onPress={() => { navigation.navigate("Notifications") }} />)
-  }
+    const notifIcon = notifAmount ? "bell-badge" : "bell";
+    const iconColor = notifAmount ? "red" : "black";
+    return (
+      <IconButton
+        icon={notifIcon}
+        color={iconColor}
+        onPress={() => {
+          navigation.navigate("Notifications");
+        }}
+      />
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -121,7 +127,7 @@ const BusinessNavigator = ({ navigation }) => {
                     <IconButton icon={"logout"} onPress={logout} />,
                   </View>
                 ),
-                headerLeft: getLeftHeader
+                headerLeft: getLeftHeader,
               }}
             />
             <homeStack.Screen
@@ -158,7 +164,7 @@ const BusinessNavigator = ({ navigation }) => {
                 headerRight: () => (
                   <IconButton icon={"logout"} onPress={logout} />
                 ),
-                headerLeft: getLeftHeader
+                headerLeft: getLeftHeader,
               }}
             />
             <CalendarStack.Screen
