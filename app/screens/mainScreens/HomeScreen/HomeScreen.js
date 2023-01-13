@@ -28,12 +28,21 @@ const HomeScreen = ({ navigation }) => {
       const response = await authAxios.get("/events?host-limit=4");
       const { data } = response;
       const { my_events = [] } = data;
-      setMyEvents([
-        {
-          title: "My Events",
-          data: my_events,
-        },
-      ]);
+      if (my_events.length === 0) {
+        setMyEvents([
+          {
+            title: "No events to display",
+            data: my_events,
+          },
+        ]);
+      } else {
+        setMyEvents([
+          {
+            title: "My Events",
+            data: my_events,
+          },
+        ]);
+      }
     } catch (error) {
       console.error(error);
       setMyEvents([]);
@@ -79,6 +88,8 @@ const HomeScreen = ({ navigation }) => {
       limit_attending,
     } = item;
     const [date, time] = event_date.split(" ");
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${year}-${month}-${day}T${time}`;
     return (
       <Card
         style={CardStyles.cardContainer}
@@ -87,7 +98,7 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate("Details", {
             id,
             name,
-            event_date,
+            event_date: formattedDate,
             category,
             address,
             description,
@@ -101,9 +112,11 @@ const HomeScreen = ({ navigation }) => {
           left={(props) => (
             <Avatar.Icon
               {...props}
-              icon={categoryIcons[`${category}`].icon}
+              icon={categoryIcons[`${category}`]?.icon || "calendar-star"}
               color={"white"}
-              style={{ backgroundColor: categoryIcons[`${category}`].color }}
+              style={{
+                backgroundColor: categoryIcons[`${category}`]?.color || "blue",
+              }}
             />
           )}
           right={RightContent}

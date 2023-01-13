@@ -45,7 +45,7 @@ const MyComponent = (props) => {
     const onBookingPress = async () => {
         try {
             await sendBookingRequest()
-            onClose()
+            closeWrapper()
         } catch (error) {
             console.log(error, error.response.status, error.response.status === 409)
             if (error.response.status === 409) {
@@ -55,6 +55,11 @@ const MyComponent = (props) => {
             }
 
         }
+    }
+
+    const closeWrapper = ()=>{
+        setBookingError("")
+        onClose()
     }
 
     useFocusEffect(
@@ -110,7 +115,7 @@ const MyComponent = (props) => {
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={onBookingPress}>Book</Button>
-                            <Button onPress={onClose}>Close</Button>
+                            <Button onPress={closeWrapper}>Close</Button>
                         </Dialog.Actions>
                     </Dialog>
                 </Portal>

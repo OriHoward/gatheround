@@ -80,10 +80,10 @@ const BusinessRequestsScreen = ({ navigation }) => {
                 left={(props) => (
                   <Avatar.Icon
                     {...props}
-                    icon={categoryIcons[`${event_category}`].icon}
+                    icon={categoryIcons[`${event_category}`]?.icon|| 'calendar-star'}
                     color={"white"}
                     style={{
-                      backgroundColor: categoryIcons[`${event_category}`].color,
+                      backgroundColor: categoryIcons[`${event_category}`]?.color || 'blue',
                       marginTop: -35,
                     }}
                   />
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   cardContainer: {
+    marginTop:7,
     backgroundColor: "#fff",
     borderRadius: 5,
     shadowColor: "#000",

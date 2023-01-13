@@ -31,18 +31,15 @@ const EventDetailsScreen = ({ route, navigation }) => {
     description,
     limit_attending,
   } = route.params;
-  const [date, time] = event_date.split(" ");
 
   const [isSaved, setIsSaved] = useState(true);
   const [isDialogVisible, setDialogVisible] = useState(false);
-  const [eventDate, setEventDate] = useState(new Date());
-  const [eventTime, setEventTime] = useState(new Date());
+  const [eventDate, setEventDate] = useState(new Date(event_date));
+  const [eventTime, setEventTime] = useState(new Date(event_date));
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [data, setData] = useState({
     id,
     name,
-    date,
-    time,
     category,
     address,
     description,
@@ -107,8 +104,8 @@ const EventDetailsScreen = ({ route, navigation }) => {
         <Card mode="outlined" style={CardStyles.cardContainer}>
           <Card.Content>
             <Title style={CardStyles.boldText}>{data.name}</Title>
-            <Text style={CardStyles.boldText}>{data.date}</Text>
-            <Text style={CardStyles.normalText}>{data.time}</Text>
+            <Text style={CardStyles.boldText}>{getFormattedDate()}</Text>
+            <Text style={CardStyles.normalText}>{getFormattedTime()}</Text>
             <Text style={CardStyles.normalText}>{data.address}</Text>
             <Text> </Text>
             <Divider />
@@ -116,13 +113,13 @@ const EventDetailsScreen = ({ route, navigation }) => {
             <Paragraph>{data.description}</Paragraph>
           </Card.Content>
           <Avatar.Icon
-            icon={categoryIcons[`${data.category}`].icon}
+            icon={categoryIcons[`${data.category}`]?.icon|| 'calendar-star'}
             color={"white"}
             size={50}
             style={{
               marginTop: 20,
               alignSelf: "center",
-              backgroundColor: categoryIcons[`${data.category}`].color,
+              backgroundColor: categoryIcons[`${data.category}`]?.color || 'blue',
             }}
           />
           <Card.Actions>

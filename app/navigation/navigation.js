@@ -13,6 +13,7 @@ import ArchiveScreen from "../screens/mainScreens/ArchiveScreen";
 import BusinessRequestsScreen from "../screens/mainScreens/BusinessRequestsScreen";
 import { TextStyles } from "../CommonStyles";
 import NotificationScreen from "../screens/mainScreens/NotificationScreen/";
+import { ActivityIndicator } from "react-native-paper";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,8 +62,8 @@ const Navigation = () => {
 
   if (isLoading) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={{ padding: 20 }}>
+        <ActivityIndicator animating={true} />
       </View>
     );
   } else {
@@ -110,11 +111,8 @@ const Navigation = () => {
       return (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Host Main" component={HostNavigator} />
-            <Stack.Screen
-              name="Archive"
-              component={ArchiveScreen}
-              options={{
+            <Stack.Group
+              screenOptions={{
                 headerShown: true,
                 headerTitleAlign: "center",
                 headerTitleStyle: [
@@ -122,19 +120,18 @@ const Navigation = () => {
                   { color: "black" },
                 ],
               }}
-            />
-            <Stack.Screen
-              name="Notifications"
-              component={NotificationScreen}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerTitleStyle: [
-                  TextStyles.sectionTitleText,
-                  { color: "black" },
-                ],
-              }}
-            />
+            >
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Host Main"
+                component={HostNavigator}
+              />
+              <Stack.Screen name="Archive" component={ArchiveScreen} />
+              <Stack.Screen
+                name="Notifications"
+                component={NotificationScreen}
+              />
+            </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>
       );
