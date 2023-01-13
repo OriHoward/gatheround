@@ -80,7 +80,6 @@ const SearchScreen = () => {
 
 	const renderSearchItem = ({ item }) => {
 		const { business_id: businessId, package_id: packageId, profession, country, city, phone_number, price, currency, package_name, description } = item
-		console.log(item, "!!!")
 		return (
 			<View style={styles.searchResultWrapper}>
 				<Card mode='outlined'>
