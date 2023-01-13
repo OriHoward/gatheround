@@ -79,6 +79,8 @@ const HomeScreen = ({ navigation }) => {
       limit_attending,
     } = item;
     const [date, time] = event_date.split(" ");
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${year}-${month}-${day}T${time}`;
     return (
       <Card
         style={CardStyles.cardContainer}
@@ -87,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate("Details", {
             id,
             name,
-            event_date,
+            event_date: formattedDate,
             category,
             address,
             description,
