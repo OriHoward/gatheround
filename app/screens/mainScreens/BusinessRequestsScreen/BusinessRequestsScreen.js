@@ -7,6 +7,7 @@ import { categoryIcons } from "../../../utils/category-icons";
 const BusinessRequestsScreen = ({ navigation }) => {
   const { authAxios } = useContext(AxiosContext);
   const [requestsList, setRequestsList] = useState([]);
+  const [currentStatus, setCurrentStatus] = useState("pending");
 
   const getRequests = async () => {
     try {
@@ -18,11 +19,35 @@ const BusinessRequestsScreen = ({ navigation }) => {
     }
   };
 
-  const handleConfirm = () => {
-    console.log("confirm");
+  const handleConfirm = async (
+    id,
+    event_user_id,
+    is_acknowledged,
+    request_status
+  ) => {
+    const data = {
+      is_acknowledged,
+      request_status,
+      id,
+      event_user_id,
+    };
+    const response = await authAxios.put("/requests", data);
   };
-  const handleDecline = () => {
-    console.log("decline");
+  const handleDecline = async (
+    id,
+    event_user_id,
+    is_acknowledged,
+    request_status
+  ) => {
+    const data = {
+      is_acknowledged,
+      request_status,
+      id,
+      event_user_id,
+    };
+    const response = await authAxios.put("/requests", data);
+    const updatedStatus = response.data.request_status;
+    setCurrentStatus(updatedStatus);
   };
 
   useEffect(() => {
@@ -34,6 +59,7 @@ const BusinessRequestsScreen = ({ navigation }) => {
   const renderItems = ({ item }) => {
     const {
       id,
+      event_user_id,
       package_id,
       event_id,
       description,
@@ -81,21 +107,37 @@ const BusinessRequestsScreen = ({ navigation }) => {
               </View>
             </View>
           </Card.Content>
-          <Card.Actions style={styles.cardActions}>
-            <Button
-              icon="check"
-              color={"green"}
-              onPress={() => handleConfirm(id)}
-            >
-              Confirm
-            </Button>
-            <Button
-              icon={"cancel"}
-              color={"red"}
-              onPress={() => handleDecline(id)}
-            >
-              Decline
-            </Button>
+          <Card.Actions style={styles.statusButtons}>
+            {currentStatus === "pending" ? (
+              <View style={styles.statusButtons}>
+                <Button
+                  icon="check"
+                  color={"green"}
+                  onPress={() => {
+                    setCurrentStatus("accepted");
+                    handleConfirm(id, event_user_id, true, 1);
+                  }}
+                >
+                  Confirm
+                </Button>
+                <Button
+                  icon={"cancel"}
+                  color={"red"}
+                  onPress={() => {
+                    setCurrentStatus("declined");
+                    handleDecline(id, event_user_id, true, 0);
+                  }}
+                >
+                  Decline
+                </Button>
+              </View>
+            ) : currentStatus === "accepted" ? (
+              <Text style={{ color: "green", fontWeight: "bold" }}>
+                ACCEPTED
+              </Text>
+            ) : (
+              <Text style={{ color: "red", fontWeight: "bold" }}>DECLINED</Text>
+            )}
           </Card.Actions>
         </Card>
       </View>
@@ -175,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
   },
-  cardActions: {
+  statusButtons: {
     flexDirection: "row",
     justifyContent: "flex-end",
   },
