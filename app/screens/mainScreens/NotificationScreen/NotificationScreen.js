@@ -18,6 +18,12 @@ export default function NotificationScreen() {
     setNotificationList(notification)
   }
 
+  const acknowledgedNotif = async (notifId) => {
+    const resp = await authAxios.put(`/request-notifs`, { notifId })
+    const { data } = resp
+    
+  }
+
   useEffect(() => {
     fetchNotifications().then().catch((e) => console.log(e))
   }, [])
@@ -32,7 +38,7 @@ export default function NotificationScreen() {
             <Text variant="bodyMedium">Date: {eventDate}</Text>
           </Card.Content>
           <Card.Actions>
-            <Button onPress={() => console.log("ACK")}>Ack</Button>
+            <Button onPress={() => acknowledgedNotif(id).catch((e)=> console.log(e))}>Seen</Button>
           </Card.Actions>
         </Card>
       </View>
