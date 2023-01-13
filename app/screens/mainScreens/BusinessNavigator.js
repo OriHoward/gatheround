@@ -13,6 +13,7 @@ import { AuthContext } from "../../context/AuthContext";
 import React, { useContext, useState, useCallback } from "react";
 import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
+import { View } from "react-native-web";
 import { AxiosContext } from "../../context/AxiosContext";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -28,35 +29,40 @@ const PackageDetailsName = "My Packages";
 const ProfileScreenName = "My Profile";
 const PackageScreenName = "Create New Package";
 
-
-
 const BusinessNavigator = ({ navigation }) => {
   const authContext = useContext(AuthContext);
-  const { authAxios } = useContext(AxiosContext)
-  const [notifAmount, setNotifAmount] = useState(0)
+  const { authAxios } = useContext(AxiosContext);
+  const [notifAmount, setNotifAmount] = useState(0);
   const logout = authContext.logout;
 
   const getNotifAmount = async () => {
-    const resp = await authAxios.get(`/notif-meta`)
-    const { data } = resp
-    const { notifCount = 0 } = data
-    setNotifAmount(notifCount)
-  }
+    const resp = await authAxios.get(`/notif-meta`);
+    const { data } = resp;
+    const { notifCount = 0 } = data;
+    setNotifAmount(notifCount);
+  };
 
   useFocusEffect(
     useCallback(() => {
-      getNotifAmount().then().catch((e) => console.log(e))
+      getNotifAmount()
+        .then()
+        .catch((e) => console.log(e));
     }, [])
-  )
-
+  );
 
   const getLeftHeader = () => {
-
-    const notifIcon = notifAmount ? "bell-badge" : "bell"
-    const iconColor = notifAmount ? "red" : "black"
-    return (<IconButton icon={notifIcon} color={iconColor}
-      onPress={() => { navigation.navigate("Notifications") }} />)
-  }
+    const notifIcon = notifAmount ? "bell-badge" : "bell";
+    const iconColor = notifAmount ? "red" : "black";
+    return (
+      <IconButton
+        icon={notifIcon}
+        color={iconColor}
+        onPress={() => {
+          navigation.navigate("Notifications");
+        }}
+      />
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -80,8 +86,18 @@ const BusinessNavigator = ({ navigation }) => {
         headerTitleAlign: "center",
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
-        headerRight: () => <IconButton icon={"logout"} onPress={logout} />,
-        headerLeft: getLeftHeader
+        headerRight: () => (
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <IconButton
+              icon={"email"}
+              onPress={() => navigation.navigate("Requests")}
+            />
+            <IconButton icon={"logout"} onPress={logout} />,
+          </View>
+        ),
+        headerLeft: getLeftHeader,
       })}
     >
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
@@ -98,9 +114,20 @@ const BusinessNavigator = ({ navigation }) => {
                   { color: "black" },
                 ],
                 headerRight: () => (
-                  <IconButton icon={"logout"} onPress={logout} />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <IconButton
+                      icon={"email"}
+                      onPress={() => navigation.navigate("Requests")}
+                    />
+                    <IconButton icon={"logout"} onPress={logout} />,
+                  </View>
                 ),
-                headerLeft: getLeftHeader
+                headerLeft: getLeftHeader,
               }}
             />
             <homeStack.Screen
@@ -137,7 +164,7 @@ const BusinessNavigator = ({ navigation }) => {
                 headerRight: () => (
                   <IconButton icon={"logout"} onPress={logout} />
                 ),
-                headerLeft: getLeftHeader
+                headerLeft: getLeftHeader,
               }}
             />
             <CalendarStack.Screen
