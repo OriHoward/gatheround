@@ -57,7 +57,7 @@ const BusinessRequestsScreen = ({ navigation }) => {
                     icon={categoryIcons[`${event_category}`]?.icon|| 'calendar-star'}
                     color={"white"}
                     style={{
-                      backgroundColor: categoryIcons[`${event_category}`]?.color || 'blue',
+                      backgroundColor: categoryIcons[`${event_category}`]?.color || 'blueviolet',
                       marginTop: -35,
                     }}
                   />

@@ -115,7 +115,7 @@ const HomeScreen = ({ navigation }) => {
               icon={categoryIcons[`${category}`]?.icon || "calendar-star"}
               color={"white"}
               style={{
-                backgroundColor: categoryIcons[`${category}`]?.color || "blue",
+                backgroundColor: categoryIcons[`${category}`]?.color || "blueviolet",
               }}
             />
           )}

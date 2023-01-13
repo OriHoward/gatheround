@@ -119,7 +119,7 @@ const EventDetailsScreen = ({ route, navigation }) => {
             style={{
               marginTop: 20,
               alignSelf: "center",
-              backgroundColor: categoryIcons[`${data.category}`]?.color || 'blue',
+              backgroundColor: categoryIcons[`${data.category}`]?.color || 'blueviolet',
             }}
           />
           <Card.Actions>
