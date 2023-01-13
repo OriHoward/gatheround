@@ -110,11 +110,8 @@ const Navigation = () => {
       return (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Host Main" component={HostNavigator} />
-            <Stack.Screen
-              name="Archive"
-              component={ArchiveScreen}
-              options={{
+            <Stack.Group
+              screenOptions={{
                 headerShown: true,
                 headerTitleAlign: "center",
                 headerTitleStyle: [
@@ -122,19 +119,18 @@ const Navigation = () => {
                   { color: "black" },
                 ],
               }}
-            />
-            <Stack.Screen
-              name="Notifications"
-              component={NotificationScreen}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerTitleStyle: [
-                  TextStyles.sectionTitleText,
-                  { color: "black" },
-                ],
-              }}
-            />
+            >
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Host Main"
+                component={HostNavigator}
+              />
+              <Stack.Screen name="Archive" component={ArchiveScreen} />
+              <Stack.Screen
+                name="Notifications"
+                component={NotificationScreen}
+              />
+            </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>
       );

@@ -25,8 +25,8 @@ const CreateEventScreenName = "Create New Event";
 
 const HostNavigator = ({ navigation }) => {
   const authContext = useContext(AuthContext);
-  const { authAxios } = useContext(AxiosContext)
-  const [notifAmount, setNotifAmount] = useState(0)
+  const { authAxios } = useContext(AxiosContext);
+  const [notifAmount, setNotifAmount] = useState(0);
   const logout = authContext.logout;
 
   const headerRight = () => {
@@ -42,25 +42,33 @@ const HostNavigator = ({ navigation }) => {
   };
 
   const getNotifAmount = async () => {
-    const resp = await authAxios.get(`/notif-meta`)
-    const { data } = resp
-    const { notifCount = 0 } = data
-    setNotifAmount(notifCount)
-  }
+    const resp = await authAxios.get(`/notif-meta`);
+    const { data } = resp;
+    const { notifCount = 0 } = data;
+    setNotifAmount(notifCount);
+  };
 
   useFocusEffect(
     useCallback(() => {
-      getNotifAmount().then().catch((e) => console.log(e))
+      getNotifAmount()
+        .then()
+        .catch((e) => console.log(e));
     }, [])
-  )
+  );
 
   const getLeftHeader = () => {
-
-    const notifIcon = notifAmount ? "bell-badge" : "bell"
-    const iconColor = notifAmount ? "red" : "black"
-    return (<IconButton icon={notifIcon} color={iconColor}
-      onPress={() => { navigation.navigate("Notifications") }} />)
-  }
+    const notifIcon = notifAmount ? "bell-badge" : "bell";
+    const iconColor = notifAmount ? "red" : "black";
+    return (
+      <IconButton
+        icon={notifIcon}
+        color={iconColor}
+        onPress={() => {
+          navigation.navigate("Notifications");
+        }}
+      />
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -91,33 +99,30 @@ const HostNavigator = ({ navigation }) => {
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
         {() => (
           <HomeStack.Navigator>
-            <HomeStack.Screen
-              name={HomeScreenName}
-              component={HomeScreen}
-              options={{
+            <HomeStack.Group
+              screenOptions={{
                 headerShown: true,
                 headerTitleAlign: "center",
                 headerTitleStyle: [
                   TextStyles.sectionTitleText,
                   { color: "black" },
                 ],
-                headerRight: headerRight,
-                headerLeft: getLeftHeader
               }}
-            />
-            <HomeStack.Screen
-              name={EventDetailsScreenName}
-              component={EventDetailsScreen}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerTitleStyle: [
-                  TextStyles.sectionTitleText,
-                  { color: "black" },
-                ],
-                contentStyle: { padding: 30 },
-              }}
-            />
+            >
+              <HomeStack.Screen
+                name={HomeScreenName}
+                component={HomeScreen}
+                options={{
+                  headerRight: headerRight,
+                  headerLeft: getLeftHeader,
+                }}
+              />
+              <HomeStack.Screen
+                name={EventDetailsScreenName}
+                component={EventDetailsScreen}
+                options={{ contentStyle: { padding: 30 } }}
+              />
+            </HomeStack.Group>
           </HomeStack.Navigator>
         )}
       </Tab.Screen>
