@@ -54,7 +54,9 @@ const HostNavigator = ({ navigation }) => {
   const getLeftHeader = () => {
 
     const notifIcon = notifAmount ? "bell-badge" : "bell"
-    return (<IconButton icon={notifIcon} onPress={() => { navigation.navigate("Notifications") }} />)
+    const iconColor = notifAmount ? "red" : "black"
+    return (<IconButton icon={notifIcon} color={iconColor}
+      onPress={() => { navigation.navigate("Notifications") }} />)
   }
 
   return (
