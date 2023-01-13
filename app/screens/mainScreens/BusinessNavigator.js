@@ -14,7 +14,7 @@ import React, { useContext, useState, useCallback } from "react";
 import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
 import { AxiosContext } from "../../context/AxiosContext";
-import { useFocusEffect } from "@react-navigation/native";ד
+import { useFocusEffect } from "@react-navigation/native";
 
 // import here the packageDetailsScreen
 const Tab = createBottomTabNavigator();
