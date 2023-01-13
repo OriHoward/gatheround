@@ -7,7 +7,6 @@ import { categoryIcons } from "../../../utils/category-icons";
 const BusinessRequestsScreen = ({ navigation }) => {
   const { authAxios } = useContext(AxiosContext);
   const [requestsList, setRequestsList] = useState([]);
-  const [currentStatus, setCurrentStatus] = useState("pending");
 
   const getRequests = async () => {
     try {
@@ -25,9 +24,8 @@ const BusinessRequestsScreen = ({ navigation }) => {
       id,
       event_user_id,
     };
-    const response = await authAxios.put("/requests", data);
-    const updatedStatus = response.data.request_status;
-    setCurrentStatus(updatedStatus);
+    await authAxios.put("/requests", data);
+    getRequests()
   };
   const handleDecline = async (id, event_user_id, request_status) => {
     const data = {
@@ -35,9 +33,8 @@ const BusinessRequestsScreen = ({ navigation }) => {
       id,
       event_user_id,
     };
-    const response = await authAxios.put("/requests", data);
-    const updatedStatus = response.data.request_status;
-    setCurrentStatus(updatedStatus);
+    await authAxios.put("/requests", data);
+    getRequests()
   };
 
   useEffect(() => {
@@ -76,7 +73,9 @@ const BusinessRequestsScreen = ({ navigation }) => {
                     }
                     color={"white"}
                     style={{
-                      backgroundColor: categoryIcons[`${event_category}`]?.color || 'blueviolet',
+                      backgroundColor:
+                        categoryIcons[`${event_category}`]?.color ||
+                        "blueviolet",
                       marginTop: -35,
                     }}
                   />
@@ -101,13 +100,12 @@ const BusinessRequestsScreen = ({ navigation }) => {
             </View>
           </Card.Content>
           <Card.Actions style={styles.statusButtons}>
-            {request_status === "pending" ? (
+            {request_status === 2 ? (
               <View style={styles.statusButtons}>
                 <Button
                   icon="check"
                   color={"green"}
                   onPress={() => {
-                    setCurrentStatus("accepted");
                     handleConfirm(id, event_user_id, 1);
                   }}
                 >
@@ -117,14 +115,13 @@ const BusinessRequestsScreen = ({ navigation }) => {
                   icon={"cancel"}
                   color={"red"}
                   onPress={() => {
-                    setCurrentStatus("declined");
                     handleDecline(id, event_user_id, 0);
                   }}
                 >
                   Decline
                 </Button>
               </View>
-            ) : request_status === "accepted" ? (
+            ) : request_status === 1 ? (
               <Text style={{ color: "green", fontWeight: "bold" }}>
                 ACCEPTED
               </Text>
