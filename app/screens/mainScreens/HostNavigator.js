@@ -9,8 +9,9 @@ import SearchScreen from "./SearchScreen";
 import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native-web";
+import { AxiosContext } from "../../context/AxiosContext";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -23,6 +24,8 @@ const CreateEventScreenName = "Create New Event";
 
 const HostNavigator = ({ navigation }) => {
   const authContext = useContext(AuthContext);
+  const { authAxios } = useContext(AxiosContext)
+  const [notifAmount, setNotifAmount] = useState(0)
   const logout = authContext.logout;
 
   const headerRight = () => {
@@ -36,6 +39,23 @@ const HostNavigator = ({ navigation }) => {
       </View>
     );
   };
+
+  const getNotifAmount = async () => {
+    const resp = await authAxios.get(`/notif-meta`)
+    const { data } = resp
+    const { notifCount = 0 } = data
+    setNotifAmount(notifCount)
+  }
+
+  useEffect(() => {
+    getNotifAmount().then().catch((e) => console.log(e))
+  }, [])
+
+  const getLeftHeader = () => {
+
+    const notifIcon = notifAmount ? "bell-badge" : "bell"
+    return (<IconButton icon={notifIcon} onPress={() => { navigation.navigate("Notifications") }} />)
+  }
 
   return (
     <Tab.Navigator
@@ -60,14 +80,7 @@ const HostNavigator = ({ navigation }) => {
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
         headerRight: headerRight,
-        headerLeft: () => (
-          <IconButton
-            icon={"bell"}
-            onPress={() => {
-              navigation.navigate("Notifications")
-            }}
-          />
-        ),
+        headerLeft: getLeftHeader,
       })}
     >
       <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
@@ -84,14 +97,7 @@ const HostNavigator = ({ navigation }) => {
                   { color: "black" },
                 ],
                 headerRight: headerRight,
-                headerLeft: () => (
-                  <IconButton
-                    icon={"bell"}
-                    onPress={() => {
-                      navigation.navigate("Notifications")
-                    }}
-                  />
-                ),
+                headerLeft: getLeftHeader
               }}
             />
             <HomeStack.Screen
