@@ -10,6 +10,7 @@ import LoginContainer from "../screens/loginScreens/LoginContainer";
 import BusinessNavigator from "../screens/mainScreens/BusinessNavigator";
 import HostNavigator from "../screens/mainScreens/HostNavigator";
 import ArchiveScreen from "../screens/mainScreens/ArchiveScreen";
+import BusinessRequestsScreen from "../screens/mainScreens/BusinessRequestsScreen";
 import { TextStyles } from "../CommonStyles";
 import NotificationScreen from "../screens/mainScreens/NotificationScreen/";
 
@@ -78,6 +79,18 @@ const Navigation = () => {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Business Main" component={BusinessNavigator} />
+            <Stack.Screen
+              name="Requests"
+              component={BusinessRequestsScreen}
+              options={{
+                headerShown: true,
+                headerTitleAlign: "center",
+                headerTitleStyle: [
+                  TextStyles.sectionTitleText,
+                  { color: "black" },
+                ],
+              }}
+            />
             <Stack.Screen
               name="Notifications"
               component={NotificationScreen}
