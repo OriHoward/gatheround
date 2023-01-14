@@ -185,7 +185,6 @@ const PackageDetailsScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   root: {
-    // alignSelf: "strech",
     marginTop: 15,
     marginBottom: 15,
     flex: 1,
