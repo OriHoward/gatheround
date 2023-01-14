@@ -72,7 +72,7 @@ const HostNavigator = ({ navigation }) => {
 
   return (
     <Tab.Navigator
-      initialRootName={HomeScreenName}
+      initialRouteName={HomeScreenName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
