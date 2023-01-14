@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     borderRadius: 15,
+    marginBottom: 10,
   },
 });
 
