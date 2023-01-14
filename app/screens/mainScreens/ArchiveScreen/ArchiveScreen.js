@@ -1,10 +1,9 @@
-import { View, ImageBackground, SectionList } from "react-native";
+import { View, ImageBackground, SectionList, FlatList } from "react-native";
 import React, { useState, useContext } from "react";
 import { AxiosContext } from "../../../context/AxiosContext";
 import backgroundImage from "../../../../assets/Images/app-background.jpg";
 import {
   Card,
-  Button,
   Avatar,
   Text,
   ActivityIndicator,
@@ -46,9 +45,22 @@ const ArchiveScreen = () => {
     }
   };
 
+  const renderPackage = ({ item }) => {
+    const { id, currency, description, package_name, price } = item;
+    return (
+      <View style={{ marginBottom: 10 }}>
+        <Text style={EventCardStyles.header2_date}>{package_name}</Text>
+        <Text
+          style={EventCardStyles.header2_time}
+        >{`${price} ${currency}`}</Text>
+      </View>
+    );
+  };
+
   const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
   const renderItem = ({ item }) => {
+    const { event, packages } = item;
     const {
       id,
       name,
@@ -57,7 +69,7 @@ const ArchiveScreen = () => {
       address,
       description,
       limit_attending,
-    } = item;
+    } = event;
     const [date, time] = event_date.split(" ");
     return (
       <Card style={CardStyles.cardContainer}>
@@ -84,8 +96,20 @@ const ArchiveScreen = () => {
           <Paragraph>{description}</Paragraph>
           <Text> </Text>
           <Divider />
-          <SectionTitle title={"Services"} />
-          <Paragraph></Paragraph>
+          {packages.length === 0 ? (
+            <>
+              <SectionTitle title={"No services were purchased"} />
+            </>
+          ) : (
+            <>
+              <SectionTitle title={"Services"} />
+              <FlatList
+                data={packages}
+                renderItem={renderPackage}
+                keyExtractor={(item) => item.id}
+              />
+            </>
+          )}
         </Card.Content>
       </Card>
     );
