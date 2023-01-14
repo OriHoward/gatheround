@@ -124,7 +124,7 @@ const BusinessNavigator = ({ navigation }) => {
                       icon={"email"}
                       onPress={() => navigation.navigate("Requests")}
                     />
-                    <IconButton icon={"logout"} onPress={logout} />,
+                    <IconButton icon={"logout"} onPress={logout} />
                   </View>
                 ),
                 headerLeft: getLeftHeader,
