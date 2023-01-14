@@ -10,7 +10,7 @@ import { TextStyles } from "../../CommonStyles";
 import { IconButton } from "react-native-paper";
 import { AuthContext } from "../../context/AuthContext";
 import React, { useContext, useState, useCallback } from "react";
-import { View } from "react-native-web";
+import { View } from "react-native";
 import { AxiosContext } from "../../context/AxiosContext";
 import { useFocusEffect } from "@react-navigation/native";
 
