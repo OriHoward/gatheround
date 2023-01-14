@@ -62,7 +62,7 @@ const BusinessCalendarScreen = ({ navigation }) => {
     }, [isDatePickerVisible]) // refreshes data after closing the date picker modal
   );
 
-  const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
+  const LeftContent = (props) => <Avatar.Icon {...props} icon="close" />;
   const RightContent = (props) => (
     <IconButton {...props} icon="chevron-right" disabled={true} />
   );
