@@ -24,6 +24,7 @@ const homeStack = createNativeStackNavigator();
 
 const CalendarScreenName = "My Calendar";
 const CalendarTabName = "Calendar Tab";
+const HomeTabName = "Home Tab";
 const HomeScreenName = "Home";
 const PackageDetailsName = "My Packages";
 const ProfileScreenName = "My Profile";
@@ -78,12 +79,12 @@ const BusinessNavigator = ({ navigation }) => {
 
   return (
     <Tab.Navigator
-      initialRouteName={HomeScreenName}
+      initialRouteName={HomeTabName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let rn = route.name;
-          if (rn === HomeScreenName) {
+          if (rn === HomeTabName) {
             iconName = focused ? "home" : "home-outline";
           } else if (rn === ProfileScreenName) {
             iconName = focused ? "person" : "person-outline";
@@ -102,7 +103,7 @@ const BusinessNavigator = ({ navigation }) => {
         headerLeft: getLeftHeader,
       })}
     >
-      <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
+      <Tab.Screen name={HomeTabName} options={{ headerShown: false }}>
         {() => (
           <homeStack.Navigator>
             <homeStack.Group
