@@ -57,8 +57,6 @@ const ArchiveScreen = () => {
     );
   };
 
-  const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-
   const renderItem = ({ item }) => {
     const { event, packages } = item;
     const {
