@@ -34,7 +34,7 @@ const BusinessPackageScreen = () => {
           "/business-package",
           packageData
         );
-        if (packageResponse.status == 200) {
+        if (packageResponse.status === 200) {
           setPackageName("");
           setDescription("");
           setPrice("");
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   inputDesc: {
     minWidth: 300,
-    height: 100,
+    height: "30%",
     marginHorizontal: 15,
     paddingBottom: 30,
   },

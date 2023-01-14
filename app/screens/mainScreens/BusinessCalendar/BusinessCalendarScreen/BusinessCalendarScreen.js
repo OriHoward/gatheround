@@ -40,7 +40,6 @@ const BusinessCalendarScreen = ({ navigation }) => {
   const getCalendarEvents = async () => {
     try {
       const response = await authAxios.get("/booked-dates");
-      // todo: delete dates that were unselected in date picker state
       const unavailableDates = [];
       response.data.forEach((element) => {
         if (element.category === "Unavailable") {
@@ -63,7 +62,6 @@ const BusinessCalendarScreen = ({ navigation }) => {
     }, [isDatePickerVisible]) // refreshes data after closing the date picker modal
   );
 
-  const peachColor = "#FF7F50";
   const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
   const RightContent = (props) => (
     <IconButton {...props} icon="chevron-right" disabled={true} />
@@ -148,9 +146,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   cardContainer: {
-    alignSelf: "center",
-    // width: 500,
-    // flex: 1,
+    flex: 1,
     borderRadius: 15,
   },
 });
