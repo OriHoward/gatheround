@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useState, useContext } from "react";
 import SectionTitle from "../../components/SectionTitle";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -128,10 +128,6 @@ const BusinessProfileScreen = () => {
             onPress={() => hideProfile().then(setIsVisible(false))}
           />
         </View>
-        {/* <TouchableOpacity style={styles.edit_style}>
-          <Ionicons name="create-sharp" size={16} />
-          <Text style={{ marginRight: 2, padding: 4 }}>Edit Profile</Text>
-        </TouchableOpacity> */}
       </View>
     );
   }

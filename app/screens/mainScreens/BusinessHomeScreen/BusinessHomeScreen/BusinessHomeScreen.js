@@ -68,7 +68,7 @@ const BusinessHomeScreen = ({ navigation }) => {
         <Text
           style={[
             TextStyles.sectionTitleText,
-            { color: "black", fontSize: 20 },
+            { color: "black", fontSize: 20 }
           ]}
         >
           {`Hello there, ${userName.firstName}!`}
@@ -83,7 +83,7 @@ const BusinessHomeScreen = ({ navigation }) => {
               package_name: packageName,
               description,
               price,
-              currency,
+              currency
             } = item;
             return (
               <PackageCard
@@ -93,7 +93,7 @@ const BusinessHomeScreen = ({ navigation }) => {
                     packageName,
                     description,
                     price,
-                    currency,
+                    currency
                   })
                 }
                 packageName={packageName}

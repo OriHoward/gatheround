@@ -25,7 +25,7 @@ const BusinessRequestsScreen = ({ navigation }) => {
       event_user_id,
     };
     await authAxios.put("/requests", data);
-    getRequests()
+    getRequests();
   };
   const handleDecline = async (id, event_user_id, request_status) => {
     const data = {
@@ -34,7 +34,7 @@ const BusinessRequestsScreen = ({ navigation }) => {
       event_user_id,
     };
     await authAxios.put("/requests", data);
-    getRequests()
+    getRequests();
   };
 
   useEffect(() => {
@@ -59,43 +59,36 @@ const BusinessRequestsScreen = ({ navigation }) => {
     return (
       <View>
         <Card style={styles.cardContainer}>
-          <Card.Content>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>{event_name}</Text>
-              <Text style={styles.cardSubtitle}>{event_category}</Text>
-              <Card.Title
-                left={(props) => (
-                  <Avatar.Icon
-                    {...props}
-                    icon={
-                      categoryIcons[`${event_category}`]?.icon ||
-                      "calendar-star"
-                    }
-                    color={"white"}
-                    style={{
-                      backgroundColor:
-                        categoryIcons[`${event_category}`]?.color ||
-                        "blueviolet",
-                      marginTop: -35,
-                    }}
-                  />
-                )}
+          <Card.Title
+            title={event_name}
+            subtitle={event_category}
+            left={(props) => (
+              <Avatar.Icon
+                {...props}
+                icon={
+                  categoryIcons[`${event_category}`]?.icon || "calendar-star"
+                }
+                color={"white"}
+                style={{
+                  backgroundColor:
+                    categoryIcons[`${event_category}`]?.color || "blueviolet",
+                }}
               />
+            )}
+          />
+          <Card.Content>
+            <View style={styles.hostMessageContainer}>
+              <Text style={styles.hostMessageTitle}>Host Message:</Text>
+              <Text style={styles.hostMessage}>{description}</Text>
             </View>
-            <View>
-              <View style={styles.hostMessageContainer}>
-                <Text style={styles.hostMessageTitle}>Host Message:</Text>
-                <Text style={styles.hostMessage}>{description}</Text>
+            <View style={styles.cardDetailContainer}>
+              <View style={styles.cardDetail}>
+                <Text style={styles.cardDetailLabel}>Date:</Text>
+                <Text style={styles.cardDetailText}>{event_date}</Text>
               </View>
-              <View style={styles.cardDetailContainer}>
-                <View style={styles.cardDetail}>
-                  <Text style={styles.cardDetailLabel}>Date:</Text>
-                  <Text style={styles.cardDetailText}>{event_date}</Text>
-                </View>
-                <View style={styles.cardDetail}>
-                  <Text style={styles.cardDetailLabel}>Address:</Text>
-                  <Text style={styles.cardDetailText}>{event_address}</Text>
-                </View>
+              <View style={styles.cardDetail}>
+                <Text style={styles.cardDetailLabel}>Address:</Text>
+                <Text style={styles.cardDetailText}>{event_address}</Text>
               </View>
             </View>
           </Card.Content>
@@ -176,7 +169,6 @@ const styles = StyleSheet.create({
   },
   hostMessageContainer: {
     marginBottom: 10,
-    marginTop: -25,
   },
   hostMessageTitle: {
     fontWeight: "bold",
