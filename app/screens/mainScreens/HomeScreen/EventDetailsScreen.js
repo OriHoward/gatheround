@@ -107,19 +107,19 @@ const EventDetailsScreen = ({ route, navigation }) => {
             <Text style={CardStyles.boldText}>{getFormattedDate()}</Text>
             <Text style={CardStyles.normalText}>{getFormattedTime()}</Text>
             <Text style={CardStyles.normalText}>{data.address}</Text>
-            <Text> </Text>
-            <Divider />
+            <Divider style={{ marginTop: 10 }} />
             <SectionTitle title={"Invitation Details"} />
             <Paragraph>{data.description}</Paragraph>
           </Card.Content>
           <Avatar.Icon
-            icon={categoryIcons[`${data.category}`]?.icon|| 'calendar-star'}
+            icon={categoryIcons[`${data.category}`]?.icon || "calendar-star"}
             color={"white"}
             size={50}
             style={{
               marginTop: 20,
               alignSelf: "center",
-              backgroundColor: categoryIcons[`${data.category}`]?.color || 'blueviolet',
+              backgroundColor:
+                categoryIcons[`${data.category}`]?.color || "blueviolet",
             }}
           />
           <Card.Actions>
@@ -191,8 +191,7 @@ const EventDetailsScreen = ({ route, navigation }) => {
               activeUnderlineColor={peachColor}
               onChangeText={(text) => setData({ ...data, address: text })}
             />
-            <Text> </Text>
-            <Divider />
+            <Divider style={{ marginTop: 10 }} />
             <SectionTitle title={"Invitation Details"} />
             <TextInput
               label={"Description"}

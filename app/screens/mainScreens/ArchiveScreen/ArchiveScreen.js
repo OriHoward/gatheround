@@ -92,8 +92,7 @@ const ArchiveScreen = () => {
             <Text style={EventCardStyles.header2_time}>{`, ${time}`}</Text>
           </View>
           <Paragraph>{description}</Paragraph>
-          <Text> </Text>
-          <Divider />
+          <Divider style={{ marginTop: 10 }} />
           {packages.length === 0 ? (
             <>
               <SectionTitle title={"No services were purchased"} />

@@ -11,12 +11,9 @@ const CalendarDetailsScreen = ({ route }) => {
         <Card.Content>
           <Title style={CardStyles.boldText}>{category}</Title>
           <Text style={CardStyles.boldText}>{date}</Text>
-          <Text> </Text>
-          <Divider />
+          <Divider style={{ marginTop: 10 }} />
           <Paragraph>{description}</Paragraph>
         </Card.Content>
-        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-        <Text> </Text>
       </Card>
     </View>
   );
