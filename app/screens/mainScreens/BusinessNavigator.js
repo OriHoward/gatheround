@@ -24,6 +24,7 @@ const homeStack = createNativeStackNavigator();
 
 const CalendarScreenName = "My Calendar";
 const CalendarTabName = "Calendar Tab";
+const HomeTabName = "Home Tab";
 const HomeScreenName = "Home";
 const PackageDetailsName = "My Packages";
 const ProfileScreenName = "My Profile";
@@ -64,14 +65,26 @@ const BusinessNavigator = ({ navigation }) => {
     );
   };
 
+  const headerRight = () => {
+    return (
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <IconButton
+          icon={"email"}
+          onPress={() => navigation.navigate("Requests")}
+        />
+        <IconButton icon={"logout"} onPress={logout} />
+      </View>
+    );
+  };
+
   return (
     <Tab.Navigator
-      initialRouteName={HomeScreenName}
+      initialRouteName={HomeTabName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let rn = route.name;
-          if (rn === HomeScreenName) {
+          if (rn === HomeTabName) {
             iconName = focused ? "home" : "home-outline";
           } else if (rn === ProfileScreenName) {
             iconName = focused ? "person" : "person-outline";
@@ -86,63 +99,37 @@ const BusinessNavigator = ({ navigation }) => {
         headerTitleAlign: "center",
         labelStlye: { paddingBottom: 10, fontSize: 10 },
         headerTitleStyle: [TextStyles.sectionTitleText, { color: "black" }],
-        headerRight: () => (
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <IconButton
-              icon={"email"}
-              onPress={() => navigation.navigate("Requests")}
-            />
-            <IconButton icon={"logout"} onPress={logout} />
-          </View>
-        ),
+        headerRight: headerRight,
         headerLeft: getLeftHeader,
       })}
     >
-      <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
+      <Tab.Screen name={HomeTabName} options={{ headerShown: false }}>
         {() => (
           <homeStack.Navigator>
-            <homeStack.Screen
-              name={HomeScreenName}
-              component={BusinessHomeScreen}
-              options={{
+            <homeStack.Group
+              screenOptions={{
                 headerShown: true,
                 headerTitleAlign: "center",
                 headerTitleStyle: [
                   TextStyles.sectionTitleText,
                   { color: "black" },
                 ],
-                headerRight: () => (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <IconButton
-                      icon={"email"}
-                      onPress={() => navigation.navigate("Requests")}
-                    />
-                    <IconButton icon={"logout"} onPress={logout} />
-                  </View>
-                ),
-                headerLeft: getLeftHeader,
               }}
-            />
-            <homeStack.Screen
-              name={PackageDetailsName}
-              component={PackageDetailsScreen}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerTitleStyle: [
-                  TextStyles.sectionTitleText,
-                  { color: "black" },
-                ],
-                contentStyle: { padding: 30 },
-              }}
-            />
+            >
+              <homeStack.Screen
+                name={HomeScreenName}
+                component={BusinessHomeScreen}
+                options={{
+                  headerRight: headerRight,
+                  headerLeft: getLeftHeader,
+                }}
+              />
+              <homeStack.Screen
+                name={PackageDetailsName}
+                component={PackageDetailsScreen}
+                options={{ contentStyle: { padding: 30 } }}
+              />
+            </homeStack.Group>
           </homeStack.Navigator>
         )}
       </Tab.Screen>
@@ -151,35 +138,30 @@ const BusinessNavigator = ({ navigation }) => {
       <Tab.Screen name={CalendarTabName} options={{ headerShown: false }}>
         {() => (
           <CalendarStack.Navigator>
-            <CalendarStack.Screen
-              name={CalendarScreenName}
-              component={BusinessCalendarScreen}
-              options={{
+            <CalendarStack.Group
+              screenOptions={{
                 headerShown: true,
                 headerTitleAlign: "center",
                 headerTitleStyle: [
                   TextStyles.sectionTitleText,
                   { color: "black" },
                 ],
-                headerRight: () => (
-                  <IconButton icon={"logout"} onPress={logout} />
-                ),
-                headerLeft: getLeftHeader,
               }}
-            />
-            <CalendarStack.Screen
-              name="Details"
-              component={CalendarDetailsScreen}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerTitleStyle: [
-                  TextStyles.sectionTitleText,
-                  { color: "black" },
-                ],
-                contentStyle: { padding: 30 },
-              }}
-            />
+            >
+              <CalendarStack.Screen
+                name={CalendarScreenName}
+                component={BusinessCalendarScreen}
+                options={{
+                  headerRight: headerRight,
+                  headerLeft: getLeftHeader,
+                }}
+              />
+              <CalendarStack.Screen
+                name="Details"
+                component={CalendarDetailsScreen}
+                options={{ contentStyle: { padding: 30 } }}
+              />
+            </CalendarStack.Group>
           </CalendarStack.Navigator>
         )}
       </Tab.Screen>

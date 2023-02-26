@@ -17,6 +17,7 @@ import { useFocusEffect } from "@react-navigation/native";
 const Tab = createBottomTabNavigator();
 const HomeStack = createNativeStackNavigator();
 
+const HomeTabName = "Home Tab";
 const HomeScreenName = "Home";
 const EventDetailsScreenName = "Details";
 const ProfileScreenName = "My Profile";
@@ -72,12 +73,12 @@ const HostNavigator = ({ navigation }) => {
 
   return (
     <Tab.Navigator
-      initialRouteName={HomeScreenName}
+      initialRouteName={HomeTabName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let rn = route.name;
-          if (rn === HomeScreenName) {
+          if (rn === HomeTabName) {
             iconName = focused ? "home" : "home-outline";
           } else if (rn === ProfileScreenName) {
             iconName = focused ? "person" : "person-outline";
@@ -96,7 +97,7 @@ const HostNavigator = ({ navigation }) => {
         headerLeft: getLeftHeader,
       })}
     >
-      <Tab.Screen name={HomeScreenName} options={{ headerShown: false }}>
+      <Tab.Screen name={HomeTabName} options={{ headerShown: false }}>
         {() => (
           <HomeStack.Navigator>
             <HomeStack.Group

@@ -79,11 +79,8 @@ const Navigation = () => {
       return (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Business Main" component={BusinessNavigator} />
-            <Stack.Screen
-              name="Requests"
-              component={BusinessRequestsScreen}
-              options={{
+            <Stack.Group
+              screenOptions={{
                 headerShown: true,
                 headerTitleAlign: "center",
                 headerTitleStyle: [
@@ -91,19 +88,21 @@ const Navigation = () => {
                   { color: "black" },
                 ],
               }}
-            />
-            <Stack.Screen
-              name="Notifications"
-              component={NotificationScreen}
-              options={{
-                headerShown: true,
-                headerTitleAlign: "center",
-                headerTitleStyle: [
-                  TextStyles.sectionTitleText,
-                  { color: "black" },
-                ],
-              }}
-            />
+            >
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="Business Main"
+                component={BusinessNavigator}
+              />
+              <Stack.Screen
+                name="Requests"
+                component={BusinessRequestsScreen}
+              />
+              <Stack.Screen
+                name="Notifications"
+                component={NotificationScreen}
+              />
+            </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>
       );

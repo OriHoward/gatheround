@@ -274,7 +274,7 @@ const SearchScreen = () => {
         </View>
       </View>
 
-      <View style={{ height: screenHeight * 0.75, paddingBottom: 40 }}>
+      <View style={{ height: screenHeight * 0.85, paddingBottom: 10, paddingTop:150 }}>
         <SafeAreaView style={styles.container}>
           <FlatList
             style={{ width: "100%" }}
