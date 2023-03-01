@@ -1,7 +1,8 @@
 # gatheround
 
-<img src="https://i.imgur.com/Vdd6lK9.gif" alt="gif" width="40%"/>
+<img src="https://i.imgur.com/Vdd6lK9.gif" alt="gif" width="60%"/>
 
+---
 <table>
   <tr>
     <td><h3>Host</h3></td>
