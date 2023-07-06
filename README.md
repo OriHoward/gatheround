@@ -1,4 +1,5 @@
 # gatheround
+- [Check out the backend codebase for the server-side implementation of the project](https://github.com/OriHoward/gatheround-backend)
 
 https://user-images.githubusercontent.com/74373665/223521141-c896b455-3fda-43d2-8ec8-1bbcd168d13d.mp4
 
